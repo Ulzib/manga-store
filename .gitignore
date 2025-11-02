@@ -1,0 +1,30 @@
+# VS Code Local History
+.history/
+
+# Dependencies
+backend/node_modules/
+frontend/node_modules/
+node_modules/
+
+# Environment variables
+backend/.env
+frontend/.env
+.env
+
+# Build files
+frontend/.next/
+frontend/build/
+frontend/out/
+backend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

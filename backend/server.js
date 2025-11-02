@@ -1,0 +1,142 @@
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import rfs from "rotating-file-stream";
+import morgan from "morgan";
+
+import axios from "axios";
+
+import connectDB from "./config/db.js";
+
+import errorHandler from "./middleware/error.js";
+import logger from "./middleware/logger.js";
+
+import fileUpload from "express-fileupload";
+
+// Router оруулж ирэх
+import categoriesRoutes from "./routes/categories.js";
+import booksRoutes from "./routes/books.js";
+import usersRoutes from "./routes/users.js";
+import commentsRoutes from "./routes/comments.js";
+
+// __dirname тохируулах (ESM-д)
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+import injectDb from "./middleware/injectDb.js";
+import cors from "cors";
+// Аппын тохиргоог process.env рүү ачаалах
+dotenv.config({ path: path.join(__dirname, "./config/config.env") });
+
+import db from "./config/db-mysql.js";
+import category from "./models/sequelize/category.js";
+import cookieParser from "cookie-parser";
+import ExpressMongoSanitize from "express-mongo-sanitize";
+import helmet from "helmet";
+import xss from "xss-clean";
+import rateLimit from "express-rate-limit";
+
+const app = express();
+
+connectDB();
+//body dahi ugugdliig json bolgon
+app.use(express.json());
+//cookie bval req.cookie ruu oruulj ugnu
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Frontend URL
+    credentials: true, //busad cookie-r irj bga medeellig huleej avah
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  })
+);
+app.use(logger);
+app.use(injectDb(db));
+
+// create a write stream (in append mode)
+const accessLogStream = rfs.createStream("access.log", {
+  interval: "1d", // өдөр тутам rotate хийх
+  path: path.join(__dirname, "log"),
+});
+
+// Body parser
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+    createParentPath: true, // хавтас байхгүй бол автоматаар үүсгэнэ
+  })
+);
+
+//mongo security serguuleh
+// app.use(ExpressMongoSanitize());
+// app.use(helmet());
+// app.use(xss());
+// //duudaltiin toog limitlene
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, //15 minutes
+//   max: 5, //limit IP to 100 req
+//   message: "15min 5 udaa duudaj blno",
+// });
+// app.use(limiter);
+
+app.use(morgan("combined", { stream: accessLogStream }));
+
+// server.js дээр routes-аас ӨМНӨ нэмэх
+app.use((req, res, next) => {
+  console.log(`\n🌐 ${req.method} ${req.originalUrl}`);
+  console.log("🍪 Cookies:", req.cookies);
+  console.log(
+    "👤 req.user:",
+    req.user ? `ID=${req.user._id}, Role=${req.user.role}` : "undefined"
+  );
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.send("API is running... 🚀");
+});
+
+// Routes, categories,books,users gd rhlrh l ym bol hoino bga fn ni hariutsna
+app.use("/api/v1/categories", categoriesRoutes);
+app.use("/api/v1/books", booksRoutes);
+app.use("/api/v1/users", usersRoutes);
+// app.use("/api/v1/users", usersRoutes);
+app.use("/api/v1/comments", commentsRoutes);
+// Error handler
+app.use(errorHandler);
+
+//sql holbolt/ sync hiij
+db.user.belongsToMany(db.book, {
+  through: db.comment,
+});
+db.book.belongsToMany(db.user, {
+  through: db.comment,
+});
+
+db.user.hasMany(db.comment);
+db.comment.belongsTo(db.user);
+
+db.book.hasMany(db.comment);
+db.comment.belongsTo(db.book);
+
+// db.category.hasMany(db.book);
+// db.book.belongsTo(db.category);
+
+db.sequelize
+  .sync()
+  .then((result) => {
+    console.log("sync hiigdev...");
+  })
+  .catch((err) => console.log(err));
+
+const server = app.listen(process.env.PORT, () =>
+  console.log(`Express сэрвэр ${process.env.PORT} порт дээр аслаа... `)
+);
+
+// Unhandled promise rejection
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Алдаа гарлаа : ${err.message}`.underline.red.bold);
+  server.close(() => process.exit(1));
+});
