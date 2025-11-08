@@ -22,6 +22,7 @@ export default function NavBar() {
       <Link href="/">Home</Link>
       <Link href="/books">Books</Link>
       {/* <Link href="/books/detail">Book detail</Link> */}
+      <Link href="/books/create">Ном нэмэх</Link>
       {token ? (
         <button onClick={logout}>Гарах</button>
       ) : (

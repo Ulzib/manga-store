@@ -97,6 +97,8 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.send("API is running... 🚀");
 });
+//zurag
+app.use("/uploads", express.static(path.join(__dirname, "public/upload")));
 
 // Routes, categories,books,users gd rhlrh l ym bol hoino bga fn ni hariutsna
 app.use("/api/v1/categories", categoriesRoutes);

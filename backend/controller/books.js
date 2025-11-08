@@ -115,7 +115,10 @@ export const getCategoryBooks = asyncHandler(async (req, res, next) => {
 });
 
 export const getBook = asyncHandler(async (req, res, next) => {
-  const book = await Book.findById(req.params.id);
+  const book = await Book.findById(req.params.id).populate({
+    path: "category",
+    select: "name",
+  });
   if (!book) {
     throw new MyError(req.params.id + "ID-тэй ном алга байна", 404);
   }
@@ -159,7 +162,7 @@ export const deleteBook = asyncHandler(async (req, res, next) => {
     throw new MyError(req.params.id + " ID-тэй ном алга байна", 404);
   }
 
-  // ✅ ЗАСВАР: Эрхийн шалгалт
+  //  ЗАСВАР: Эрхийн шалгалт
   const isAdmin = req.user.role === "admin" || req.user.role === "operator";
   const isOwner =
     book.createdUser && book.createdUser.toString() === req.user._id.toString();

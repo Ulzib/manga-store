@@ -3,6 +3,7 @@ import axios from "../axios/axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Spinner from "../Spinner";
+import { getImageUrl } from "../../../../utils/imageHelper";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -51,12 +52,12 @@ const Books = () => {
             {books.map((el) => (
               <div
                 key={el._id}
-                className="flex flex-col items-centerhover:shadow-lg transition-all p-3"
+                className="flex flex-col items-center hover:shadow-lg transition-all rounded-1 p-3"
               >
                 <div className="w-full aspect-[3/4] overflow-hidden rounded-lg">
                   <Link href={`/books/${el._id}`}>
                     <img
-                      src={el.photo}
+                      src={getImageUrl(el.photo)}
                       alt={el.name}
                       className="w-full h-full object-contain hover:scale-105 transition-transform"
                     />

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "../Spinner";
 import axios from "../axios/axios";
 import toast from "react-hot-toast";
+import { getImageUrl } from "../../../../utils/imageHelper";
 
 export default function BookDetail({ id }) {
   const [name, setName] = useState("");
@@ -158,7 +159,11 @@ export default function BookDetail({ id }) {
         <div className="w-full flex gap-8">
           {photo && (
             <div className="w-[310px] h-[384px] overflow-hidden rounded-lg flex-shrink-0 ">
-              <img className="w-full h-full " src={photo} alt={name} />
+              <img
+                className="w-full h-full "
+                src={getImageUrl(photo)}
+                alt={name}
+              />
             </div>
           )}
           <div className="w-full flex flex-col gap-3">
