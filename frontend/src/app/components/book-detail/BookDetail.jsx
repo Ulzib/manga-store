@@ -7,6 +7,7 @@ import Spinner from "../Spinner";
 import axios from "../axios/axios";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils/imageHelper";
+import { Camera } from "lucide-react";
 
 export default function BookDetail({ id }) {
   const [name, setName] = useState("");
@@ -17,6 +18,10 @@ export default function BookDetail({ id }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [deleted, setDeleted] = useState(false);
+
+  //zurag uurchluh state-uud
+  const [imageFile, setImageFile] = useState(null); //user-iin songosn zurag
+  const [imagePreview, setImagePreview] = useState(null);
 
   //butsah
   const router = useRouter();
@@ -34,6 +39,24 @@ export default function BookDetail({ id }) {
     } else if (name === "description") {
       setDescription(value);
     }
+  };
+
+  //zurag songoh
+  const handleImageChange = (el) => {
+    const file = el.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Зураг сонгоно уу");
+      return;
+    }
+
+    setImageFile(file);
+
+    //preview uusgeh //zurag servert ilgeegeegui browser dr haruulh
+    const reader = new FileReader(); //zurgiig base64 data url bolgon huvirgh
+    reader.onloadend = () => setImagePreview(reader.result);
+    reader.readAsDataURL(file);
   };
 
   const fetchData = async () => {
@@ -62,12 +85,26 @@ export default function BookDetail({ id }) {
 
     try {
       setLoading(true);
-      const put = await axios.put(`books/${id}`, {
-        name,
-        price,
-        description,
-      });
-      console.log(put);
+
+      // Хэрэв шинэ зураг сонгосон бол upload хийнэ
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("file", imageFile); //file nertei imageFile nemeed backend-d req.file hlberer ochno
+
+        //Axios PUT хүсэлт илгээнэ
+        // Endpoint: books/:id/upload-photo Header-д multipart/form-data гэж заавал өгөх шаардлагатай
+        // Backend энэ замаар зураг хадгална (жишээ нь Cloudinary, S3 гэх мэт)
+        const response = await axios.put(`books/${id}/upload-photo`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        // State шинэчлэх
+        setPhoto(response.data.data);
+        setImageFile(null);
+        // setImagePreview(null);
+      }
+
+      await axios.put(`books/${id}`, { name, price, description });
       toast.success("Амжилттай хадгалагдлаа");
     } catch (err) {
       const errorMessage =
@@ -76,10 +113,9 @@ export default function BookDetail({ id }) {
         err.message ||
         "Хадгалахад алдаа гарлаа";
       toast.error(errorMessage);
-      console.log(errorMessage);
-
       if (err.response?.status === 401) {
         localStorage.removeItem("token");
+        router.push("/login");
       }
     } finally {
       setLoading(false);
@@ -87,8 +123,6 @@ export default function BookDetail({ id }) {
   };
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("token");
-
     const isConfirmed = window.confirm("Та үнэхээр устгахыг хүсэж байна уу?");
 
     if (!isConfirmed) {
@@ -152,20 +186,39 @@ export default function BookDetail({ id }) {
   }
 
   return (
-    <div className="container ">
+    <div className="container">
       <div className="flex flex-col items-center mt-8 gap-10">
-        <h1 className="text-[30px] font-bold"> {name}</h1>
+        <h1 className="text-[30px] font-bold">{name}</h1>
 
-        <div className="w-full flex gap-8">
+        <div className="w-full flex gap-8 ">
           {photo && (
-            <div className="w-[310px] h-[384px] overflow-hidden rounded-lg flex-shrink-0 ">
-              <img
-                className="w-full h-full "
-                src={getImageUrl(photo)}
-                alt={name}
-              />
+            <div className="w-[310px] flex-shrink-0 flex flex-col items-center">
+              <div className="w-[310px] h-[384px] overflow-hidden rounded-lg relative group">
+                <img
+                  className="w-full h-full object-contain transition-transform group-hover:scale-105"
+                  src={imagePreview || getImageUrl(photo)}
+                  alt={name}
+                />
+                //zurag solih ui
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                  <label
+                    htmlFor="fileInput"
+                    className="cursor-pointer flex flex-col items-center"
+                  >
+                    <Camera className="w-10 h-10 text-white" />
+                    <input
+                      id="fileInput"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
             </div>
           )}
+
           <div className="w-full flex flex-col gap-3">
             <label className="font-medium">Нэр</label>
             <input
@@ -175,6 +228,7 @@ export default function BookDetail({ id }) {
               onChange={handleType}
               className="border p-2 rounded"
             />
+
             <label className="font-medium">Үнэ</label>
             <input
               type="text"
@@ -183,6 +237,7 @@ export default function BookDetail({ id }) {
               onChange={handleType}
               className="border p-2 rounded"
             />
+
             <label className="font-medium">Тайлбар</label>
             <textarea
               name="description"
@@ -190,6 +245,7 @@ export default function BookDetail({ id }) {
               onChange={handleType}
               className="h-30 border p-2 rounded"
             />
+
             <div className="flex gap-2">
               <Button className="bg-blue-900" onClick={goBack}>
                 Буцах
@@ -197,7 +253,7 @@ export default function BookDetail({ id }) {
               <Button className="bg-green-500" onClick={handleSave}>
                 Хадгалах
               </Button>
-              <Button className="bg-red-500 " onClick={handleDelete}>
+              <Button className="bg-red-500" onClick={handleDelete}>
                 Устгах
               </Button>
             </div>
