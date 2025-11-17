@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "../axios/axios"; // Backend руу хүсэлт явуулах
+import axios from "../../axios/axios"; // Backend руу хүсэлт явуулах
 import toast from "react-hot-toast"; // Мессеж харуулах
 
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Spinner from "../Spinner";
+import Spinner from "../../Spinner";
 
 const formSchema = z.object({
   name: z
@@ -133,7 +133,9 @@ const CreateBook = () => {
   return (
     <div className="flex flex-col justify-center items-center p-10">
       <div className="max-w-5xl container ">
-        <p className="text-4xl font-bold leading-2 ">Шинэ ном нэмэх</p>
+        <p className="text-4xl font-bold leading-2 text-center pb-10">
+          Шинэ ном нэмэх
+        </p>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

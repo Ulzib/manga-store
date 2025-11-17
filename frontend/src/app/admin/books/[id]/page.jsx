@@ -1,5 +1,5 @@
 "use client";
-import BookDetail from "@/app/components/book-detail/BookDetail";
+import BookDetail from "@/app/admin/book-detail/BookDetail";
 
 import { useParams } from "next/navigation";
 

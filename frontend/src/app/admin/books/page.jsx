@@ -1,5 +1,5 @@
 import React from "react";
-import Books from "../components/books-com/Books";
+import Books from "../../../components/admin/books-com/Books";
 
 const BooksPage = () => {
   return (
@@ -9,4 +9,4 @@ const BooksPage = () => {
   );
 };
 
-export default Books;
+export default BooksPage;

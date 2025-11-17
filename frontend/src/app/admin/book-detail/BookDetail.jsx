@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import Spinner from "../Spinner";
-import axios from "../axios/axios";
+import Spinner from "../../../components/Spinner";
+import axios from "../../components/axios/axios";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import { Camera } from "lucide-react";
@@ -14,6 +14,8 @@ export default function BookDetail({ id }) {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
+  const [author, setAuthor] = useState("");
+  const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -36,6 +38,10 @@ export default function BookDetail({ id }) {
       setName(value);
     } else if (name === "price") {
       setPrice(value);
+    } else if (name === "author") {
+      setAuthor(value);
+    } else if (name === "category") {
+      setCategory(value);
     } else if (name === "description") {
       setDescription(value);
     }
@@ -65,7 +71,9 @@ export default function BookDetail({ id }) {
       const res = await axios.get(`books/${id}`);
       const data = await res.data;
       setName(data.data?.name || "");
+      setAuthor(data.data?.author || "");
       setPrice(data.data?.price || "");
+      setCategory(data.data?.category.name || "");
       setDescription(data.data?.description || "");
       setPhoto(data.data?.photo || "");
       setLoading(false);
@@ -104,7 +112,13 @@ export default function BookDetail({ id }) {
         // setImagePreview(null);
       }
 
-      await axios.put(`books/${id}`, { name, price, description });
+      await axios.put(`books/${id}`, {
+        name,
+        author,
+        price,
+        category,
+        description,
+      });
       toast.success("Амжилттай хадгалагдлаа");
     } catch (err) {
       const errorMessage =
@@ -159,7 +173,6 @@ export default function BookDetail({ id }) {
       setLoading(false);
     }
   };
-
   // useEffect(() => {
   //   if (error) toast.error(error);
   // }, [error]);
@@ -228,6 +241,14 @@ export default function BookDetail({ id }) {
               onChange={handleType}
               className="border p-2 rounded"
             />
+            <label className="font-medium">Зохиолч</label>
+            <input
+              type="text"
+              name="author"
+              value={author}
+              onChange={handleType}
+              className="border p-2 rounded"
+            />
 
             <label className="font-medium">Үнэ</label>
             <input
@@ -237,6 +258,19 @@ export default function BookDetail({ id }) {
               onChange={handleType}
               className="border p-2 rounded"
             />
+
+            <label className="font-medium">Категори</label>
+            <select
+              name="category"
+              value={category}
+              onChange={handleType}
+              className="border p-2 rounded"
+            >
+              <option value="">Сонгох...</option>
+              <option value="book">Ном</option>
+              <option value="movie">Кино</option>
+              <option value="music">Хөгжим</option>
+            </select>
 
             <label className="font-medium">Тайлбар</label>
             <textarea

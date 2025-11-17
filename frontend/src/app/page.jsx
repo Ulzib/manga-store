@@ -1,10 +1,6 @@
-import Login from "./components/login-com/Login";
+import { redirect } from "next/navigation";
 
 const Home = () => {
-  return (
-    <div>
-      <Login />
-    </div>
-  );
+  redirect("/books");
 };
 export default Home;
