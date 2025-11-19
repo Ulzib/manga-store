@@ -111,7 +111,7 @@ const CreateBook = () => {
         const formData = new FormData(); //file ilgeeh format
         formData.append("file", imageFile);
 
-        await axios.put(`books/${bookid}/upload-photo`, formData, {
+        await axios.put(`/admin/books/${bookid}/upload-photo`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Зураг амжилттай хадгалагдав");

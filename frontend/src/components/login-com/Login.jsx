@@ -6,6 +6,16 @@ import toast from "react-hot-toast";
 import { useToken } from "../navi/TokenLog";
 import Spinner from "../Spinner";
 
+const decodeToken = (token) => {
+  try {
+    if (!token) return null;
+    const payload = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    return JSON.parse(atob(payload));
+  } catch {
+    return null;
+  }
+};
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,13 +26,55 @@ const Login = () => {
   //cookie-ee checkleed redirect hiih
   useEffect(() => {
     const checkAuth = () => {
-      const hasCookie = document.cookie.includes("book-token");
-      const hasLocalToken = localStorage.getItem("book-token");
+      console.log("🔄 useEffect: Token шалгаж байна..."); // ← НЭМЭХ
 
-      if (hasCookie || hasLocalToken) {
-        router.replace("/books");
+      const hasCookie = document.cookie.includes("book-token");
+      console.log("🍪 useEffect: Cookie байгаа эсэх:", hasCookie); // ← НЭМЭХ
+
+      if (hasCookie) {
+        const cookieToken = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("book-token="))
+          ?.split("=")[1];
+
+        console.log(
+          "🔍 useEffect: Cookie token:",
+          cookieToken?.substring(0, 50) + "..."
+        ); // ← НЭМЭХ
+
+        const decoded = decodeToken(cookieToken);
+        console.log("🔍 useEffect: Decoded from cookie:", decoded); // ← НЭМЭХ
+        console.log("🔍 useEffect: Role from cookie:", decoded?.role); // ← НЭМЭХ
+
+        if (decoded?.role === "admin" || decoded?.role === "operator") {
+          console.log("➡️ useEffect: Admin руу redirect"); // ← НЭМЭХ
+          router.replace("/admin/books");
+        } else {
+          console.log("➡️ useEffect: User руу redirect"); // ← НЭМЭХ
+          router.replace("/books");
+        }
       } else {
-        setLoading(false);
+        const hasLocalToken = localStorage.getItem("book-token");
+        console.log(
+          "💾 useEffect: LocalStorage token байгаа эсэх:",
+          !!hasLocalToken
+        ); // ← НЭМЭХ
+
+        if (hasLocalToken) {
+          const decoded = decodeToken(hasLocalToken);
+          console.log("🔍 useEffect: Decoded from localStorage:", decoded); // ← НЭМЭХ
+          console.log("🔍 useEffect: Role from localStorage:", decoded?.role); // ← НЭМЭХ
+
+          if (decoded?.role === "admin" || decoded?.role === "operator") {
+            console.log("➡️ useEffect: Admin руу redirect"); // ← НЭМЭХ
+            router.replace("/admin/books");
+          } else {
+            console.log("➡️ useEffect: User руу redirect"); // ← НЭМЭХ
+            router.replace("/books");
+          }
+        } else {
+          setLoading(false);
+        }
       }
     };
     checkAuth();
@@ -30,18 +82,32 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    console.log("🚀 Login button дарагдлаа");
     if (!email || !password) return toast.error("Имэйл, нууц үг оруулна уу");
 
     setLoading(true);
+    console.log("📤 API дуудаж байна...");
     try {
       const { data } = await axios.post("users/login", { email, password });
+      console.log("✅ API response:", data);
       handleLogin(data.token);
       toast.success("Амжилттай нэвтэрлээ");
+      //Token decode hj role-r redirect
+      const decoded = decodeToken(data.token);
 
+      console.log("🔍 Decoded token:", decoded); // ← Энийг нэмээрэй
+      console.log("🔍 Role:", decoded?.role);
       setTimeout(() => {
-        router.push("/books");
+        if (decoded?.role === "admin" || decoded?.role === "operator") {
+          console.log("➡️ Admin хэсэг рүү явна");
+          router.push("/admin/books");
+        } else {
+          console.log("➡️ User хэсэг рүү явна");
+          router.push("/books");
+        }
       }, 200);
     } catch (err) {
+      console.error("❌ Login алдаа:", err);
       toast.error(
         err.response?.data?.error?.message || "Серверт холбогдож чадсангүй"
       );

@@ -1,11 +1,16 @@
 "use client";
 import Link from "next/link";
-import { useToken } from "../../navi/TokenLog"; // ← Path засах
+import { useToken } from "../navi/TokenLog";
 import { useRouter } from "next/navigation";
 
 export default function AdminNavBar() {
   const { token, handleLogout } = useToken();
   const router = useRouter();
+
+  // Түр userRole шалгалтыг устгах
+  // if (userRole !== "admin" && userRole !== "operator") {
+  //   return null;
+  // }
 
   const logout = async () => {
     await new Promise((resolve) => {

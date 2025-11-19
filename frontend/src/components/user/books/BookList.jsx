@@ -54,7 +54,7 @@ const Books = () => {
                 key={el._id}
                 className="flex flex-col items-center hover:shadow-lg transition-all rounded-1 p-3"
               >
-                <div className="w-full aspect-[3/4] overflow-hidden rounded-lg">
+                <div className="w-full aspect-3/4 overflow-hidden rounded-lg">
                   <Link href={`/books/${el._id}`}>
                     <img
                       src={getImageUrl(el.photo)}

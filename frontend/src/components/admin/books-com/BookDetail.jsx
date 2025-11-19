@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import Spinner from "../../../components/Spinner";
-import axios from "../../components/axios/axios";
+import Spinner from "../../Spinner";
+import axios from "../../axios/axios";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import { Camera } from "lucide-react";
@@ -16,6 +16,7 @@ export default function BookDetail({ id }) {
   const [photo, setPhoto] = useState("");
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -73,9 +74,16 @@ export default function BookDetail({ id }) {
       setName(data.data?.name || "");
       setAuthor(data.data?.author || "");
       setPrice(data.data?.price || "");
-      setCategory(data.data?.category.name || "");
+      setCategory(data.data?.category._id || "");
       setDescription(data.data?.description || "");
       setPhoto(data.data?.photo || "");
+      //buh category tatah
+      const categoriesRes = await axios.get("categories");
+      console.log("🔍 Categories response:", categoriesRes.data); // ← НЭМЭХ
+      console.log("🔍 Type:", typeof categoriesRes.data); // ← НЭМЭХ
+      console.log("🔍 Is array?", Array.isArray(categoriesRes.data)); // ← НЭМЭХ
+      setCategories(categoriesRes.data.data || []);
+
       setLoading(false);
       setError(null);
       console.log(data);
@@ -205,8 +213,8 @@ export default function BookDetail({ id }) {
 
         <div className="w-full flex gap-8 ">
           {photo && (
-            <div className="w-[310px] flex-shrink-0 flex flex-col items-center">
-              <div className="w-[310px] h-[384px] overflow-hidden rounded-lg relative group">
+            <div className="w-[310px] shrink-0 flex flex-col items-center">
+              <div className="w-[310px] h-96 overflow-hidden rounded-lg relative group">
                 <img
                   className="w-full h-full object-contain transition-transform group-hover:scale-105"
                   src={imagePreview || getImageUrl(photo)}
@@ -267,9 +275,11 @@ export default function BookDetail({ id }) {
               className="border p-2 rounded"
             >
               <option value="">Сонгох...</option>
-              <option value="book">Ном</option>
-              <option value="movie">Кино</option>
-              <option value="music">Хөгжим</option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
 
             <label className="font-medium">Тайлбар</label>

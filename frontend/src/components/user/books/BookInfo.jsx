@@ -60,8 +60,8 @@ export default function BookInfo({ id }) {
 
         <div className="w-full flex gap-8">
           {book.photo && (
-            <div className="w-[310px] flex-shrink-0">
-              <div className="w-[310px] h-[384px] overflow-hidden rounded-lg">
+            <div className="w-[310px] shrink-0">
+              <div className="w-[310px] h-96 overflow-hidden rounded-lg">
                 <img
                   className="w-full h-full object-contain"
                   src={getImageUrl(book.photo)}
