@@ -25,6 +25,7 @@ export default function AdminNavBar() {
       <Link href="/admin">Admin Home</Link>
       <Link href="/admin/books">Номын жагсаалт</Link>
       <Link href="/admin/books/create">Ном нэмэх</Link>
+      <Link href="/admin/categories">Категори</Link>
       {token ? (
         <button onClick={logout}>Гарах</button>
       ) : (

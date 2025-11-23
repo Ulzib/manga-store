@@ -10,6 +10,7 @@ import { getImageUrl } from "../../../../utils/imageHelper";
 import { Camera } from "lucide-react";
 
 export default function BookDetail({ id }) {
+  const [headerName, setHeaderName] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -72,6 +73,7 @@ export default function BookDetail({ id }) {
       const res = await axios.get(`books/${id}`);
       const data = await res.data;
       setName(data.data?.name || "");
+      setHeaderName(data.data?.name || "");
       setAuthor(data.data?.author || "");
       setPrice(data.data?.price || "");
       setCategory(data.data?.category._id || "");
@@ -127,6 +129,7 @@ export default function BookDetail({ id }) {
         category,
         description,
       });
+      setHeaderName(name);
       toast.success("Амжилттай хадгалагдлаа");
     } catch (err) {
       const errorMessage =
@@ -209,7 +212,7 @@ export default function BookDetail({ id }) {
   return (
     <div className="container">
       <div className="flex flex-col items-center mt-8 gap-10">
-        <h1 className="text-[30px] font-bold">{name}</h1>
+        <h1 className="text-[30px] font-bold">{headerName}</h1>
 
         <div className="w-full flex gap-8 ">
           {photo && (
@@ -290,14 +293,14 @@ export default function BookDetail({ id }) {
               className="h-30 border p-2 rounded"
             />
 
-            <div className="flex gap-2">
-              <Button className="bg-blue-900" onClick={goBack}>
+            <div className="flex gap-2 ">
+              <Button className="bg-black" onClick={goBack}>
                 Буцах
               </Button>
-              <Button className="bg-green-500" onClick={handleSave}>
+              <Button className="bg-black" onClick={handleSave}>
                 Хадгалах
               </Button>
-              <Button className="bg-red-500" onClick={handleDelete}>
+              <Button className="bg-black" onClick={handleDelete}>
                 Устгах
               </Button>
             </div>

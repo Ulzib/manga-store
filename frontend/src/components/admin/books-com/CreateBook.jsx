@@ -111,13 +111,13 @@ const CreateBook = () => {
         const formData = new FormData(); //file ilgeeh format
         formData.append("file", imageFile);
 
-        await axios.put(`/admin/books/${bookid}/upload-photo`, formData, {
+        await axios.put(`books/${bookid}/upload-photo`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Зураг амжилттай хадгалагдав");
       }
 
-      setTimeout(() => router.push("/books"), 1000);
+      setTimeout(() => router.push("/admin/books"), 1000);
     } catch (error) {
       if (error.response?.status === 401) {
         toast.error("Та нэвтэрнэ үү!");
