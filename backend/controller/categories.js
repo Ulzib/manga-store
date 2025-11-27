@@ -31,18 +31,18 @@ export const getCategories = asyncHandler(async (req, res, next) => {
 });
 
 export const getCategory = asyncHandler(async (req, res, next) => {
-  req.db.teacher.create({
-    id: 2,
-    name: "Jane",
-    phone: "88889999",
-    password: "123456",
-  });
-  req.db.course.create({
-    id: 1,
-    name: "Javascript for beginners",
-    price: "100$",
-    description: "programing course",
-  });
+  // req.db.teacher.create({
+  //   id: 2,
+  //   name: "Jane",
+  //   phone: "88889999",
+  //   password: "123456",
+  // });
+  // req.db.course.create({
+  //   id: 1,
+  //   name: "Javascript for beginners",
+  //   price: "100$",
+  //   description: "programing course",
+  // });
 
   const category = await Category.findById(req.params.id).populate("books");
 
@@ -85,7 +85,7 @@ export const deleteCategory = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
 
   if (!category) {
-    throw new MyError(req.params.id + " ID-тэй категори байхгүйээээ.", 400);
+    throw new MyError(req.params.id + " ID-тэй категори байхгүй.", 400);
   }
 
   await category.deleteOne();

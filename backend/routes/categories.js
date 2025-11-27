@@ -12,8 +12,6 @@ import { authorize, protect } from "../middleware/protect.js";
 
 const router = express.Router();
 
-router.route("/:categoryId/books").get(getCategoryBooks);
-
 // /api/v1/categories
 router
   .route("/")
@@ -25,5 +23,7 @@ router
   .get(getCategory)
   .put(protect, authorize("admin", "operator"), updateCategory)
   .delete(protect, authorize("admin"), deleteCategory);
+
+router.route("/:categoryId/books").get(getCategoryBooks);
 
 export default router;
