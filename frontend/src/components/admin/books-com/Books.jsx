@@ -4,17 +4,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Spinner from "../../Spinner";
 import { getImageUrl } from "../../../../utils/imageHelper";
+import Pagination from "@/components/Pagination";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [pagination, setPagination] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchData = async () => {
+  const fetchData = async (page = 1) => {
     setLoading(true);
     try {
-      const res = await axios.get("books?limit=50");
+      const res = await axios.get(`books?limit=15&page=${page}`);
       setBooks(res.data.data);
+      setPagination(res.data.pagination);
+      setCurrentPage(page);
     } catch (err) {
       setError("Алдаа гарлаа");
       console.log(err.response);
@@ -24,8 +29,19 @@ const Books = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(1);
   }, []);
+
+  const handlePageChange = (page) => {
+    fetchData(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  if (loading) {
+    <div className="flex justify-center items-center min-h-screen">
+      <Spinner />
+    </div>;
+  }
 
   return (
     <div className="w-full flex flex-col justify-center items-center p-6">
@@ -70,6 +86,11 @@ const Books = () => {
             ))}
           </div>
         )}
+        <Pagination
+          pagination={pagination}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

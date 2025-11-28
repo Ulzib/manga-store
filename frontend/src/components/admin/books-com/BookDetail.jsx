@@ -81,9 +81,7 @@ export default function BookDetail({ id }) {
       setPhoto(data.data?.photo || "");
       //buh category tatah
       const categoriesRes = await axios.get("categories");
-      console.log("🔍 Categories response:", categoriesRes.data); // ← НЭМЭХ
-      console.log("🔍 Type:", typeof categoriesRes.data); // ← НЭМЭХ
-      console.log("🔍 Is array?", Array.isArray(categoriesRes.data)); // ← НЭМЭХ
+
       setCategories(categoriesRes.data.data || []);
 
       setLoading(false);
@@ -104,7 +102,7 @@ export default function BookDetail({ id }) {
     try {
       setLoading(true);
 
-      // Хэрэв шинэ зураг сонгосон бол upload хийнэ
+      // herev shine zurag songosn bol upload hiine
       if (imageFile) {
         const formData = new FormData();
         formData.append("file", imageFile); //file nertei imageFile nemeed backend-d req.file hlberer ochno
@@ -151,7 +149,6 @@ export default function BookDetail({ id }) {
     const isConfirmed = window.confirm("Та үнэхээр устгахыг хүсэж байна уу?");
 
     if (!isConfirmed) {
-      console.log("Амжилтгүй");
       return;
     }
 
@@ -161,13 +158,9 @@ export default function BookDetail({ id }) {
       // Token байхгүй байсан ч хүсэлт явуулах
       const response = await axios.delete(`books/${id}`);
 
-      console.log("Delete success:", response.data);
       toast.success("Ном амжилттай устгагдлаа");
       setDeleted(true);
     } catch (err) {
-      console.log("Delete error:", err);
-      console.log("Error response:", err.response?.data);
-
       //  Middleware-ээс ирсэн мессеж
       const errorMessage =
         err.response?.data?.error?.message || // "нэвтэрч байж энэ үйлдлийг хийх боломжтой!"
