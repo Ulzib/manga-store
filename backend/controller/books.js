@@ -15,7 +15,11 @@ export const getBooks = asyncHandler(async (req, res, next) => {
 
   const queryObj = { ...req.query };
   ["select", "sort", "page", "limit"].forEach((el) => delete queryObj[el]);
-  ///
+
+  if (req.query.name) {
+    queryObj.name = { $regex: req.query.name, $options: "i" };
+  }
+
   // Pagination
   const pagination = await paginate(page, limit, Book);
 
@@ -52,7 +56,12 @@ export const getUserBooks = asyncHandler(async (req, res, next) => {
 
   const queryObj = { ...req.query };
   ["select", "sort", "page", "limit"].forEach((el) => delete queryObj[el]);
-  ///
+
+  ///search
+  if (req.query.search) {
+    queryObj.name = { $regex: req.query.search, $options: "i" };
+    delete queryObj.search;
+  }
   // Pagination
   const pagination = await paginate(page, limit, Book);
 

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../../Spinner";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import Pagination from "@/components/Pagination";
+import { useSearchParams } from "next/navigation";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -12,32 +13,38 @@ const Books = () => {
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const searchParams = useSearchParams();
 
-  const fetchData = async (page = 1) => {
+  const fetchData = async (page = 1, searchQuery = "") => {
     setLoading(true);
     try {
-      const res = await axios.get(`books?limit=15&page=${page}`);
+      let query = `books?limit=15&page=${page}`;
+      if (searchQuery) query += `&name=${searchQuery}`;
+
+      const res = await axios.get(query);
       setBooks(res.data.data);
-      setPagination(res.data.pagination);
+      //Backend-аас ирсэн pagination объект → totalPages, totalItems, nextPage, etc.
+      setPagination({ ...res.data.pagination, page });
       setCurrentPage(page);
     } catch (err) {
       setError("Алдаа гарлаа");
-      console.log(err.response);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData(1);
-  }, []);
+    const searchQuery = searchParams.get("search") || "";
+    fetchData(1, searchQuery);
+  }, [searchParams]);
 
   const handlePageChange = (page) => {
-    fetchData(page);
+    const searchQuery = searchParams.get("search") || "";
+    fetchData(page, searchQuery);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (loading) {
+  if (loading && books.length === 0) {
     <div className="flex justify-center items-center min-h-screen">
       <Spinner />
     </div>;
@@ -85,6 +92,9 @@ const Books = () => {
               </div>
             ))}
           </div>
+        )}
+        {books.length === 0 && (
+          <p className="text-center text-gray-500 mt-10">Ном олдсонгүй</p>
         )}
         <Pagination
           pagination={pagination}

@@ -90,7 +90,7 @@ const CreateBook = () => {
     }
   };
 
-  // ✅ Submit handler
+  // Submit handler
   const onSubmit = async (values) => {
     setLoading(true);
 
@@ -153,7 +153,7 @@ const CreateBook = () => {
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className=" aspect-[3/4]  rounded-lg object-contain  w-full h-full"
+                  className=" aspect-3/4  rounded-lg object-contain  w-full h-full"
                 />
               )}
             </div>
