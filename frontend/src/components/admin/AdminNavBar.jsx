@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import axios from "../axios/axios";
 import { getImageUrl } from "../../../utils/imageHelper";
+import { useRef } from "react";
 
 const AdminNavBar = () => {
   const { token, handleLogout } = useToken();
@@ -14,6 +15,7 @@ const AdminNavBar = () => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const logout = async () => {
     await new Promise((resolve) => {
@@ -59,6 +61,20 @@ const AdminNavBar = () => {
     router.push(`/admin/books/${id}`);
   };
 
+  //remove dropdown
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="flex gap-4 p-4 bg-white shadow">
       <Link href="/admin">Admin Home</Link>
@@ -67,6 +83,7 @@ const AdminNavBar = () => {
       <Link href="/admin/categories">Категори</Link>
 
       <form
+        ref={dropdownRef}
         onSubmit={handleSearchSubmit}
         className="flex-1 max-w-md mx-4 relative"
       >
