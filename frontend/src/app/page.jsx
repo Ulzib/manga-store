@@ -9,6 +9,8 @@ const Home = () => {
   const { token, userRole, loading } = useToken();
   const router = useRouter();
 
+  //role shalgaad redirect
+
   useEffect(() => {
     // loading duusahiig huleeh
     if (loading) return;

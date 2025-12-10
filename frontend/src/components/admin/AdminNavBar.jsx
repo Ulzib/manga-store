@@ -81,6 +81,7 @@ const AdminNavBar = () => {
       <Link href="/admin/books">Номын жагсаалт</Link>
       <Link href="/admin/books/create">Ном нэмэх</Link>
       <Link href="/admin/categories">Категори</Link>
+      <Link href="/admin/users">Хэрэглэгчид</Link>
 
       <form
         ref={dropdownRef}
