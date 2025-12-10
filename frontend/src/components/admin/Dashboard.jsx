@@ -125,7 +125,7 @@ const Dashboard = () => {
               </Link>
             ))}
           </div>
-          {/* "Бүгдийг харах" линк */}
+          {/* "Bugdiig harah" link */}
           <div className="text-center">
             <Link
               href="/admin/books"
