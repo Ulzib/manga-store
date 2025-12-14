@@ -31,10 +31,7 @@ dotenv.config({ path: path.join(__dirname, "./config/config.env") });
 import db from "./config/db-mysql.js";
 import category from "./models/sequelize/category.js";
 import cookieParser from "cookie-parser";
-import ExpressMongoSanitize from "express-mongo-sanitize";
-import helmet from "helmet";
-import xss from "xss-clean";
-import rateLimit from "express-rate-limit";
+import ordersRoutes from "./routes/orders.js";
 
 const app = express();
 
@@ -104,6 +101,7 @@ app.use("/uploads", express.static(path.join(__dirname, "public/upload")));
 app.use("/api/v1/categories", categoriesRoutes);
 app.use("/api/v1/books", booksRoutes);
 app.use("/api/v1/users", usersRoutes);
+app.use("/api/v1/orders", ordersRoutes);
 // app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/comments", commentsRoutes);
 // Error handler
