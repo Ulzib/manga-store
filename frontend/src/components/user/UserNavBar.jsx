@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useToken } from "../navi/TokenLog";
 import { useRouter } from "next/navigation";
+import CartButton from "./CartButton";
+import { ShoppingCart } from "lucide-react";
 
 export default function UserNavBar() {
   const { token, handleLogout } = useToken();
@@ -16,10 +18,10 @@ export default function UserNavBar() {
   };
 
   return (
-    <nav className="flex gap-4 p-4 bg-white shadow">
+    <nav className="flex items-center  gap-4 p-4 bg-white shadow">
       <Link href="/">Нүүр</Link>
       <Link href="/books">Номууд</Link>
-      <Link href="/cart">Сагс</Link>
+      <CartButton />
       {token ? (
         <>
           <Link href="/profile">Профайл</Link>

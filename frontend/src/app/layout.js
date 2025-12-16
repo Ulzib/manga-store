@@ -1,6 +1,8 @@
 import "./globals.css";
 import ToastProvider from "../components/toast/ToastProvider";
 import { TokenProvider } from "../components/navi/TokenLog";
+import { CartProvider } from "@/context/CartContext";
+import UserNavBar from "@/components/user/UserNavBar";
 
 export const metadata = {
   title: "Book Store",
@@ -12,8 +14,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
         <TokenProvider>
-          <ToastProvider />
-          {children} {/* ClientLayout устгах */}
+          <CartProvider>
+            <ToastProvider />
+            {children}
+          </CartProvider>
         </TokenProvider>
       </body>
     </html>
