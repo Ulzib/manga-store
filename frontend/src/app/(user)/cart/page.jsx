@@ -35,23 +35,23 @@ const CartPage = () => {
   return (
     <div className="max-w-6xl mx-auto pt-6 flex flex-col gap-9 ">
       <h1 className="text-3xl font-bold mb-6">Миний сагс</h1>
-      <div className="flex gap-6">
-        <div className=" flex-1 flex flex-col rounded-lg bg-white shadow gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 flex flex-col rounded-lg bg-white shadow gap-6">
           <div className="divide-y divide-gray-200/70">
             {cart.map((item) => (
               <div key={item._id} className=" p-4 ">
-                <div className="flex gap-8">
+                <div className="flex flex-col sm:flex-row sm:gap-8">
                   <img
                     src={item.photo || "placeholder.jpg"}
                     alt={item.name}
-                    className="w-24 h-32 object-fill rounded-md"
+                    className="w-full sm:w-24 h-48 sm:h-32 object-fill rounded-md"
                   />
-                  <div className="flex-1 flex flex-col justify-between ">
-                    <h3 className="font-bold">{item.name}</h3>
-                    <p className="text-gray-600">
+                  <div className="flex-1 flex flex-col justify-between sm:gap-0">
+                    <h3 className="font-bold text-lg">{item.name}</h3>
+                    <p className="text-gray-600 text-sm sm:text-base">
                       {item.price?.toLocaleString()}₮
                     </p>
-                    <div className="flex items-center rounded-lg">
+                    <div className="flex items-center justify-center sm:justify-start rounded-lg">
                       <Button
                         onClick={() =>
                           updateQuantity(item._id, item.quantity - 1)
@@ -84,7 +84,7 @@ const CartPage = () => {
                     >
                       <Trash2 className="w-5 h-5 text-red-500 " />
                     </Button>
-                    <p className="font-bold">
+                    <p className="font-bold text-lg">
                       {(item.price * item.quantity).toLocaleString()}₮
                     </p>
                   </div>
@@ -94,7 +94,7 @@ const CartPage = () => {
           </div>
         </div>
 
-        <div className="w-90 h-40 flex flex-col justify-between bg-white p-6 rounded-lg shadow ">
+        <div className="w-full lg:w-90 h-40 flex flex-col justify-between bg-white p-6 rounded-lg shadow ">
           <div className="flex justify-between mb-4">
             <span className="text-xl font-bold">Нийт дүн:</span>
             <span className="text-2xl font-bold text-black">
