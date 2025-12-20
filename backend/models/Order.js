@@ -47,7 +47,7 @@ const OrderSchema = new mongoose.Schema(
     //tulburiin medeelel
     paymentMethod: {
       type: String,
-      enum: ["cash", "card", "transfer"],
+      enum: ["cash", "card", "qpay"],
       default: "cash",
     },
     //tulsun eseh

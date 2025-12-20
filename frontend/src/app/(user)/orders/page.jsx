@@ -85,7 +85,7 @@ const MyOrdersPage = () => {
             <Package className="w-16 h-16 mx-auto mb-4 text-gray" />
             <p className="text-gray-600 mb-4">Захиалга алга байна</p>
             <Button
-              onClick={() => router.push(".books")}
+              onClick={() => router.push("/books")}
               className="px-6 py-2 bg-blue-950 text-white rounded-lg hover:bg-blue-800"
             >
               Манга үзэх

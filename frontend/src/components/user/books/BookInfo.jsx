@@ -7,11 +7,14 @@ import Spinner from "../../Spinner";
 import axios from "../../axios/axios";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils/imageHelper";
+import { useCart } from "@/context/CartContext";
 
 export default function BookInfo({ id }) {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const { addToCart } = useCart();
 
   const goBack = () => {
     router.back();
@@ -36,6 +39,15 @@ export default function BookInfo({ id }) {
   useEffect(() => {
     fetchData();
   }, [id]);
+
+  //sagsand nemeh
+  const handleAddToCart = (book, e) => {
+    e.preventDefault();
+    e.stopPropagation(); //e deesh damjihiig zogsooh, endee duusah
+    addToCart(book);
+
+    toast.success(`"${book.name}" сагсанд нэмэгдлээ`);
+  };
 
   if (loading) {
     return (
@@ -98,7 +110,12 @@ export default function BookInfo({ id }) {
               <Button className="bg-blue-900" onClick={goBack}>
                 Буцах
               </Button>
-              <Button className="bg-green-500">Сагсанд нэмэх</Button>
+              <Button
+                onClick={(e) => handleAddToCart(book, e)}
+                className="bg-green-500"
+              >
+                Сагсанд нэмэх
+              </Button>
             </div>
           </div>
         </div>

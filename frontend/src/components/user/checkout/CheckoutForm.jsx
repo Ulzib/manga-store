@@ -71,7 +71,11 @@ const CheckoutForm = () => {
       if (response.data.success) {
         toast.success("Захиалга амжилттай үүслээ!");
         clearCart();
-        router.push("/user/orders/success");
+
+        setTimeout(() => {
+          router.push("/orders/success");
+        }, 2000);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Захиалга үүсгэхэд алдаа гарлаа:", error);
