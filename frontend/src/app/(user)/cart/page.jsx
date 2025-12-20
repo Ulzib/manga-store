@@ -28,9 +28,13 @@ const CartPage = () => {
     );
   }
 
-  if (loading) {
-    <Spinner />;
-  }
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      await router.push("/checkout");
+    } finally {
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto pt-6 flex flex-col gap-9 ">
@@ -101,8 +105,12 @@ const CartPage = () => {
               {totalPrice.toLocaleString()}₮
             </span>
           </div>
-          <Button className="w-full py-3 bg-blue-950 text-white rounded-3xl hover:bg-blue-800 transition">
-            Захиалга үүсгэх
+          <Button
+            onClick={handleCheckout}
+            disabled={loading}
+            className="w-full py-3 bg-blue-950 text-white rounded-3xl hover:bg-blue-800 transition"
+          >
+            {loading ? <Spinner /> : "Захиалга үүсгэх"}
           </Button>
         </div>
       </div>

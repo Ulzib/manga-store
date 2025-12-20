@@ -8,7 +8,39 @@ const instance = axios.create({
 // Global default тохиргоо
 instance.defaults.withCredentials = true;
 
-// Response interceptor - 401 алдаа бол logout
+// REQUEST interceptor - Token нэмэх
+instance.interceptors.request.use(
+  (config) => {
+    // Cookie-с token авах
+    const getCookieToken = () => {
+      const cookies = document.cookie.split(";");
+      for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split("=");
+        if (name === "book-token") {
+          // Таны cookie нэр
+          return value;
+        }
+      }
+      return null;
+    };
+
+    const token = getCookieToken();
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+      console.log("✅ Token added to request:", token.substring(0, 20) + "...");
+    } else {
+      console.log("⚠️ No token found in cookie");
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// RESPONSE interceptor - 401 алдаа бол logout
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
