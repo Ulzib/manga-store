@@ -21,6 +21,7 @@ export default function UserNavBar() {
     <nav className="flex items-center  gap-4 p-4 bg-white shadow">
       <Link href="/">Нүүр</Link>
       <Link href="/books">Номууд</Link>
+      <Link href="/orders"> Миний захиалга</Link>
       <CartButton />
       {token ? (
         <>

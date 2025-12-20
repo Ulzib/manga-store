@@ -79,12 +79,13 @@ const CheckoutForm = () => {
       // Error message-г string болгож харуулах
       let errorMessage = "Захиалга үүсгэхэд алдаа гарлаа!";
 
-      if (error.response?.data?.message) {
+      if (error.response?.status === 403) {
+        errorMessage = "Нэвтрэх эрх хүрэлцэхгүй байна!";
+      } else if (error.response?.status === 401) {
+        errorMessage = "Нэвтрэх шаардлагатай!";
+        setTimeout(() => router.push("/login"), 2000);
+      } else if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
-      } else if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.message) {
-        errorMessage = error.message;
       }
 
       toast.error(errorMessage);
