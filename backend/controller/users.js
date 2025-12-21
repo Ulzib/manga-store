@@ -236,3 +236,72 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
     user: user,
   });
 });
+
+//GET /api/v1/users/profile - uuriin profile harah
+export const getProfile = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user._id).select("-password");
+
+  if (!user) {
+    throw new MyError("Хэрэглэгч олдсонгүй", 404);
+  }
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+// PUT /api/v1/users/profile - uuriin profile zasah
+export const updateProfile = asyncHandler(async (req, res, next) => {
+  // zasah bolomjtoi talbarud
+  const fieldsToUpdate = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  //email uurchluh bl davtsaj bga esehiig shalgh
+  if (req.body.email && req.body.email !== req.body.email) {
+    const emailExists = await User.findOne({ email: req.body.email });
+    if (emailExists) {
+      throw new MyError("Энэ и-мэйл аль хэдийн бүртгэгдсэн байна", 400);
+    }
+  }
+
+  const user = await User.findByIdAndUpdate(req.user._id, fieldsToUpdate, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+// PUT /api/v1/users/password - uuriin password solih
+export const updatePassword = asyncHandler(async (req, res, next) => {
+  const { currenPassword, newPassword } = req.body;
+
+  //validation
+  if (!currenPassword || !newPassword) {
+    throw new MyError("Одоогийн болон шинэ нууц үгээ оруулна уу", 400);
+  }
+
+  //User-iig passwordtoi hamt tatah
+  const user = await User.findById(req.user._id).select("+password");
+
+  // odoogiin password ug zuv esehiig shalgh
+  const isMatch = await user.checkPassword(currenPassword);
+  if (!isMatch) {
+    throw new MyError("Нууц үг буруу байна", 401);
+  }
+
+  //password hadgalah
+  user.password = newPassword;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Нууц үг амжилттай солигдлоо",
+  });
+});

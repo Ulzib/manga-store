@@ -10,6 +10,9 @@ import {
   forgotPassword,
   resetPassword,
   logout,
+  getProfile,
+  updateProfile,
+  updatePassword,
 } from "../controller/users.js";
 import { getUserBooks } from "../controller/books.js";
 import { protect, authorize } from "../middleware/protect.js";
@@ -54,6 +57,11 @@ router
 router
   .route("/:id/books")
   .get(authorize("admin", "operator", "user"), getUserBooks);
+
+//profile routes
+router.route("/profile").get(protect, getProfile).put(protect, updateProfile);
+
+router.route("/password").put(protect, updatePassword);
 
 router.route("/:id/comments").get(getUserComments);
 
