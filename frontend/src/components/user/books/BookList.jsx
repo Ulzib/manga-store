@@ -9,31 +9,51 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useSearchParams } from "next/navigation";
+import Pagination from "@/components/Pagination";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [pagination, setPagination] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const searchParams = useSearchParams();
 
   const { addToCart } = useCart();
 
-  const fetchData = async () => {
+  const fetchData = async (page = 1, searchQuery = "") => {
     setLoading(true);
     try {
-      const res = await axios.get("books?limit=50");
+      let query = `books?limit=15&page=${page}`;
+      if (searchQuery) query += `&name=${searchQuery}`;
+
+      const res = await axios.get(query);
       setBooks(res.data.data);
+      //Backend-аас ирсэн pagination объект → totalPages, totalItems, nextPage, etc.
+      setPagination({ ...res.data.pagination, page });
+      setCurrentPage(page);
     } catch (err) {
       setError("Алдаа гарлаа");
-      console.log(err.response);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    const searchQuery = searchParams.get("search") || "";
+    fetchData(1, searchQuery);
+  }, [searchParams]);
+
+  useEffect(() => {
     fetchData();
   }, []);
 
+  const handlePageChange = (page) => {
+    const searchQuery = searchParams.get("search") || "";
+    fetchData(page, searchQuery);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   //sagsand nemeh
   const handleAddToCart = (book, e) => {
     e.preventDefault();
@@ -99,6 +119,14 @@ const Books = () => {
             ))}
           </div>
         )}
+        {books.length === 0 && (
+          <p className="text-center text-gray-500 mt-10">Ном олдсонгүй</p>
+        )}
+        <Pagination
+          pagination={pagination}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
