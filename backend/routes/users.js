@@ -34,13 +34,18 @@ router.route("/register").post(register);
 //login gdg route dr post hiivel login fn ajillana
 router.route("/login").post(login);
 
-router.route("logout").post(logout);
+router.route("/logout").post(logout);
 
 router.route("/forgot-password").post(forgotPassword);
 router.route("/reset-password").post(resetPassword);
 
 //ene murnuus doosh buh huseltuuded protect-iig hereglene
 router.use(protect);
+
+//profile routes
+router.route("/profile").get(protect, getProfile).put(protect, updateProfile);
+
+router.route("/password").put(protect, updatePassword);
 
 // "/api/v1/users"
 router
@@ -57,11 +62,6 @@ router
 router
   .route("/:id/books")
   .get(authorize("admin", "operator", "user"), getUserBooks);
-
-//profile routes
-router.route("/profile").get(protect, getProfile).put(protect, updateProfile);
-
-router.route("/password").put(protect, updatePassword);
 
 router.route("/:id/comments").get(getUserComments);
 

@@ -280,10 +280,10 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
 
 // PUT /api/v1/users/password - uuriin password solih
 export const updatePassword = asyncHandler(async (req, res, next) => {
-  const { currenPassword, newPassword } = req.body;
+  const { currentPassword, newPassword } = req.body;
 
   //validation
-  if (!currenPassword || !newPassword) {
+  if (!currentPassword || !newPassword) {
     throw new MyError("Одоогийн болон шинэ нууц үгээ оруулна уу", 400);
   }
 
@@ -291,7 +291,7 @@ export const updatePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id).select("+password");
 
   // odoogiin password ug zuv esehiig shalgh
-  const isMatch = await user.checkPassword(currenPassword);
+  const isMatch = await user.checkPassword(currentPassword);
   if (!isMatch) {
     throw new MyError("Нууц үг буруу байна", 401);
   }
