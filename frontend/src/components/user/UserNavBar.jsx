@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useToken } from "../navi/TokenLog";
 import { useRouter } from "next/navigation";
 import CartButton from "./CartButton";
-import { Search, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import axios from "../axios/axios";
 import { Input } from "../ui/input";
@@ -73,7 +73,7 @@ export default function UserNavBar() {
   }, []);
 
   return (
-    <nav className="flex items-center  gap-4 p-4 bg-white shadow">
+    <nav className="flex justify-center items-center  gap-8 p-4 bg-white shadow ">
       <Link href="/">Нүүр</Link>
       <Link href="/books">Номууд</Link>
       <Link href="/orders"> Миний захиалга</Link>
@@ -107,7 +107,7 @@ export default function UserNavBar() {
                       className="w-14 h-14 object-fill rounded-full flex-shrink-0 "
                     />
                   )}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col        ">
                     <p className="font-medium">{book.name} </p>
                     {book.author && (
                       <p className="text-sm text-gray-500">{book.author}</p>
@@ -119,9 +119,15 @@ export default function UserNavBar() {
           )}
         </div>
       </form>
+
       {token ? (
         <>
-          <Link href="/profile">Профайл</Link>
+          <Link href="/profile">
+            <User
+              className=" w-6 h-6  text-black hover:text-gray-400
+      rounded-full transition duration-200"
+            />
+          </Link>
           <button onClick={logout}>Гарах</button>
         </>
       ) : (

@@ -260,7 +260,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
   };
 
   //email uurchluh bl davtsaj bga esehiig shalgh
-  if (req.body.email && req.body.email !== req.body.email) {
+  if (req.body.email && req.body.email !== req.user.email) {
     const emailExists = await User.findOne({ email: req.body.email });
     if (emailExists) {
       throw new MyError("Энэ и-мэйл аль хэдийн бүртгэгдсэн байна", 400);

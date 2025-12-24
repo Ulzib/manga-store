@@ -3,16 +3,10 @@ import dotenv from "dotenv";
 import path from "path";
 import rfs from "rotating-file-stream";
 import morgan from "morgan";
-
-import axios from "axios";
-
 import connectDB from "./config/db.js";
-
 import errorHandler from "./middleware/error.js";
 import logger from "./middleware/logger.js";
-
 import fileUpload from "express-fileupload";
-
 // Router оруулж ирэх
 import categoriesRoutes from "./routes/categories.js";
 import booksRoutes from "./routes/books.js";
@@ -32,6 +26,7 @@ import db from "./config/db-mysql.js";
 import category from "./models/sequelize/category.js";
 import cookieParser from "cookie-parser";
 import ordersRoutes from "./routes/orders.js";
+import wishlistRoutes from "./routes/wishlist.js";
 
 const app = express();
 
@@ -104,6 +99,7 @@ app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/orders", ordersRoutes);
 // app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/comments", commentsRoutes);
+app.use("/api/v1/wishlist", wishlistRoutes);
 // Error handler
 app.use(errorHandler);
 
