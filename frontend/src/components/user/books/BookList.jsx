@@ -11,6 +11,7 @@ import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/components/Pagination";
+import WishlistButton from "../wishlist/WishlistButton";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -88,8 +89,11 @@ const Books = () => {
             {books.map((el) => (
               <div
                 key={el._id}
-                className="flex flex-col items-center hover:shadow-lg transition-all rounded-1 p-3"
+                className="flex flex-col items-center hover:shadow-lg transition-all rounded-1 p-3 relative"
               >
+                <div className="absolute top-2 right-10 z-10">
+                  <WishlistButton bookId={el._id} />
+                </div>
                 <div className="w-full aspect-3/4 overflow-hidden rounded-lg">
                   <Link href={`/books/${el._id}`}>
                     <img

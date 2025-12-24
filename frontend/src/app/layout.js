@@ -3,6 +3,7 @@ import ToastProvider from "../components/toast/ToastProvider";
 import { TokenProvider } from "../components/navi/TokenLog";
 import { CartProvider } from "@/context/CartContext";
 import UserNavBar from "@/components/user/UserNavBar";
+import { WishlistProvider } from "@/context/WishlistContext";
 
 export const metadata = {
   title: "Book Store",
@@ -14,10 +15,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
         <TokenProvider>
-          <CartProvider>
-            <ToastProvider />
-            {children}
-          </CartProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <ToastProvider />
+              {children}
+            </CartProvider>
+          </WishlistProvider>
         </TokenProvider>
       </body>
     </html>

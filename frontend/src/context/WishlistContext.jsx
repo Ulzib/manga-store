@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "../components/axios/axios";
@@ -22,7 +23,7 @@ export const WishlistProvider = ({ children }) => {
   };
 
   //nom nemeh
-  const addToWishlist = async () => {
+  const addToWishlist = async (bookId) => {
     try {
       const res = await axios.post(`/wishlist/${bookId}`);
       setWishlist(res.data.data.books);
@@ -34,7 +35,7 @@ export const WishlistProvider = ({ children }) => {
   };
 
   //nom hasah
-  const removeFromWishlist = async () => {
+  const removeFromWishlist = async (bookId) => {
     try {
       const res = await axios.delete(`/wishlist/${bookId}`);
       setWishlist(res.data.data.books);
