@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useToken } from "../navi/TokenLog";
 import { useRouter } from "next/navigation";
 import CartButton from "./CartButton";
-import { Search, ShoppingCart, User } from "lucide-react";
+import { Heart, Search, ShoppingCart, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import axios from "../axios/axios";
 import { Input } from "../ui/input";
@@ -78,6 +78,11 @@ export default function UserNavBar() {
       <Link href="/books">Номууд</Link>
       <Link href="/orders"> Миний захиалга</Link>
       <CartButton />
+      {token && (
+        <Link href="/wishlist" className="relative">
+          <Heart className="w-6 h-6 text-gray-700 hover:fill-gray-400 hover:text-gray-400 trasition" />
+        </Link>
+      )}
       <form
         ref={dropdownRef}
         onSubmit={handleSearchSubmit}

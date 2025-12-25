@@ -27,7 +27,7 @@ export const WishlistProvider = ({ children }) => {
     try {
       const res = await axios.post(`/wishlist/${bookId}`);
       setWishlist(res.data.data.books);
-      toast.success("Хүслийн жагсаалтад нэмэгдлээ");
+      toast.success("Жагсаалтад нэмэгдлээ");
     } catch (err) {
       const msg = err.response?.data?.error || "Алдаа гарлаа";
       toast.error(msg);
@@ -39,7 +39,7 @@ export const WishlistProvider = ({ children }) => {
     try {
       const res = await axios.delete(`/wishlist/${bookId}`);
       setWishlist(res.data.data.books);
-      toast.success("Хүслийн жагсаалтаас хасагдлаа");
+      toast.success("Жагсаалтаас хасагдлаа");
     } catch (err) {
       toast.error("Алдаа гарлаа");
     }
