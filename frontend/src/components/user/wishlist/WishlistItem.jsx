@@ -17,7 +17,7 @@ const WishlistItem = ({ book, onAdd, onRemove }) => {
       </button>
 
       <Link href={`/books/${book._id}`} className="block">
-        <div className="relative w-full aspect-[2/3] sm:aspect-[3/4] max-h-[250px] sm:max-h-[300px] overflow-hidden bg-gray-100">
+        <div className="relative w-full aspect-[2/3] max-h-[220px] sm:max-h-[280px] overflow-hidden bg-gray-100">
           <img
             src={getImageUrl(book.photo)}
             alt={book.name}

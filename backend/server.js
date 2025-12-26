@@ -27,6 +27,7 @@ import category from "./models/sequelize/category.js";
 import cookieParser from "cookie-parser";
 import ordersRoutes from "./routes/orders.js";
 import wishlistRoutes from "./routes/wishlist.js";
+import reviewRoutes from "./routes/reviews.js";
 
 const app = express();
 
@@ -100,6 +101,7 @@ app.use("/api/v1/orders", ordersRoutes);
 // app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/comments", commentsRoutes);
 app.use("/api/v1/wishlist", wishlistRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
 // Error handler
 app.use(errorHandler);
 

@@ -8,8 +8,12 @@ import {
   uploadBookPhoto,
 } from "../controller/books.js";
 import { authorize, protect } from "../middleware/protect.js";
-import { getBookComments } from "../controller/comments.js";
+// import { getBookComments } from "../controller/comments.js";
+import reviewRoutes from "./reviews.js";
+
 const router = express.Router();
+
+router.use("/:bookId/reviews", reviewRoutes);
 
 // "/api/v1/books"
 router
@@ -27,6 +31,6 @@ router
   .route("/:id/upload-photo")
   .put(protect, authorize("admin", "operator"), uploadBookPhoto);
 
-router.route("/:id/comments").get(getBookComments);
+// router.route("/:id/comments").get(getBookComments);
 
 export default router;
