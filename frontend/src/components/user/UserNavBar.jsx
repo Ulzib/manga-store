@@ -73,71 +73,73 @@ export default function UserNavBar() {
   }, []);
 
   return (
-    <nav className="flex justify-center items-center  gap-8 p-4 bg-white shadow ">
-      <Link href="/">Нүүр</Link>
-      <Link href="/books">Номууд</Link>
-      <Link href="/orders"> Миний захиалга</Link>
-      <CartButton />
-      {token && (
-        <Link href="/wishlist" className="relative">
-          <Heart className="w-6 h-6 text-gray-700 hover:fill-gray-400 hover:text-gray-400 trasition" />
-        </Link>
-      )}
-      <form
-        ref={dropdownRef}
-        onSubmit={handleSearchSubmit}
-        className="flex-1 max-w-lg mx-4 relative"
-      >
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <Input
-            placeholder="Ном хайх..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
-          />
-
-          {showDropDown && result.length > 0 && (
-            <div className="absolute left-0 right-0 mt-1 bg-white border rounded shadow-lg max-h-60 overflow-y-auto z-50">
-              {result.map((book) => (
-                <div
-                  key={book._id}
-                  className="flex gap-5 p-3 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleSelectBook(book._id)}
-                >
-                  {book.photo && (
-                    <img
-                      src={getImageUrl(book.photo)}
-                      alt={book.name}
-                      className="w-14 h-14 object-fill rounded-full flex-shrink-0 "
-                    />
-                  )}
-                  <div className="flex flex-col        ">
-                    <p className="font-medium">{book.name} </p>
-                    {book.author && (
-                      <p className="text-sm text-gray-500">{book.author}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </form>
-
-      {token ? (
-        <>
-          <Link href="/profile">
-            <User
-              className=" w-6 h-6  text-black hover:text-gray-400
-      rounded-full transition duration-200"
-            />
+    <nav className="sticky top-0 z-50 flex gap-6 p-4 bg-white shadow  items-center justify-center">
+      <div className="max-w-7xl container flex items-center justify-between gap-6">
+        <Link href="/">Нүүр</Link>
+        <Link href="/books">Номууд</Link>
+        <Link href="/orders"> Миний захиалга</Link>
+        <CartButton />
+        {token && (
+          <Link href="/wishlist" className="relative">
+            <Heart className="w-6 h-6 text-gray-700 hover:fill-gray-400 hover:text-gray-400 trasition" />
           </Link>
-          <button onClick={logout}>Гарах</button>
-        </>
-      ) : (
-        <Link href="/login">Нэвтрэх</Link>
-      )}
+        )}
+        <form
+          ref={dropdownRef}
+          onSubmit={handleSearchSubmit}
+          className="flex-1 max-w-lg mx-4 relative"
+        >
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input
+              placeholder="Ном хайх..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10"
+            />
+
+            {showDropDown && result.length > 0 && (
+              <div className="absolute left-0 right-0 mt-1 bg-white border rounded shadow-lg max-h-60 overflow-y-auto z-60">
+                {result.map((book) => (
+                  <div
+                    key={book._id}
+                    className="flex gap-5 p-3 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleSelectBook(book._id)}
+                  >
+                    {book.photo && (
+                      <img
+                        src={getImageUrl(book.photo)}
+                        alt={book.name}
+                        className="w-14 h-14 object-fill rounded-full flex-shrink-0 "
+                      />
+                    )}
+                    <div className="flex flex-col        ">
+                      <p className="font-medium">{book.name} </p>
+                      {book.author && (
+                        <p className="text-sm text-gray-500">{book.author}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </form>
+
+        {token ? (
+          <>
+            <Link href="/profile">
+              <User
+                className=" w-6 h-6  text-black hover:text-gray-400
+      rounded-full transition duration-200"
+              />
+            </Link>
+            <button onClick={logout}>Гарах</button>
+          </>
+        ) : (
+          <Link href="/login">Нэвтрэх</Link>
+        )}
+      </div>
     </nav>
   );
 }

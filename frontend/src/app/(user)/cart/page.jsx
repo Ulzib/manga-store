@@ -4,13 +4,30 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CartPage = () => {
   const { cart, updateQuantity, removeFromCart, totalPrice, clearCart } =
     useCart();
   const [loading, setLoading] = useState(false);
+  const [inLoading, setInLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setInLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (inLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner />
+      </div>
+    );
+  }
+
   if (cart.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -33,6 +50,7 @@ const CartPage = () => {
     try {
       await router.push("/checkout");
     } finally {
+      setLoading(false);
     }
   };
 

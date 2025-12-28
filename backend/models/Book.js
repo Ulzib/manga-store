@@ -26,7 +26,12 @@ const BookSchema = new mongoose.Schema(
     averageRating: {
       type: Number,
       min: [1, "Рэйтинг хамгийн багадаа 1 байх ёстой"],
-      max: [10, "Рэйтинг хамгийн ихдээ 10 байх ёстой"],
+      max: [5, "Рэйтинг хамгийн ихдээ 10 байх ёстой"],
+      default: 0,
+    },
+    reviewCount: {
+      type: Number,
+      default: 0,
     },
     price: {
       type: Number,

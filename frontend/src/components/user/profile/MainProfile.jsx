@@ -6,6 +6,7 @@ import ProfileTabs from "./ProfileTabs";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfilePasswordForm from "./ProfilePasswordForm";
 import toast from "react-hot-toast";
+import Spinner from "@/components/Spinner";
 
 const MainProfile = () => {
   const [activeTab, setActiveTab] = useState("info");
@@ -25,6 +26,7 @@ const MainProfile = () => {
   }, []);
 
   const fetchProfile = async () => {
+    setLoading(true);
     try {
       const response = await axios.get("/users/profile");
       const user = response.data.data;
@@ -34,6 +36,8 @@ const MainProfile = () => {
       });
     } catch (error) {
       toast.error("Профайл татахад алдаа гарлаа!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,6 +91,14 @@ const MainProfile = () => {
       setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="container">

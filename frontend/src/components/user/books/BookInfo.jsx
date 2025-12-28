@@ -8,12 +8,14 @@ import axios from "../../axios/axios";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import { useCart } from "@/context/CartContext";
+import MainReview from "../review/MainReview";
+import WishlistButton from "../wishlist/WishlistButton";
 
 export default function BookInfo({ id }) {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
-
   const { addToCart } = useCart();
 
   const goBack = () => {
@@ -21,6 +23,7 @@ export default function BookInfo({ id }) {
   };
 
   const fetchData = async () => {
+    if (!id) return;
     try {
       setLoading(true);
       const res = await axios.get(`books/${id}`);
@@ -41,12 +44,20 @@ export default function BookInfo({ id }) {
   }, [id]);
 
   //sagsand nemeh
-  const handleAddToCart = (book, e) => {
-    e.preventDefault();
-    e.stopPropagation(); //e deesh damjihiig zogsooh, endee duusah
-    addToCart(book);
+  const handleAddToCart = async (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-    toast.success(`"${book.name}" сагсанд нэмэгдлээ`);
+    setIsAdding(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      addToCart(book);
+      toast.success(`"${book.name}" сагсанд нэмэгдлээ`);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   if (loading) {
@@ -66,9 +77,12 @@ export default function BookInfo({ id }) {
   }
 
   return (
-    <div className="container">
+    <div className="max-w-5xl container">
       <div className="flex flex-col items-center mt-8 gap-10">
-        <h1 className="text-[30px] font-bold">{book.name}</h1>
+        <div className="w-full flex items-center justify-between">
+          <h1 className="text-[30px] font-bold">{book.name}</h1>
+          <WishlistButton bookId={book._id} className="scale-125" />
+        </div>
 
         <div className="w-full flex gap-8">
           {book.photo && (
@@ -111,14 +125,23 @@ export default function BookInfo({ id }) {
                 Буцах
               </Button>
               <Button
-                onClick={(e) => handleAddToCart(book, e)}
-                className="bg-green-500"
+                onClick={handleAddToCart}
+                disabled={isAdding}
+                className="bg-green-600 hover:bg-green-500 disabled:opacity-500"
               >
-                Сагсанд нэмэх
+                {isAdding ? (
+                  <div className="flex items-center gap-2">
+                    <Spinner size="sm" />
+                    <span>Нэмж байна...</span>{" "}
+                  </div>
+                ) : (
+                  "Сагсанд нэмэх"
+                )}
               </Button>
             </div>
           </div>
         </div>
+        <MainReview bookId={id} />
       </div>
     </div>
   );

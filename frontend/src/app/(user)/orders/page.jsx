@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "../../../components/axios/axios";
 import Spinner from "@/components/Spinner";
+import { getImageUrl } from "../../../../utils/imageHelper";
 
 const MyOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -64,7 +65,7 @@ const MyOrdersPage = () => {
         return "bg-blue-100 text-blue-600";
       case "completed":
         return "bg-green-100 text-green-600";
-      case "canceleld":
+      case "cancelled":
         return "bg-red-600";
       default:
         return "bg-gray-100 text-gray-600";
@@ -72,9 +73,11 @@ const MyOrdersPage = () => {
   };
 
   if (loading) {
-    <div className="flex items-center justify-center min-h-screen">
-      <Spinner />
-    </div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Spinner />
+      </div>
+    );
   }
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -113,7 +116,9 @@ const MyOrdersPage = () => {
                       {order.items?.map((item, idx) => (
                         <div key={idx} className="flex gap-3">
                           <img
-                            src={item.book?.photo || "placeholder.jpg"}
+                            src={
+                              getImageUrl(item.book?.photo) || "placeholder.jpg"
+                            }
                             alt={item.book?.name}
                             className="w-12 h-16 object-fill rounded"
                           />

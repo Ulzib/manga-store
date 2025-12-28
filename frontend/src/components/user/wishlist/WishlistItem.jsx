@@ -1,9 +1,24 @@
+"use client";
 import Link from "next/link";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, X } from "lucide-react";
+import Spinner from "@/components/Spinner";
+import { useState } from "react";
 
 const WishlistItem = ({ book, onAdd, onRemove }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleAddClick = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await onAdd(book, e);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="group relative flex flex-col border rounded-lg overflow-hidden hover:shadow-lg transition bg-white h-full">
       <button
@@ -42,12 +57,21 @@ const WishlistItem = ({ book, onAdd, onRemove }) => {
         </div>
 
         <Button
-          onClick={(e) => onAdd(book, e)}
-          className="w-full gap-2 bg-green-500 hover:bg-green-900 text-white mt-auto"
+          onClick={handleAddClick}
+          disabled={loading}
+          className="w-full gap-2 bg-green-600 hover:bg-green-900 text-white mt-auto"
           size="sm"
         >
-          <ShoppingCart className="w-4 h-4" />
-          <span>Сагслах</span>
+          {loading ? (
+            <div className="flex items-center gap-2">
+              <Spinner size="sm" />
+            </div>
+          ) : (
+            <>
+              <ShoppingCart className="w-4 h-4" />
+              <span>Сагслах</span>
+            </>
+          )}
         </Button>
       </div>
     </div>

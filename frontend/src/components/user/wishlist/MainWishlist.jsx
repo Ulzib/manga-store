@@ -8,21 +8,32 @@ import { Heart, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import WishlistItem from "./WishlistItem";
+import { useEffect, useState } from "react";
 
 const MainWishlist = () => {
   const { wishlist, loading, removeFromWishlist } = useWishList();
+  const [inloading, setInLoading] = useState(true);
   const { addToCart } = useCart();
 
-  const handleAddToCart = (book, e) => {
+  const handleAddToCart = async (book, e) => {
     e.preventDefault();
-    addToCart(book);
+    await addToCart(book);
     toast.success(`"${book.name}" жагсаалтад нэмэгдлээ`);
   };
 
-  if (loading) {
-    <div className="container flex justify-center items-center min-h-screen">
-      <Spinner />
-    </div>;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setInLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (inloading) {
+    return (
+      <div className="container flex justify-center items-center min-h-screen">
+        <Spinner />
+      </div>
+    );
   }
 
   if (wishlist.length === 0) {
