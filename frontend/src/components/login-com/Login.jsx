@@ -103,7 +103,7 @@ const Login = () => {
           router.push("/admin/books");
         } else {
           console.log("➡️ User хэсэг рүү явна");
-          router.push("/books");
+          router.push("/home");
         }
       }, 200);
     } catch (err) {

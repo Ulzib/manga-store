@@ -20,7 +20,7 @@ const Home = () => {
       if (userRole === "admin" || userRole === "operator") {
         router.replace("/admin");
       } else {
-        router.replace("/books");
+        router.replace("/home");
       }
     } else {
       router.replace("/login");

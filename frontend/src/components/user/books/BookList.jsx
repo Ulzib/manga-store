@@ -65,7 +65,7 @@ const Books = () => {
   };
 
   return (
-    <div className="max-w-5xl container">
+    <div className="max-w-7xl container">
       <h1 className="pl-2.5 text-2xl font-semibold mb-6 ">Номын дэлгүүр</h1>
 
       {loading ? (

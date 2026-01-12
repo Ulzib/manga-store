@@ -1,10 +1,14 @@
-import UserNavBar from "../../components/user/UserNavBar";
+import Footer from "@/components/user/Footer";
+import UserNavBar from "../../components/user/navigation/UserNavBar";
 
 export default function UserLayout({ children }) {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <UserNavBar />
-      <main className="container mx-auto p-4">{children}</main>
+      <main className="flex-1 w-full max-w-full overflow-x-hidden pt-20">
+        {children}
+      </main>
+      <Footer />
     </div>
   );
 }

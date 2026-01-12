@@ -77,7 +77,7 @@ export default function BookInfo({ id }) {
   }
 
   return (
-    <div className="max-w-5xl container">
+    <div className="max-w-7xl container">
       <div className="flex flex-col items-center mt-8 gap-10">
         <div className="w-full flex items-center justify-between">
           <h1 className="text-[30px] font-bold">{book.name}</h1>
