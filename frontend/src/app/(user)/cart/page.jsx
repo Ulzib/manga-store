@@ -66,7 +66,7 @@ const CartPage = () => {
                   <img
                     src={item.photo || "placeholder.jpg"}
                     alt={item.name}
-                    className="w-full sm:w-24 h-48 sm:h-32 object-fill rounded-md"
+                    className="w-full sm:w-24 h-68 sm:h-32 object-fill rounded-md"
                   />
                   <div className="flex-1 flex flex-col justify-between sm:gap-0">
                     <h3 className="font-bold text-lg">{item.name}</h3>

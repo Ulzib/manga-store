@@ -5,9 +5,7 @@ export default function UserLayout({ children }) {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <UserNavBar />
-      <main className="flex-1 w-full max-w-full overflow-x-hidden pt-20">
-        {children}
-      </main>
+      <main className="flex-1 w-full max-w-full ">{children}</main>
       <Footer />
     </div>
   );

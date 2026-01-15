@@ -7,7 +7,7 @@ import NewArrivals from "@/components/user/home/NewArrivals";
 
 const HomePage = () => {
   return (
-    <>
+    <div className="min-h-screen">
       <MainCarousel />
       {/* <div className="flex flex-col justify-center items-center px-14">
         <HeroCarousel />
@@ -16,7 +16,7 @@ const HomePage = () => {
         <CategorySection />
         <NewArrivals />
       </div> */}
-    </>
+    </div>
   );
 };
 export default HomePage;

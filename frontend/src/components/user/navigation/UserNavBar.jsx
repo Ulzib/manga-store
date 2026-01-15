@@ -4,10 +4,7 @@ import { useToken } from "../../navi/TokenLog";
 import { usePathname, useRouter } from "next/navigation";
 import CartButton from "../CartButton";
 import { CircleUserRound, Heart, LogOut, User } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import axios from "../../axios/axios";
-import { Input } from "../../ui/input";
-import { getImageUrl } from "../../../../utils/imageHelper";
+import { useEffect, useState } from "react";
 import BottomNav from "./BottomNav";
 import MobileSearch from "./MobileSearch";
 import DesktopSearch from "./DesktopSearch";
@@ -17,6 +14,22 @@ export default function UserNavBar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isHomePage = pathname === "/" || pathname === "/home";
+
+  //scroll hiihed navbar ungu solih
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
 
   const logout = async () => {
     await new Promise((resolve) => {
@@ -40,9 +53,16 @@ export default function UserNavBar() {
       isActive(path) ? "opacity-100" : "opacity-0 group-hover:opacity-50"
     }`;
 
+  const navbarBg = () => {
+    if (!isHomePage) return "bg-gray-900/90 backdrop-blur-md shadow-lg";
+    return isScrolled ? "bg-gray-900/90  shadow-lg" : "bg-transparent";
+  };
+
   return (
     <>
-      <nav className="w-full fixed top-0 left-0 z-50 flex gap-6 py-4   bg-gray-900/90 backdrop-blur ">
+      <nav
+        className={`w-full fixed top-0 left-0 z-50 flex gap-6 py-4  ${navbarBg()}`}
+      >
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-14 flex items-center justify-between h-8 md:h-12 ">
           <Link
             href="/"
