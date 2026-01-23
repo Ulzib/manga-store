@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import HeroCarousel from "./HeroCarousel";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const MainCarousel = () => {
+const MainCarousel = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  // const [isScrolling, setIsScrolling] = useState(false);
+  // const mainCarouselRef = useRef(null);
 
   const slides = [
     {
@@ -52,14 +56,31 @@ const MainCarousel = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      handleNext();
     }, 10000);
-
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [currentSlide]);
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => {
+      if (prev === slides.length - 1) {
+        return 0; //suuliin slide bol ehlel ruu butsah
+      }
+      return prev + 1;
+    });
+  };
+
+  const handlePrev = () => {
+    setCurrentSlide((prev) => {
+      if (prev === 0) {
+        return slides.length - 1; //ehnii slide bol suul ruu ochih
+      }
+      return prev - 1;
+    });
+  };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800 z-0">
+    <div className=" relative w-full h-screen overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800 ">
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
@@ -68,24 +89,26 @@ const MainCarousel = () => {
               index === currentSlide
                 ? "opacity-100 translate-x-0 z-10"
                 : index < currentSlide
-                ? "opacity-0 -translate-x-full z-0"
-                : "opacity-0 translate-x-full z-0"
+                  ? "opacity-0 -translate-x-full z-0"
+                  : "opacity-0 translate-x-full z-0"
             }`}
           >
             {/*background image*/}
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${slide.image})` }}
-            >
+            <div className="absolute inset-0 ">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-top lg:object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
 
               {/*content*/}
-              <div className="relative z-10 container h-full px-4 flex items-end pb-30 sm:px-6 lg:px-14">
-                <div className="max-w-2xl text-white space-y-6">
+              <div className="absolute inset-0 z-20 px-12 flex items-center pb-35 md:pb-35 sm:px-14 lg:px-20">
+                <div className="w-full md:max-w-2xl text-white space-y-4 md:space-y-6 text-center md:text-left">
                   <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight">
                     {slide.title}
                   </h1>
-                  <p className="text-sm md:text-lg lg:text-xl text-gray-200">
+                  <p className="text-sm line-clamp-4 md:text-lg lg:text-xl text-gray-200">
                     {slide.description}
                   </p>
                   <Link
@@ -99,20 +122,35 @@ const MainCarousel = () => {
             </div>
           </div>
         ))}
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:bg-white/50 text-white p-3 rounded-full transition"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:bg-white/50 text-white p-3 rounded-full transition"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="absolute bottom-36 md:bottom-60 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
+            className={`w-1.5 h-1.5 md:w-3 md:h-3 rounded-full transition-all ${
               index === currentSlide
                 ? "bg-white w-8"
                 : "bg-white/50 hover:bg-white/75"
             }`}
           ></button>
         ))}
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 z-30 bg-grandient-to-t from-black via-black/20 to-transparent">
+        {children}
       </div>
     </div>
   );

@@ -66,7 +66,7 @@ export default function UserNavBar() {
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-14 flex items-center justify-between h-8 md:h-12 ">
           <Link
             href="/"
-            className="hidden md:flex sm:text-xl md:text-2xl font-black text-white shrink-0"
+            className="flex sm:text-xl md:text-2xl font-black text-white shrink-0"
           >
             Panel
           </Link>

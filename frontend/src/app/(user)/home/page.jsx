@@ -8,14 +8,15 @@ import NewArrivals from "@/components/user/home/NewArrivals";
 const HomePage = () => {
   return (
     <div className="min-h-screen">
-      <MainCarousel />
-      {/* <div className="flex flex-col justify-center items-center px-14">
+      <MainCarousel>
         <HeroCarousel />
-        <BestSellers />
+      </MainCarousel>
+      <div className="flex flex-col justify-center items-center px-14">
+        {/* <BestSellers />
         <FeaturedBooks />
         <CategorySection />
-        <NewArrivals />
-      </div> */}
+        <NewArrivals /> */}
+      </div>
     </div>
   );
 };
