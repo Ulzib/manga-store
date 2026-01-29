@@ -131,13 +131,13 @@ const HeroCarousel = () => {
       </div>
       <button
         onClick={handlePrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:bg-white/50 text-white rounded-full transition"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:bg-white/80 text-white rounded-full transition"
       >
         <ChevronLeft size={42} />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:bg-white/50 text-white rounded-full transition"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:bg-white/80 text-white rounded-full transition"
       >
         <ChevronRight size={42} />
       </button>
