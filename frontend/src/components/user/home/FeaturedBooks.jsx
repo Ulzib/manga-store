@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 import Spinner from "@/components/Spinner";
+import WheelGesturesPlugin from "embla-carousel-wheel-gestures";
 
 const FeaturedBooks = () => {
   const [books, setBooks] = useState([]);
@@ -26,7 +27,7 @@ const FeaturedBooks = () => {
     const fetchFeature = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/books?limit=12&sort=-createAt");
+        const res = await axios.get("/books?limit=12&sort=-createdAt&page=2");
         setBooks(res.data.data || []);
       } catch (err) {
         console.log("Алдаа гарлаа", err);
@@ -69,9 +70,10 @@ const FeaturedBooks = () => {
           dragFree: true,
           containScroll: "trimSnaps",
         }}
+        plugins={[WheelGesturesPlugin()]} //side scrolling Wheel gesture
         className="w-full"
       >
-        <CarouselContent className="-ml-4 basis-auto ">
+        <CarouselContent className="-ml-4 ">
           {books.map((book) => (
             <CarouselItem key={book._id} className="pl-4 basis-auto pt-10">
               <div className="group relative w-52 bg-[#0F0F0F] rounded-2xl p-4 pt-0 transition-all border border-white/5 ">
@@ -109,8 +111,8 @@ const FeaturedBooks = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="-left-4 hidden hover:bg-white/80 md:flex" />
-        <CarouselNext className="-right-4 hidden hover:bg-white/80 md:flex" />
+        <CarouselPrevious className=" hidden hover:bg-white/80 md:flex" />
+        <CarouselNext className=" hidden hover:bg-white/80 md:flex" />
       </Carousel>
     </section>
   );

@@ -25,7 +25,7 @@ const BookSchema = new mongoose.Schema(
     },
     averageRating: {
       type: Number,
-      min: [1, "Рэйтинг хамгийн багадаа 1 байх ёстой"],
+      min: [0, "Рэйтинг хамгийн багадаа 0 байх ёстой"],
       max: [5, "Рэйтинг хамгийн ихдээ 10 байх ёстой"],
       default: 0,
     },
@@ -71,7 +71,7 @@ const BookSchema = new mongoose.Schema(
       default: Date.now,
     },
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
 
 //dundaj uniig oldog middleware, mongoose static fn
