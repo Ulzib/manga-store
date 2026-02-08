@@ -76,9 +76,9 @@ const FeaturedBooks = () => {
         <CarouselContent className="-ml-4 ">
           {books.map((book) => (
             <CarouselItem key={book._id} className="pl-4 basis-auto pt-10">
-              <div className="group relative w-52 bg-[#0F0F0F] rounded-2xl p-4 pt-0 transition-all border border-white/5 ">
+              <div className="group relative w-52 bg-gray-900/60 rounded-2xl p-4 pt-0 transition-all border border-white/5 ">
                 <Link href={`books/${book._id}`} className="block">
-                  <div className="relative -mt-8 mb-4 mx-auto w-40 aspect-151/223 overflow-hidden rounded-lg transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                  <div className="relative -mt-8 mb-4 mx-auto w-40 aspect-151/223 overflow-hidden rounded-lg transition-transform duration-500 ease-out group-hover:-translate-y-1">
                     <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition">
                       <WishlistButton bookId={book._id} />
                     </div>
@@ -103,7 +103,7 @@ const FeaturedBooks = () => {
 
                 <Button
                   onClick={(e) => handleAddCart(book, e)}
-                  className="w-full h-11 bg-zinc-800/80 hover:bg-zinc-700 text-white rounded-2xl border-none font-bold text-xs flex items-center justify-center gap-2 transition-colors my-2"
+                  className="w-full h-11 bg-zinc-800/80 hover:bg-zinc-700 text-white rounded-2xl border-none  flex items-center justify-center gap-2 transition-colors my-2 "
                 >
                   <ShoppingCart className="w-4 h-4 opacity-70" />
                 </Button>

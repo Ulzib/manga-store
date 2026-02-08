@@ -76,7 +76,7 @@ const AdminNavBar = () => {
   }, []);
 
   return (
-    <nav className="flex gap-4 p-4 bg-white shadow">
+    <nav className="flex justify-center items-center gap-8 p-4 bg-white shadow">
       <Link href="/admin">Admin Home</Link>
       <Link href="/admin/books">Номын жагсаалт</Link>
       <Link href="/admin/books/create">Ном нэмэх</Link>

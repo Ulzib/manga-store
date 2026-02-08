@@ -26,8 +26,10 @@ const Books = () => {
   const fetchData = async (page = 1, searchQuery = "") => {
     setLoading(true);
     try {
+      const categoryId = searchParams.get("category") || "";
       let query = `books?limit=15&page=${page}`;
       if (searchQuery) query += `&name=${searchQuery}`;
+      if (categoryId) query += `&category=${categoryId}`;
 
       const res = await axios.get(query);
       setBooks(res.data.data);
