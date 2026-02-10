@@ -55,7 +55,9 @@ export default function UserNavBar() {
 
   const navbarBg = () => {
     if (!isHomePage) return "bg-gray-900/90 backdrop-blur-md shadow-lg";
-    return isScrolled ? "bg-gray-900/90  shadow-lg" : "bg-transparent";
+    return isScrolled
+      ? "bg-gray-900/90 shadow-lg backdrop-blur-md"
+      : "bg-transparent";
   };
 
   return (
@@ -89,14 +91,14 @@ export default function UserNavBar() {
 
             <CartButton />
             {token && (
-              <Link href="/wishlist" className="hidden sm:block">
-                <Heart className="w-6 h-6 hover:fill-white hover:text-white transition-all text-white" />
+              <Link href="/wishlist" className="block">
+                <Heart className="w-5 h-5 md:w-6 md:h-6 hover:fill-white hover:text-white transition-all text-white" />
               </Link>
             )}
 
             {token ? (
-              <div className="relative group hidden md:block">
-                <User className="w-6 h-6 text-white hover:text-gray-100 cursor-pointer" />
+              <div className="relative group block">
+                <User className="w-5 h-5 md:w-6 md:h-6 text-white hover:text-gray-100 cursor-pointer" />
 
                 <div className="absolute right-0 top-full opacity-0 invisible group-hover:opacity-100 pt-4 group-hover:visible transition-all ">
                   <div className="w-48 bg-gray-900 overflow-hidden border border-white/10  rounded-lg shadow-xl text-white">

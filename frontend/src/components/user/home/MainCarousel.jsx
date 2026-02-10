@@ -80,7 +80,7 @@ const MainCarousel = ({ children }) => {
   };
 
   return (
-    <div className=" relative w-full h-screen overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800 ">
+    <div className=" relative w-full h-screen overflow-hidden bg-linear-to-b from-slate-900 to-slate-800 ">
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
@@ -98,7 +98,7 @@ const MainCarousel = ({ children }) => {
               <img
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-full object-top lg:object-cover"
+                className="w-full h-full object-top lg:object-fill"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
 
@@ -136,7 +136,7 @@ const MainCarousel = ({ children }) => {
         </button>
       </div>
 
-      <div className="absolute bottom-36 md:bottom-60 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="absolute bottom-36 md:bottom-64 left-1/2 -translate-x-1/2 z-20 flex gap-5">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -149,7 +149,7 @@ const MainCarousel = ({ children }) => {
           ></button>
         ))}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 z-30 bg-grandient-to-t from-black via-black/20 to-transparent">
+      <div className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-black via-black/90 to-transparent">
         {children}
       </div>
     </div>

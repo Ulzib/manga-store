@@ -44,7 +44,9 @@ const CategroySection = () => {
   };
   return (
     <div className="w-full py-12">
-      <h2 className="text-3xl font-bold mb-6 text-white">Категори</h2>
+      <h2 className="text-xl md:text-3xl font-bold mb-6 text-white md:text-center">
+        Категори
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 ">
         {categories.map((cat, index) => (
@@ -58,7 +60,7 @@ const CategroySection = () => {
               }}
             >
               <div className="absolute inset-0 bg-black/50 transition-colors flex items-end justify-start  text-center p-5">
-                <CardTitle className="text-base text-white">
+                <CardTitle className="text-sm md:text-base text-white">
                   {cat.name}
                 </CardTitle>
               </div>

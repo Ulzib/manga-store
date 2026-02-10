@@ -56,12 +56,12 @@ const BestSellers = () => {
     return null;
   }
   return (
-    <div className="w-full py-12">
-      <div className="relative flex justify-center items-center w-full mb-6">
-        <h2 className="text-3xl font-bold text-white">Бестселлер</h2>
+    <div className="w-full pt-6 md:pt-12">
+      <div className="relative flex justify-between items-center md:justify-center w-full mb-1 lg:mb-6">
+        <h2 className="text-xl md:text-3xl font-bold text-white">Бестселлер</h2>
         <Link
           href="/books"
-          className="absolute right-0 text-white/40 hover:text-white font-medium text-sm transition-colors"
+          className="absolute right-0 text-white/40 hover:text-white font-medium text-[10px] md:text-sm transition-colors"
         >
           Бүгдийг үзэх →
         </Link>
@@ -79,9 +79,9 @@ const BestSellers = () => {
         <CarouselContent className="-ml-4 basis-auto">
           {books.map((book) => (
             <CarouselItem key={book._id} className="pl-4 basis-auto pt-10">
-              <div className="group relative w-52 bg-gray-900/60 rounded-2xl p-4 pt-0 transition-all border border-white/5">
+              <div className="group relative w-28 md:w-40 lg:w-52 bg-gray-900/60 rounded-2xl p-4 pt-0 transition-all border border-white/5">
                 <Link href={`/books/${book._id}`} className="block">
-                  <div className="relative -mt-8 mb-4 mx-auto w-40 aspect-151/223 overflow-hidden rounded-lg transition-transform durantion-500 ease-out group-hover:-translate-y-1 ">
+                  <div className="relative -mt-8 mb-4 mx-auto w-20 md:w-30 lg:w-40 aspect-151/223 overflow-hidden rounded-lg transition-transform durantion-500 ease-out group-hover:-translate-y-1 ">
                     <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition">
                       <WishlistButton bookId={book._id} />
                     </div>
@@ -111,10 +111,10 @@ const BestSellers = () => {
                       </div>
                     )}
 
-                    <h3 className="font-bold text-white text-sm leading-tight line-clamp-1">
+                    <h3 className="font-bold text-white text-[8px] md:text-sm leading-tight line-clamp-1">
                       {book.name}
                     </h3>
-                    <p className="text-[12px] text-zinc-400 font-medium truncate pb-2">
+                    <p className="text-[7px] md:text-[12px] text-zinc-400 font-medium truncate pb-2">
                       {book.author}
                     </p>
                   </div>
@@ -122,7 +122,7 @@ const BestSellers = () => {
 
                 <Button
                   onClick={(e) => handleAddCart(book, e)}
-                  className="w-full h-11 bg-zinc-800/90 hover:bg-zinc-700 text-white rounded-2xl border-none  flex items-center justify-center gap-2 transition-colors my-2"
+                  className="w-full h-6 md:h-11 bg-zinc-800/90 hover:bg-zinc-700 text-white rounded-2xl border-none  flex items-center justify-center gap-2 transition-colors md:my-2"
                 >
                   <ShoppingCart className="w-4 h-4 opacity-70" />
                 </Button>

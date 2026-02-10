@@ -11,7 +11,7 @@ const HomePage = () => {
       <MainCarousel>
         <HeroCarousel />
       </MainCarousel>
-      <div className="flex flex-col justify-center items-center px-14">
+      <div className="flex flex-col justify-center items-center px-4  md:px-14">
         <FeaturedBooks />
         <BestSellers />
         <NewArrivals />

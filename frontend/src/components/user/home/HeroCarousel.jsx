@@ -115,7 +115,7 @@ const HeroCarousel = () => {
           <div
             key={profile.id}
             href={profile.link}
-            className="shrink-0 w-26 h-26 md:w-40 md:h-40 lg:w-50 lg:h-50 rounded-full bg-gradient-to-tr from-gray-900 to-blue-700 hover:from-purple-700 hover:to-blue-500  p-1 cursor-pointer transition-transform"
+            className="shrink-0 w-24 h-24 md:w-40 md:h-40 lg:w-50 lg:h-50 rounded-full bg-gradient-to-tr from-gray-900 to-blue-700 hover:from-purple-700 hover:to-blue-500  p-1 cursor-pointer transition-transform"
           >
             {/* Дотор нь дугуй зураг */}
             <div className="w-full h-full rounded-full overflow-hidden bg-gray-900">
