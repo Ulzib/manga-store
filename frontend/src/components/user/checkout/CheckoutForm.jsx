@@ -34,7 +34,7 @@ const CheckoutForm = () => {
 
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   const handleSubmit = async () => {
@@ -114,12 +114,16 @@ const CheckoutForm = () => {
 
   if (cart.length === 0) return;
   return (
-    <div className="max-w-5xl mx-auto py-2 px-4">
-      <Button variant="ghost" onClick={() => router.back()} className="mb-3">
-        <ArrowLeft className="w-4 h-4 " />
+    <div className="max-w-4xl mx-auto px-7 md:px-6 lg:px-4 pt-16 md:pt-22 pb-8">
+      <Button
+        variant="ghost"
+        onClick={() => router.back()}
+        className="group mb-3 text-white hover:text-black transition-colors hover:bg-white/90 text-[10px] md:text-xs lg:text-sm flex items-center gap-1 md:gap-2"
+      >
+        <ArrowLeft className="w-1 h-1 lg:w-4 lg:h-4  text-white group-hover:text-black transition-colors " />
         Буцах
       </Button>
-      <h1 className="text-3xl font-bold mb-8 text-center">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-8 text-center text-white">
         Захиалга баталгаажуулах
       </h1>
       <div className="flex flex-col gap-6 ">

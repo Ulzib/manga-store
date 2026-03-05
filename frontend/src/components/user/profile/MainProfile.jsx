@@ -101,7 +101,7 @@ const MainProfile = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container pt-22 text-white">
       <h1 className="text-3xl font-bold mb-8">Миний профайл</h1>
 
       <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />

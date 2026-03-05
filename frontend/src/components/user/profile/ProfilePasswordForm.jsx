@@ -12,7 +12,7 @@ const ProfilePasswordForm = ({
   onSubmit,
 }) => {
   return (
-    <Card>
+    <Card className="bg-gray-700/40 border-none text-white">
       <CardContent className="p-6">
         <form onSubmit={onSubmit} className="space-y-6">
           <div className="space-y-2">
@@ -20,6 +20,7 @@ const ProfilePasswordForm = ({
             <Input
               type="password"
               value={passwordData.currentPassword}
+              className="border border-gray-600"
               onChange={(e) =>
                 setPasswordData({
                   ...passwordData,
@@ -33,6 +34,7 @@ const ProfilePasswordForm = ({
             <Label>Шинэ нууц үг</Label>
             <Input
               type="password"
+              className="border border-gray-600"
               value={passwordData.newPassword}
               onChange={(e) =>
                 setPasswordData({
@@ -47,6 +49,7 @@ const ProfilePasswordForm = ({
             <Label>Нууц үг давтах</Label>
             <Input
               type="password"
+              className="border border-gray-600"
               value={passwordData.confirmPassword}
               onChange={(e) =>
                 setPasswordData({
@@ -57,7 +60,11 @@ const ProfilePasswordForm = ({
               required
             />
           </div>
-          <Button type="submit" disabled={loading} className="w-full">
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-zinc-800/80 hover:bg-zinc-700 text-white transition-colors text-[12px] md:text-sm"
+          >
             {loading ? (
               <>
                 <Loader className="w-4 h-4 mr-2 animate-spin" />

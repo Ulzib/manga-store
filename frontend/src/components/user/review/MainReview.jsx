@@ -80,20 +80,26 @@ const MainReview = ({ bookId }) => {
       : 0;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10 w-full">
-      <div className="flex flex-1 mb-6">
+    <div className="flex flex-col gap-2 lg:gap-3 w-full border-2 lg:border-3 border-gray-300 rounded-xl p-5 lg:w-sm">
+      <div className="flex flex-1 mb-3 md:mb-5">
         <div>
-          <h2 className="text-2xl font-bold">Үнэлгээ</h2>
+          <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-white">
+            Үнэлгээ
+          </h2>
           {reviews.length > 0 && (
             <div className="flex items-center gap-2 mt-2">
-              <ReviewStars rating={avgRating} size="w-5 h-5" />
-              <span className="text-lg font-medium">{avgRating}</span>
-              <span className="text-gray-500">({reviews.length})</span>
+              <ReviewStars rating={avgRating} size="w-4 h-4 md:w-5 md:h-5" />
+              <span className="text-sm md:text-lg font-medium text-gray-100">
+                {avgRating}
+              </span>
+              <span className="text-gray-300 text-sm md:text-base">
+                ({reviews.length})
+              </span>
             </div>
           )}
         </div>
       </div>
-      <div className="md:col-span-2 min-w-0">
+      <div className="md:col-span-2 min-w-0 text-gray-200 text-sm md:text-text-base">
         {showForm && (
           <ReviewForm
             rating={rating}
@@ -113,13 +119,13 @@ const MainReview = ({ bookId }) => {
         )}
 
         {loading ? (
-          <div className="text-center text-gray-500">
+          <div className="text-center text-white">
             <Spinner />
           </div>
         ) : reviews.length === 0 ? (
-          <p className="text-center text-gray-500">Үнэлгээ алга байна</p>
+          <p className="text-center text-gray-300 mb-3">Хоосон байна</p>
         ) : (
-          <div className="space-y-6 w-full">
+          <div className="space-y-6 w-full ">
             {reviews.map((review) => (
               <ReviewItem key={review._id} review={review} />
             ))}
@@ -127,7 +133,12 @@ const MainReview = ({ bookId }) => {
         )}
 
         {token && !showForm && (
-          <Button onClick={() => setShowForm(true)}>Үнэлгээ өгөх</Button>
+          <Button
+            onClick={() => setShowForm(true)}
+            className="mt-5 md:mt-3 bg-zinc-800/80 hover:bg-zinc-700 text-gray-300 text-xs md:text-sm"
+          >
+            Үнэлгээ өгөх
+          </Button>
         )}
       </div>
     </div>

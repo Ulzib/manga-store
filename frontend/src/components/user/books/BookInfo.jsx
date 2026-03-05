@@ -10,11 +10,14 @@ import { getImageUrl } from "../../../../utils/imageHelper";
 import { useCart } from "@/context/CartContext";
 import MainReview from "../review/MainReview";
 import WishlistButton from "../wishlist/WishlistButton";
+import { ArrowLeft } from "lucide-react";
+import BookBackground from "./BackImage";
 
 export default function BookInfo({ id }) {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const router = useRouter();
   const { addToCart } = useCart();
 
@@ -77,71 +80,111 @@ export default function BookInfo({ id }) {
   }
 
   return (
-    <div className="max-w-7xl container">
-      <div className="flex flex-col items-center mt-8 gap-10">
-        <div className="w-full flex items-center justify-between">
-          <h1 className="text-[30px] font-bold">{book.name}</h1>
-          <WishlistButton bookId={book._id} className="scale-125" />
-        </div>
+    <div className="relative min-h-screen w-full overflow-hidden">
+      <BookBackground bookId={id} />
 
-        <div className="w-full flex gap-8">
-          {book.photo && (
-            <div className="w-[310px] shrink-0">
-              <div className="w-[310px] h-96 overflow-hidden rounded-lg">
-                <img
-                  className="w-full h-full object-contain"
-                  src={getImageUrl(book.photo)}
-                  alt={book.name}
-                />
+      <div className="relative z-10 w-full mx-auto pt-20 lg:pt-24 pb-14 px-4 md:px-14">
+        <Button
+          variant="ghost"
+          onClick={() => router.back()}
+          className="group mb-3 text-white hover:text-black transition-colors hover:bg-white/90 text-[10px] md:text-xs lg:text-sm flex items-center gap-1 md:gap-2"
+        >
+          <ArrowLeft className="w-1 h-1 lg:w-4 lg:h-4  text-white group-hover:text-black transition-colors " />
+          Буцах
+        </Button>
+        <div className="flex flex-col items-center mt-8 gap-8 md:gap-15">
+          <div className="relative w-full flex items-center justify-center ">
+            <h1 className="text-lg md:text-2xl lg:text-4xl font-bold text-white tracking-tight text-center ">
+              {book.name}
+            </h1>
+            <div className="absolute right-0">
+              <WishlistButton
+                bookId={book._id}
+                className="scale-125 w-7 h-7 md:w-10 md:h-10"
+              />
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col gap-8 lg:flex-row md:justify-between ">
+            <div className="flex flex-col items-center md:items-start md:flex-row md:gap-18">
+              {book.photo && (
+                <div className="w-60  md:w-full md:max-w-xs overflow-hidden ">
+                  <img
+                    className="w-full aspect-3/4 object-fill rounded-lg"
+                    src={getImageUrl(book.photo)}
+                    alt={book.name}
+                  />
+                </div>
+              )}
+
+              <div className="flex flex-col gap-5 pt-8 md:pt-0">
+                <div>
+                  <label className="font-medium text-sm md:text-lg lg:text-xl text-gray-100">
+                    Зохиолч
+                  </label>
+                  <p className="text-lg md:text-xl lg:text-2xl text-gray-300">
+                    {book.author}
+                  </p>
+                </div>
+
+                <div>
+                  <label className="font-medium text-sm md:text-lg lg:text-xl text-gray-100">
+                    Үнэ
+                  </label>
+                  <p className="text-xl lg:text-2xl font-bold text-white">
+                    {book.price}₮
+                  </p>
+                </div>
+
+                <div>
+                  <label className="font-medium text-sm md:text-lg lg:text-xl text-gray-100">
+                    Категори
+                  </label>
+                  <p className="text-lg md:text-xl lg:text-2xl text-gray-300">
+                    {book.category?.name || "—"}
+                  </p>
+                </div>
+
+                <div>
+                  <label className="font-medium text-gray-100 text-sm md:text-lg lg:text-xl">
+                    Тайлбар
+                  </label>
+                  <p
+                    className={`text-gray-300 text-sm md:text-lg  leading-relaxed max-w-2xl ${expanded ? "" : "line-clamp-5"}`}
+                  >
+                    {book.description}
+                  </p>
+                  <button
+                    onClick={() => setExpanded(!expanded)}
+                    className="text-xs md:text-sm text-gray-500 hover:text-white mt-1"
+                  >
+                    {expanded ? "Хураах" : " Цааш унших"}
+                  </button>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleAddToCart}
+                    disabled={isAdding}
+                    className="bg-blue-800/80 hover:bg-blue-600 p-4 md:p-5 text-white transition-colors text-[10px] sm:text-xs md:text-sm"
+                  >
+                    {isAdding ? (
+                      <div className="flex items-center gap-2">
+                        <Spinner size="sm" />
+                        <span>Нэмж байна...</span>{" "}
+                      </div>
+                    ) : (
+                      "Сагсанд нэмэх"
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
-          )}
-
-          <div className="w-full flex flex-col gap-4">
             <div>
-              <label className="font-medium text-gray-600">Зохиолч</label>
-              <p className="text-lg">{book.author}</p>
-            </div>
-
-            <div>
-              <label className="font-medium text-gray-600">Үнэ</label>
-              <p className="text-2xl font-bold text-green-600">{book.price}₮</p>
-            </div>
-
-            <div>
-              <label className="font-medium text-gray-600">Категори</label>
-              <p className="text-lg">{book.category?.name || "—"}</p>
-            </div>
-
-            <div>
-              <label className="font-medium text-gray-600">Тайлбар</label>
-              <p className="text-gray-700 leading-relaxed">
-                {book.description}
-              </p>
-            </div>
-
-            <div className="flex gap-2 mt-4">
-              <Button className="bg-blue-900" onClick={goBack}>
-                Буцах
-              </Button>
-              <Button
-                onClick={handleAddToCart}
-                disabled={isAdding}
-                className="bg-green-600 hover:bg-green-500 disabled:opacity-500"
-              >
-                {isAdding ? (
-                  <div className="flex items-center gap-2">
-                    <Spinner size="sm" />
-                    <span>Нэмж байна...</span>{" "}
-                  </div>
-                ) : (
-                  "Сагсанд нэмэх"
-                )}
-              </Button>
+              <MainReview bookId={id} />
             </div>
           </div>
         </div>
-        <MainReview bookId={id} />
       </div>
     </div>
   );

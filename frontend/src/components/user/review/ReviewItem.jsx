@@ -7,12 +7,12 @@ const ReviewItem = ({ review }) => {
         <span className="font-medium">
           {review.user?.name || "Тодорхойгүй хэрэглэгч"}
         </span>
-        <ReviewStars rating={review.rating} />
-        <span className="text-sm text-gray-500">
+        <ReviewStars rating={review.rating} size="w-3 h-3 md:w-5 md:h-5" />
+        <span className="text-xs md:text-sm text-gray-400">
           {new Date(review.createdAt).toLocaleString("mn-MN")}
         </span>
       </div>
-      <p className="text-gray-700 break-words whitespace-pre-wrap leading-relaxed overflow-hidden">
+      <p className="text-white font-medium break-words whitespace-pre-wrap text-xs md:text-sm leading-relaxed overflow-hidden">
         {review.text}
       </p>
     </div>

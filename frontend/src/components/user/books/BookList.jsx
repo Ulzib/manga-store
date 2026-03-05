@@ -33,7 +33,7 @@ const Books = () => {
 
       const res = await axios.get(query);
       setBooks(res.data.data);
-      //Backend-аас ирсэн pagination объект → totalPages, totalItems, nextPage, etc.
+      //Backend-s irsen pagination object → totalPages, totalItems, nextPage, etc.
       setPagination({ ...res.data.pagination, page });
       setCurrentPage(page);
     } catch (err) {
@@ -67,9 +67,7 @@ const Books = () => {
   };
 
   return (
-    <div className="max-w-7xl container">
-      <h1 className="pl-2.5 text-2xl font-semibold mb-6 ">Номын дэлгүүр</h1>
-
+    <div className="max-w-7xl pt-22 md:pt-30 pb-10 px-4">
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="scale-150">
@@ -80,44 +78,42 @@ const Books = () => {
         <div
           className="
           grid
-          gap-6
-          sm:grid-cols-2
+          gap-4
+          md:gap-6
+          grid-cols-2
           md:grid-cols-3
           lg:grid-cols-4
           xl:grid-cols-5
+          
         "
         >
-          {books.map((el) => (
+          {books.map((book) => (
             <div
-              key={el._id}
-              className="flex flex-col items-center hover:shadow-lg transition-all rounded-1 p-3 relative"
+              key={book._id}
+              className="group relative flex flex-col hover:shadow-lg transition-all p-3 border border-white/6 rounded-2xl bg-gray-900/90"
             >
-              <div className="absolute top-2 right-10 z-10">
-                <WishlistButton bookId={el._id} />
+              <div className="opacity-0 group-hover:opacity-100 absolute top-5 right-5 z-10">
+                <WishlistButton bookId={book._id} />
               </div>
-              <div className="w-full aspect-3/4 overflow-hidden rounded-lg">
-                <Link href={`/books/${el._id}`}>
+              <Link href={`/books/${book._id}`} className="w-full block">
+                <div className="relative w-full aspect-3/3 overflow-hidden rounded-lg">
                   <img
-                    src={getImageUrl(el.photo)}
-                    alt={el.name}
-                    className="w-full h-full object-contain hover:scale-105 transition-transform"
+                    src={getImageUrl(book.photo)}
+                    alt={book.name}
+                    className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-300"
                   />
-                </Link>
-              </div>
-              <h2 className="mt-3 text-sm font-medium text-gray-800 text-center line-clamp-2">
-                {el.name}
-              </h2>
-              {/* une, sagslah tovch */}
-              <div className="w-full mt-3 flex items-center justify-between gap-2">
-                <span className="text-lg font-bold text-blue-600">
-                  {el.price?.toLocaleString()}₮
-                </span>
+                </div>
+                <h2 className="mt-3 text-[12px] md:text-sm font-medium text-center leading-tight line-clamp-1 text-white">
+                  {book.name}
+                </h2>
+              </Link>
+              <div className="w-full pt-3">
                 <Button
-                  onClick={(e) => handleAddToCart(el, e)}
-                  className="flex items-center gap-1 px-3 py-2 bg-blue-500 text-white"
+                  onClick={(e) => handleAddToCart(book, e)}
+                  className="w-full flex items-center gap-2 px-3 py-2 bg-zinc-800/80 hover:bg-zinc-700 text-white transition-colors text-[12px] md:text-sm"
                 >
-                  <ShoppingCart className="w-4 h-4" />
-                  Сагс
+                  <ShoppingCart className="w-3 h-3 md:w-4 md:h-4" />
+                  Сагслах
                 </Button>
               </div>
             </div>

@@ -80,89 +80,94 @@ const MyOrdersPage = () => {
     );
   }
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="container">
-        <h1 className="text-3xl font-bold mb-8">Миний захиалгууд</h1>
-        {orders.length === 0 ? (
-          <Card className="p-12 text-center">
-            <Package className="w-16 h-16 mx-auto mb-4 text-gray" />
-            <p className="text-gray-600 mb-4">Захиалга алга байна</p>
-            <Button
-              onClick={() => router.push("/books")}
-              className="px-6 py-2 bg-blue-950 text-white rounded-lg hover:bg-blue-800"
+    <div className="w-lg md:w-2xl lg:w-6xl mx-auto pt-25 md:pt-30 pb-8 px-4 md:px-8">
+      <h1 className="text-3xl font-bold mb-8 text-white">Миний захиалгууд</h1>
+      {orders.length === 0 ? (
+        <Card className="p-12 text-center">
+          <Package className="w-16 h-16 mx-auto mb-4 text-gray" />
+          <p className="text-gray-600 mb-4">Захиалга алга байна</p>
+          <Button
+            onClick={() => router.push("/books")}
+            className="px-6 py-2 bg-blue-950 text-white rounded-lg hover:bg-blue-800"
+          >
+            Манга үзэх
+          </Button>
+        </Card>
+      ) : (
+        <div className="space-y-4 ">
+          {orders.map((order) => (
+            <Card
+              key={order._id}
+              className="p-4 sm:p-5 lg:p-6 bg-gray-700/40 border-none text-white"
             >
-              Манга үзэх
-            </Button>
-          </Card>
-        ) : (
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <Card key={order._id} className="p-6">
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <p>Захиалга #{order._id.slice(-6)}</p>
-                      <span
-                        className={`px-3 py-1 text-xs rounded-full flex items-center gap-1 ${getStatusColor(
-                          order.status
-                        )}`}
-                      >
-                        {getStatusIcon(order.status)}
-                        {getStatusText(order.status)}
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 mb-3">
-                      {order.items?.map((item, idx) => (
-                        <div key={idx} className="flex gap-3">
-                          <img
-                            src={
-                              getImageUrl(item.book?.photo) || "placeholder.jpg"
-                            }
-                            alt={item.book?.name}
-                            className="w-12 h-16 object-fill rounded"
-                          />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium">
-                              {item.book?.name || "Манга"}
-                            </p>
-                            <p className="text-xs text-gray-600">
-                              {item.quantity} × {item.price?.toLocaleString()}₮
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="text-sm text-gray-600 mb-2">
-                      {order.shippingAddress?.city},{""}
-                      {order.shippingAddress?.district}, {""}
-                      {order.shippingAddress?.address}
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      {new Date(order.createdAt).toLocaleString("mn-MN")}
+              <div className="flex sm:flex-row sm:items-start gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-3 ">
+                    <p className="text-xs md:text-sm">
+                      Захиалга #{order._id.slice(-6)}
                     </p>
+                    <span
+                      className={`px-1.5 md:px-3 py-0.5 md:py-1 text-[7px] md:text-xs rounded-full flex items-center gap-1 ${getStatusColor(
+                        order.status,
+                      )}`}
+                    >
+                      {getStatusIcon(order.status)}
+                      {getStatusText(order.status)}
+                    </span>
                   </div>
 
-                  <div className="text-right">
-                    <p className="text-sm text-gray-600 mb-1">Нийт дүн</p>
-                    <p className="text-xl font-bold">
-                      {order.totalAmount?.toLocaleString()}₮
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {order.paymentMethod === "cash"
-                        ? "Дансаар"
-                        : order.paymentMethod === "cart"
+                  <div className="space-y-2 mb-3">
+                    {order.items?.map((item, idx) => (
+                      <div key={idx} className="flex gap-3">
+                        <img
+                          src={
+                            getImageUrl(item.book?.photo) || "placeholder.jpg"
+                          }
+                          alt={item.book?.name}
+                          className="w-12 h-16 object-fill rounded"
+                        />
+                        <div className="flex-1">
+                          <p className="text-xs md:text-sm font-medium">
+                            {item.book?.name || "Манга"}
+                          </p>
+                          <p className="text-[10px] md:text-xs text-gray-400">
+                            {item.quantity} × {item.price?.toLocaleString()}₮
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="text-[10px] md:text-sm text-gray-400 mb-2">
+                    {order.shippingAddress?.city},{""}
+                    {order.shippingAddress?.district}, {""}
+                    {order.shippingAddress?.address}
+                  </div>
+                  <p className="text-[9px] md:text-xs text-gray-500">
+                    {new Date(order.createdAt).toLocaleString("mn-MN")}
+                  </p>
+                </div>
+
+                <div className="md:text-right">
+                  <p className="text-xs md:text-sm text-gray-200 mb-1 ">
+                    Нийт дүн
+                  </p>
+                  <p className="text-sm md:text-xl font-bold">
+                    {order.totalAmount?.toLocaleString()}₮
+                  </p>
+                  <p className="text-[9px] md:text-xs text-gray-400 mt-1">
+                    {order.paymentMethod === "cash"
+                      ? "Дансаар"
+                      : order.paymentMethod === "cart"
                         ? "Картаар"
                         : "QPay"}
-                    </p>
-                  </div>
+                  </p>
                 </div>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

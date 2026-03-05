@@ -13,11 +13,12 @@ const Pagination = ({ pagination, currentPage, onPageChange }) => {
         variant="outline"
         onClick={() => onPageChange(prevPage)}
         disabled={!prevPage}
+        className="w-7 h-7 md:w-9 md:h-9"
       >
         <ChevronLeft className="w-5 h-5" />
       </Button>
 
-      <span className="px-4 text-sm">
+      <span className="px-4 text-[12px] md:text-sm text-white">
         {currentPage} / {pageCount}
       </span>
 
@@ -25,6 +26,7 @@ const Pagination = ({ pagination, currentPage, onPageChange }) => {
         variant="outline"
         onClick={() => onPageChange(nextPage)}
         disabled={!nextPage}
+        className="w-7 h-7 md:w-9 md:h-9"
       >
         <ChevronRight className="w-5 h-5" />
       </Button>

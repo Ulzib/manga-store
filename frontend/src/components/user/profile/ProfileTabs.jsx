@@ -4,9 +4,9 @@ import { Lock, User } from "lucide-react";
 const ProfileTabs = ({ activeTab, setActiveTab }) => {
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-      <TabsList>
+      <TabsList className="bg-gray-300 ">
         <TabsTrigger value="info">
-          <User className="w-4 h-4 mr-2" />
+          <User className="w-4 h-4 mr-2 " />
           Хувийн мэдээлэл
         </TabsTrigger>
         <TabsTrigger value="password">

@@ -16,8 +16,8 @@ const ReviewForm = ({
   onCancel,
 }) => {
   return (
-    <Card className="mb-6">
-      <CardContent className="p-6">
+    <Card className="mb-6 shadow bg-gray-700/50 border-none text-white">
+      <CardContent className="p-3 ">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label className="mb-2 block">Үнэлгээ</Label>
@@ -31,7 +31,7 @@ const ReviewForm = ({
                   onMouseLeave={() => setHoverRating(0)}
                 >
                   <Star
-                    className={`w-8 h-8 transition ${
+                    className={`w-6 h-6 md:w-8 md:h-8 transition ${
                       star <= (hoverRating || rating)
                         ? "fill-yellow-400 text-yellow-400"
                         : "text-muted-foreground"
@@ -50,16 +50,23 @@ const ReviewForm = ({
               placeholder="Таны санал..."
               rows={4}
               maxLength={500}
+              className="text-sm md:text-base"
             />
-            <p className="text-sm text-muted-foreground">{text.length}/500</p>
+            <p className="text-xs md:text-sm text-muted-foreground">
+              {text.length}/500
+            </p>
           </div>
 
           <div className="flex gap-2">
             <Button type="submit" disabled={submitting}>
               {submitting ? "Илгээж байна..." : "Илгээх"}
             </Button>
-            <Button type="button" variant="outline" onClick={onCancel}>
-              {" "}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              className="text-black"
+            >
               Болих
             </Button>
           </div>
