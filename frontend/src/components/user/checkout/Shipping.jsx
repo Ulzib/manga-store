@@ -32,7 +32,7 @@ const ShippingSection = ({ formData, onChange }) => {
               placeholder="Улаанбаатар"
               value={formData.city}
               onChange={onChange}
-              className="border-neutral-700 text-xs md:text-xl"
+              className="border-neutral-700 text-xs md:text-base"
             />
           </div>
           <div>
@@ -45,7 +45,7 @@ const ShippingSection = ({ formData, onChange }) => {
               placeholder="Сүхбаатар"
               value={formData.district}
               onChange={onChange}
-              className="border-neutral-700 text-xs md:text-xl"
+              className="border-neutral-700 text-xs md:text-base"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ const ShippingSection = ({ formData, onChange }) => {
             value={formData.address}
             onChange={onChange}
             placeholder="Байр , тоот, давхар"
-            className="border-neutral-700 text-xs md:text-xl"
+            className="border-neutral-700 text-xs md:text-base"
           />
         </div>
         <div>
@@ -72,7 +72,7 @@ const ShippingSection = ({ formData, onChange }) => {
             placeholder="99999999"
             value={formData.phone}
             onChange={onChange}
-            className="border-neutral-700 text-xs md:text-xl"
+            className="border-neutral-700 text-xs md:text-base"
           />
         </div>
         <div>
@@ -85,7 +85,7 @@ const ShippingSection = ({ formData, onChange }) => {
             value={formData.note}
             onChange={onChange}
             rows={4}
-            className="pt-3 border-neutral-700 text-xs md:text-xl"
+            className="pt-3 border-neutral-700 text-xs md:text-base"
           />
         </div>
       </CardContent>
