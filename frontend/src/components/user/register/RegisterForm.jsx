@@ -1,9 +1,5 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "../../axios/axios";
-import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
+
 import {
   Card,
   CardContent,
@@ -11,6 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import axios from "../../axios/axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import {
   Field,
   FieldDescription,
@@ -18,60 +18,56 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// Бүртгүүлэх форм компонент
 const RegisterForm = ({ className, ...props }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
-  // Бүртгүүлэх товч дарахад ажиллана
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Талбар хоосон байвал алдаа гарна
     if (!name || !email || !password || !confirmPassword) {
-      return toast.error("Бүх талбарыг бөглөнө үү");
+      return toast.error("Талбаруудыг гүйцэт бөглөнө үү");
     }
 
-    // Нууц үг таарахгүй бол алдаа гарна
     if (password !== confirmPassword) {
       return toast.error("Нууц үг таарахгүй байна");
     }
 
     setLoading(true);
+
     try {
-      // Backend-д бүртгүүлэх хүсэлт илгээнэ
       await axios.post("users/register", { name, email, password });
-      toast.success("Амжилттай бүртгүүллээ! Нэвтэрнэ үү.");
+      toast.success("Амжилттай бүртгүүллээ! Одоо нэвтэрнэ үү");
       router.push("/login");
     } catch (err) {
       toast.error(
-        err.response?.data?.error?.message || "Серверт холбогдож чадсангүй",
+        err.response?.data?.error?.message ||
+          "Бүртгэл үүсгэхэд алдаа гарлаа. Серверт холбогдсонгүй",
       );
     } finally {
       setLoading(false);
     }
   };
-
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-3", className)} {...props}>
       <Card>
         <CardHeader>
           <CardTitle>Бүртгүүлэх</CardTitle>
           <CardDescription>
+            {" "}
             Мэдээллээ оруулан шинэ бүртгэл үүсгэнэ үү
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <FieldGroup>
-              {/* Нэр */}
               <Field>
                 <FieldLabel htmlFor="name">Нэр</FieldLabel>
                 <Input
@@ -84,7 +80,6 @@ const RegisterForm = ({ className, ...props }) => {
                 />
               </Field>
 
-              {/* И-мэйл */}
               <Field>
                 <FieldLabel htmlFor="email">И-Мэйл</FieldLabel>
                 <Input
@@ -97,7 +92,6 @@ const RegisterForm = ({ className, ...props }) => {
                 />
               </Field>
 
-              {/* Нууц үг */}
               <Field>
                 <FieldLabel htmlFor="password">Нууц үг</FieldLabel>
                 <Input
@@ -110,7 +104,6 @@ const RegisterForm = ({ className, ...props }) => {
                 />
               </Field>
 
-              {/* Нууц үг давтах */}
               <Field>
                 <FieldLabel htmlFor="confirmPassword">
                   Нууц үг давтах
@@ -125,18 +118,18 @@ const RegisterForm = ({ className, ...props }) => {
                 />
               </Field>
 
-              {/* Товчнууд */}
               <Field>
                 <Button type="submit" disabled={loading}>
-                  {loading ? "Бүртгүүлж байна..." : "Бүртгүүлэх"}
+                  {loading ? "Бүртгэл үүсгэж байна.." : "Бүргүүлэх"}
                 </Button>
-                <FieldDescription className="text-center">
-                  Бүртгэлтэй юу?{" "}
-                  <a href="/login" className="underline underline-offset-4">
-                    Нэвтрэх
-                  </a>
-                </FieldDescription>
               </Field>
+
+              <FieldDescription className="text-center">
+                Бүртгэлтэй юу?{" "}
+                <a href="/login" className="underline underline-offset-4">
+                  Нэвтрэх
+                </a>
+              </FieldDescription>
             </FieldGroup>
           </form>
         </CardContent>
@@ -144,5 +137,4 @@ const RegisterForm = ({ className, ...props }) => {
     </div>
   );
 };
-
 export default RegisterForm;

@@ -17,13 +17,11 @@ import commentsRoutes from "./routes/comments.js";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import injectDb from "./middleware/injectDb.js";
+
 import cors from "cors";
 // Аппын тохиргоог process.env рүү ачаалах
-dotenv.config({ path: path.join(__dirname, "./config/config.env") });
+dotenv.config({ path: path.join(__dirname, ".env") });
 
-import db from "./config/db-mysql.js";
-import category from "./models/sequelize/category.js";
 import cookieParser from "cookie-parser";
 import ordersRoutes from "./routes/orders.js";
 import wishlistRoutes from "./routes/wishlist.js";
@@ -42,10 +40,9 @@ app.use(
     credentials: true, //busad cookie-r irj bga medeellig huleej avah
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  })
+  }),
 );
 app.use(logger);
-app.use(injectDb(db));
 
 // create a write stream (in append mode)
 const accessLogStream = rfs.createStream("access.log", {
@@ -59,7 +56,7 @@ app.use(
     useTempFiles: true,
     tempFileDir: "/tmp/",
     createParentPath: true, // хавтас байхгүй бол автоматаар үүсгэнэ
-  })
+  }),
 );
 
 //mongo security serguuleh
@@ -82,7 +79,7 @@ app.use((req, res, next) => {
   console.log("🍪 Cookies:", req.cookies);
   console.log(
     "👤 req.user:",
-    req.user ? `ID=${req.user._id}, Role=${req.user.role}` : "undefined"
+    req.user ? `ID=${req.user._id}, Role=${req.user.role}` : "undefined",
   );
   next();
 });
@@ -105,32 +102,8 @@ app.use("/api/v1/reviews", reviewRoutes);
 // Error handler
 app.use(errorHandler);
 
-//sql holbolt/ sync hiij
-db.user.belongsToMany(db.book, {
-  through: db.comment,
-});
-db.book.belongsToMany(db.user, {
-  through: db.comment,
-});
-
-db.user.hasMany(db.comment);
-db.comment.belongsTo(db.user);
-
-db.book.hasMany(db.comment);
-db.comment.belongsTo(db.book);
-
-// db.category.hasMany(db.book);
-// db.book.belongsTo(db.category);
-
-db.sequelize
-  .sync()
-  .then((result) => {
-    console.log("sync hiigdev...");
-  })
-  .catch((err) => console.log(err));
-
 const server = app.listen(process.env.PORT, () =>
-  console.log(`Express сэрвэр ${process.env.PORT} порт дээр аслаа... `)
+  console.log(`Express сэрвэр ${process.env.PORT} порт дээр аслаа... `),
 );
 
 // Unhandled promise rejection

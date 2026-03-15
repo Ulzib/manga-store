@@ -27,7 +27,7 @@ const ResetPasswordForm = ({ token }) => {
     if (password !== confirmPassword) {
       return toast.error("Нууц үг таарахгүй байна");
     }
-    console.log("📤 Явуулж байгаа өгөгдөл:", { resetToken: token, password });
+
     setLoading(true);
 
     try {

@@ -61,12 +61,10 @@ const LoginForm = ({ className, ...props }) => {
         ); // ← НЭМЭХ
 
         const decoded = decodeToken(cookieToken);
-        console.log("🔍 useEffect: Decoded from cookie:", decoded); // ← НЭМЭХ
-        console.log("🔍 useEffect: Role from cookie:", decoded?.role); // ← НЭМЭХ
 
         if (decoded?.role === "admin" || decoded?.role === "operator") {
           console.log("➡️ useEffect: Admin руу redirect"); // ← НЭМЭХ
-          router.replace("/admin/books");
+          router.replace("/admin");
         } else {
           console.log("➡️ useEffect: User руу redirect"); // ← НЭМЭХ
           router.replace("/books");
@@ -85,7 +83,7 @@ const LoginForm = ({ className, ...props }) => {
 
           if (decoded?.role === "admin" || decoded?.role === "operator") {
             console.log("➡️ useEffect: Admin руу redirect"); // ← НЭМЭХ
-            router.replace("/admin/books");
+            router.replace("/admin");
           } else {
             console.log("➡️ useEffect: User руу redirect"); // ← НЭМЭХ
             router.replace("/books");
@@ -118,14 +116,13 @@ const LoginForm = ({ className, ...props }) => {
       setTimeout(() => {
         if (decoded?.role === "admin" || decoded?.role === "operator") {
           console.log("➡️ Admin хэсэг рүү явна");
-          router.push("/admin/books");
+          router.push("/admin");
         } else {
           console.log("➡️ User хэсэг рүү явна");
           router.push("/home");
         }
       }, 200);
     } catch (err) {
-      console.error("❌ Login алдаа:", err);
       toast.error(
         err.response?.data?.error?.message || "Серверт холбогдож чадсангүй",
       );
@@ -185,10 +182,10 @@ const LoginForm = ({ className, ...props }) => {
               <Field>
                 <Button type="submit">Нэвтрэх</Button>
                 <Button variant="outline" type="button">
-                  Gmail-р нэвтрэх
+                  Зочноор нэвтрэх
                 </Button>
                 <FieldDescription className="text-center">
-                  Шинэ хэрэглэгч болох <a href="#">Бүртгүүлэх</a>
+                  Шинэ хэрэглэгч болох <a href="/register">Бүртгүүлэх</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
