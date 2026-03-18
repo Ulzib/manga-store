@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import ForgotPasswordModal from "./LoginForgot";
+import Link from "next/link";
 
 const decodeToken = (token) => {
   try {
@@ -44,48 +45,28 @@ const LoginForm = ({ className, ...props }) => {
   //cookie-ee checkleed redirect hiih
   useEffect(() => {
     const checkAuth = () => {
-      console.log("🔄 useEffect: Token шалгаж байна..."); // ← НЭМЭХ
-
       const hasCookie = document.cookie.includes("book-token");
-      console.log("🍪 useEffect: Cookie байгаа эсэх:", hasCookie); // ← НЭМЭХ
-
       if (hasCookie) {
         const cookieToken = document.cookie
           .split("; ")
           .find((row) => row.startsWith("book-token="))
           ?.split("=")[1];
-
-        console.log(
-          "🔍 useEffect: Cookie token:",
-          cookieToken?.substring(0, 50) + "...",
-        ); // ← НЭМЭХ
-
         const decoded = decodeToken(cookieToken);
 
         if (decoded?.role === "admin" || decoded?.role === "operator") {
-          console.log("➡️ useEffect: Admin руу redirect"); // ← НЭМЭХ
           router.replace("/admin");
         } else {
-          console.log("➡️ useEffect: User руу redirect"); // ← НЭМЭХ
           router.replace("/books");
         }
       } else {
         const hasLocalToken = localStorage.getItem("book-token");
-        console.log(
-          "💾 useEffect: LocalStorage token байгаа эсэх:",
-          !!hasLocalToken,
-        ); // ← НЭМЭХ
 
         if (hasLocalToken) {
           const decoded = decodeToken(hasLocalToken);
-          console.log("🔍 useEffect: Decoded from localStorage:", decoded); // ← НЭМЭХ
-          console.log("🔍 useEffect: Role from localStorage:", decoded?.role); // ← НЭМЭХ
 
           if (decoded?.role === "admin" || decoded?.role === "operator") {
-            console.log("➡️ useEffect: Admin руу redirect"); // ← НЭМЭХ
             router.replace("/admin");
           } else {
-            console.log("➡️ useEffect: User руу redirect"); // ← НЭМЭХ
             router.replace("/books");
           }
         } else {
@@ -98,27 +79,18 @@ const LoginForm = ({ className, ...props }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log("🚀 Login button дарагдлаа");
     if (!email || !password) return toast.error("Имэйл, нууц үг оруулна уу");
-
     setLoading(true);
-    console.log("📤 API дуудаж байна...");
     try {
       const { data } = await axios.post("users/login", { email, password });
-      console.log("✅ API response:", data);
       handleLogin(data.token);
       toast.success("Амжилттай нэвтэрлээ");
       //Token decode hj role-r redirect
       const decoded = decodeToken(data.token);
-
-      console.log("🔍 Decoded token:", decoded); // ← Энийг нэмээрэй
-      console.log("🔍 Role:", decoded?.role);
       setTimeout(() => {
         if (decoded?.role === "admin" || decoded?.role === "operator") {
-          console.log("➡️ Admin хэсэг рүү явна");
           router.push("/admin");
         } else {
-          console.log("➡️ User хэсэг рүү явна");
           router.push("/home");
         }
       }, 200);
@@ -126,6 +98,19 @@ const LoginForm = ({ className, ...props }) => {
       toast.error(
         err.response?.data?.error?.message || "Серверт холбогдож чадсангүй",
       );
+      setLoading(false);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post("users/guest-login");
+      handleLogin(data.token);
+      toast.success("Зочноор нэвтэрлээ");
+      router.push("/home");
+    } catch {
+      toast.error("Нэвтрэх явцад алдаа гарлаа");
       setLoading(false);
     }
   };
@@ -138,8 +123,8 @@ const LoginForm = ({ className, ...props }) => {
     );
   }
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+    <div className={cn("flex flex-col gap-6 ", className)} {...props}>
+      <Card className="hover:shadow-lg transition bg-gray-900/70 border-none text-white">
         <CardHeader>
           <CardTitle>Нэвтрэх</CardTitle>
           <CardDescription>
@@ -157,6 +142,7 @@ const LoginForm = ({ className, ...props }) => {
                   placeholder="@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
@@ -176,16 +162,37 @@ const LoginForm = ({ className, ...props }) => {
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
               <Field>
-                <Button type="submit">Нэвтрэх</Button>
-                <Button variant="outline" type="button">
+                <Button
+                  type="submit"
+                  className="bg-linear-to-r from-indigo-500 to-purple-600 hover:opacity-90"
+                >
+                  Нэвтрэх
+                </Button>
+                <Button
+                  variant="outline"
+                  type="button"
+                  className="bg-white text-gray-700 
+  border border-gray-300 
+  px-6 py-2 rounded-lg
+  hover:bg-gray-200
+  shadow-sm"
+                  onClick={handleGuestLogin}
+                >
                   Зочноор нэвтрэх
                 </Button>
                 <FieldDescription className="text-center">
-                  Шинэ хэрэглэгч болох <a href="/register">Бүртгүүлэх</a>
+                  Шинэ хэрэглэгч болох{" "}
+                  <Link
+                    href="/register"
+                    className="text-gray-200! transition-colors hover:text-gray-400!"
+                  >
+                    Бүртгүүлэх
+                  </Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

@@ -59,18 +59,6 @@ app.use(
   }),
 );
 
-//mongo security serguuleh
-// app.use(ExpressMongoSanitize());
-// app.use(helmet());
-// app.use(xss());
-// //duudaltiin toog limitlene
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, //15 minutes
-//   max: 5, //limit IP to 100 req
-//   message: "15min 5 udaa duudaj blno",
-// });
-// app.use(limiter);
-
 app.use(morgan("combined", { stream: accessLogStream }));
 
 // server.js дээр routes-аас ӨМНӨ нэмэх

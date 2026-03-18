@@ -5,7 +5,11 @@ import { useParams } from "next/navigation";
 
 const EditCategoryPage = () => {
   const { id } = useParams();
-  return <CategoryDetail id={id} />;
+  return (
+    <div className="pt-26">
+      <CategoryDetail id={id} />
+    </div>
+  );
 };
 
 export default EditCategoryPage;

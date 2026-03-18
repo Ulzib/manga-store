@@ -23,7 +23,7 @@ const Home = () => {
         router.replace("/home");
       }
     } else {
-      router.replace("/login");
+      router.replace("/home");
     }
   }, [token, userRole, loading, router]);
 

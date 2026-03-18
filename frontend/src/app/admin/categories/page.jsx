@@ -2,7 +2,7 @@ import CategoryList from "@/components/admin/categories/CategoryList";
 
 const CategoriesPage = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="pt-26">
       <CategoryList />
     </div>
   );

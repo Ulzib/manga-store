@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import MyError from "../utils/myError.js";
 import asyncHandler from "express-async-handler";
@@ -89,6 +90,27 @@ export const logout = asyncHandler(async (req, res, next) => {
     });
 });
 
+// guest login
+export const guestLogin = asyncHandler(async (req, res, next) => {
+  const token = jwt.sign(
+    { id: "guest", role: "user" },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" },
+  );
+
+  const cookieOps = {
+    httpOnly: false,
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "lax",
+    secure: false,
+    path: "/",
+  };
+
+  res.cookie("book-token", token, cookieOps).status(200).json({
+    success: true,
+    token,
+  });
+});
 //////////////users-iin crud///////////////////////////////////////////
 
 export const getUsers = asyncHandler(async (req, res, next) => {
@@ -192,11 +214,16 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
 
   const message = `Сайн байна уу<br><br>Та нууц үгээ солих хүсэлт илгээлээ.<br> Нууц үгээ доорхи линк дээр дарж солино уу:<br><br><a href= "${link}">${link}</a>`;
 
-  await sendMail({
-    email: user.email,
-    subject: "Нууц үг өөрчлөх хүсэлт",
-    message,
-  });
+  try {
+    await sendMail({
+      email: user.email,
+      subject: "Нууц үг өөрчлөх хүсэлт",
+      message,
+    });
+    console.log("✅ Имэйл явуулсан хаяг:", user.email);
+  } catch (mailErr) {
+    console.error("❌ Имэйл алдаа:", mailErr.message);
+  }
 
   res.status(200).json({
     success: true,

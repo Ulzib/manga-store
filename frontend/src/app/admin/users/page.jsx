@@ -1,6 +1,10 @@
 import UserList from "@/components/admin/UserList";
 
 const UsersPage = () => {
-  return <UserList />;
+  return (
+    <div className="pt-26">
+      <UserList />
+    </div>
+  );
 };
 export default UsersPage;

@@ -13,6 +13,7 @@ import {
   getProfile,
   updateProfile,
   updatePassword,
+  guestLogin,
 } from "../controller/users.js";
 import { getUserBooks } from "../controller/books.js";
 import { protect, authorize } from "../middleware/protect.js";
@@ -25,7 +26,7 @@ router.post(
   (req, res, next) => {
     next();
   },
-  logout
+  logout,
 );
 
 //register
@@ -38,6 +39,8 @@ router.route("/logout").post(logout);
 
 router.route("/forgot-password").post(forgotPassword);
 router.route("/reset-password").post(resetPassword);
+
+router.route("/guest-login").post(guestLogin);
 
 //ene murnuus doosh buh huseltuuded protect-iig hereglene
 router.use(protect);

@@ -36,7 +36,7 @@ export default function UserNavBar() {
       handleLogout();
       setTimeout(resolve, 50);
     });
-    router.replace("/login");
+    router.replace("/home");
   };
 
   const isActive = (path) => {

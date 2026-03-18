@@ -97,10 +97,8 @@ export const getCategoryBooks = asyncHandler(async (req, res, next) => {
 
   const queryObj = { ...req.query };
   ["select", "sort", "page", "limit"].forEach((el) => delete queryObj[el]);
-
   ///Category ID nemeh
   queryObj.category = req.params.categoryId;
-
   // Pagination
   const pagination = await paginate(page, limit, Book);
 
@@ -171,18 +169,9 @@ export const deleteBook = asyncHandler(async (req, res, next) => {
     throw new MyError(req.params.id + " ID-тэй ном алга байна", 404);
   }
 
-  //  ЗАСВАР: Эрхийн шалгалт
   const isAdmin = req.user.role === "admin" || req.user.role === "operator";
   const isOwner =
     book.createdUser && book.createdUser.toString() === req.user._id.toString();
-
-  console.log("🗑️ Delete authorization:", {
-    isAdmin,
-    isOwner,
-    userRole: req.user.role,
-    bookCreatedUser: book.createdUser,
-    currentUserId: req.user._id,
-  });
 
   if (!isAdmin && !isOwner) {
     throw new MyError("Та зөвхөн өөрийн номыг устгах эрхтэй", 403);
@@ -207,28 +196,18 @@ export const updateBook = asyncHandler(async (req, res, next) => {
   if (!book) {
     throw new MyError(req.params.id + " ID-тэй ном байхгүй.", 400);
   }
-
-  // ✅ ЗАСВАР: Эрхийн шалгалт
+  //erh check
   const isAdmin = req.user.role === "admin" || req.user.role === "operator";
   const isOwner =
     book.createdUser && book.createdUser.toString() === req.user._id.toString();
-
-  console.log("📝 Update authorization:", {
-    isAdmin,
-    isOwner,
-    userRole: req.user.role,
-    bookCreatedUser: book.createdUser,
-    currentUserId: req.user._id,
-  });
 
   if (!isAdmin && !isOwner) {
     throw new MyError("Та зөвхөн өөрийн номыг засварлах эрхтэй", 403);
   }
 
-  // ✅ ЗАСВАР: req.userId → req.user._id
+  //  req.userId → req.user._id
   req.body.updatedUser = req.user._id;
 
-  // Давталт дуусах хүртэл утгыг book руу хийнэ
   for (let attr in req.body) {
     book[attr] = req.body[attr];
   }
@@ -241,7 +220,6 @@ export const updateBook = asyncHandler(async (req, res, next) => {
   });
 });
 //PUT : api/v1/books/:id/photo
-
 export const uploadBookPhoto = asyncHandler(async (req, res, next) => {
   const book = await Book.findById(req.params.id);
 
@@ -251,9 +229,7 @@ export const uploadBookPhoto = asyncHandler(async (req, res, next) => {
   if (!req.files || !req.files.file) {
     throw new MyError("Upload hiine uu!", 400);
   }
-
   //image upload
-
   const file = req.files.file;
   if (!file.mimetype.startsWith("image")) {
     throw new MyError("Ta zurag upload hiine uu!", 400);
@@ -272,10 +248,9 @@ export const uploadBookPhoto = asyncHandler(async (req, res, next) => {
     if (err) {
       throw new MyError(
         "File-iig huulah yavtsad aldaa garlaa! Aldaa : " + err.message,
-        400
+        400,
       );
     }
-
     //nomiin neriig ugugdliin sand uurchluh/ talbart ni utga uguud save hiine
     book.photo = file.name;
     await book.save();

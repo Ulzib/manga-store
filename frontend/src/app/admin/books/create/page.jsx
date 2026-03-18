@@ -3,7 +3,7 @@ import CreateBook from "@/components/admin/books-com/CreateBook";
 
 const CreateBookPage = () => {
   return (
-    <div>
+    <div className="pt-26">
       <CreateBook />
     </div>
   );

@@ -56,8 +56,8 @@ const RegisterForm = ({ className, ...props }) => {
     }
   };
   return (
-    <div className={cn("flex flex-col gap-3", className)} {...props}>
-      <Card>
+    <div className={cn("flex flex-col ", className)} {...props}>
+      <Card className="hover:shadow-lg transition bg-gray-900/70 border-none text-white">
         <CardHeader>
           <CardTitle>Бүртгүүлэх</CardTitle>
           <CardDescription>
@@ -69,64 +69,69 @@ const RegisterForm = ({ className, ...props }) => {
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">Нэр</FieldLabel>
                 <Input
                   id="name"
                   type="text"
                   placeholder="Таны нэр"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="email">И-Мэйл</FieldLabel>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="@gmail.com"
+                  placeholder="И-Мэйл"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="password">Нууц үг</FieldLabel>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Дор хаяж 4 тэмдэгт"
+                  placeholder="Нууц үг"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="confirmPassword">
-                  Нууц үг давтах
-                </FieldLabel>
                 <Input
                   id="confirmPassword"
                   type="password"
                   placeholder="Нууц үгээ дахин оруулна уу"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
 
               <Field>
-                <Button type="submit" disabled={loading}>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-linear-to-r from-indigo-500 to-purple-600 hover:opacity-90"
+                >
                   {loading ? "Бүртгэл үүсгэж байна.." : "Бүргүүлэх"}
                 </Button>
               </Field>
 
               <FieldDescription className="text-center">
                 Бүртгэлтэй юу?{" "}
-                <a href="/login" className="underline underline-offset-4">
+                <a
+                  href="/login"
+                  className="underline underline-offset-4 text-gray-200! transition-colors hover:text-gray-400!"
+                >
                   Нэвтрэх
                 </a>
               </FieldDescription>

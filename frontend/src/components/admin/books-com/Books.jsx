@@ -51,10 +51,8 @@ const Books = () => {
   }
 
   return (
-    <div className="w-full flex flex-col justify-center items-center p-6">
+    <div className="w-full flex flex-col justify-center items-center ">
       <div className="container">
-        <h1 className="pl-2.5 text-2xl font-semibold mb-6 ">Номын дэлгүүр</h1>
-
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="scale-150">

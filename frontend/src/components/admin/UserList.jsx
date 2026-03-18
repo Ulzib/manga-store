@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "../axios/axios";
 import { Card } from "../ui/card";
 import Spinner from "../Spinner";
-import { ShieldIcon, UserCircle } from "lucide-react";
+import { ShieldIcon, Trash2, UserCircle } from "lucide-react";
 
 const UserList = () => {
   const [users, setUsers] = useState([]); //user jagsaalt
@@ -25,15 +25,25 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
+  const handleDelete = async (id) => {
+    if (!confirm("Устгахдаа итгэлтэй байна уу?")) return;
+    try {
+      await axios.delete(`users/${id}`);
+      setUsers(users.filter((u) => u._id !== id));
+    } catch (err) {
+      alert("Устгахад алдаа гарлаа!");
+    }
+  };
+
   if (loading) {
     <div className="flex justify-center items-center min-h-screen">
       <Spinner />
     </div>;
   }
   return (
-    <div className="flex justify-center items-center px-4 sm:px-6 lg:px-8 py-6 ">
-      <div className="max-w-4xl w-full">
-        <h1 className="text-3xl sm:text-3xl font-bold mb-6 ">Хэрэглэгчид</h1>
+    <div className="w-full flex flex-col justify-center items-center ">
+      <div className="mx-auto container lg:max-w-6xl px-4">
+        <h1 className="text-3xl font-bold mb-6">Хэрэглэгчид</h1>
         <Card className="p-4 sm:p-6">
           <div className="space-y-4 sm:space-y-5">
             {users.map((user) => (
@@ -54,31 +64,27 @@ const UserList = () => {
                 </div>
                 {/* erh */}
                 <div className="flex items-center gap-2 self-start sm:self-auto">
-                  {user.role === "admin" && (
-                    <ShieldIcon className="w-4 h-4 text-red-500" />
-                  )}
-                  {user.role === "operator" && (
-                    <ShieldIcon className="w-4 h-4 text-orange-500" />
-                  )}
-                  {user.role === "user" && (
-                    <ShieldIcon className="w-4 h-4 text-gray-500" />
-                  )}
-
                   <span
                     className={`px-3 py-1 text-xs rounded-full ${
                       user.role === "admin"
                         ? "bg-red-100 text-red-600"
                         : user.role === "operator"
-                        ? "bg-orange-100 text-orange-600"
-                        : "bg-gray-100 text-gray-600"
+                          ? "bg-orange-100 text-orange-600"
+                          : "bg-gray-100 text-gray-600"
                     }`}
                   >
                     {user.role === "admin"
                       ? "Админ"
                       : user.role === "operator"
-                      ? "Оператор"
-                      : "Хэрэглэгч"}
+                        ? "Оператор"
+                        : "Хэрэглэгч"}
                   </span>
+                  <button
+                    onClick={() => handleDelete(user._id)}
+                    className="p-2 text-gray-400 hover:text-red-500 rounded-lg"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             ))}

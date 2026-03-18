@@ -45,8 +45,8 @@ const ResetPasswordForm = ({ token }) => {
     }
   };
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <Card className="w-full max-w-sm">
+    <div className="flex min-h-screen items-center justify-center ">
+      <Card className="absolute w-full max-w-md hover:shadow-lg transition bg-gray-900/70 border-none text-white">
         <CardHeader>
           <CardTitle>Нууц үг солих</CardTitle>
           <CardDescription>Шинэ нууц үгээ оруулна уу</CardDescription>
@@ -55,31 +55,33 @@ const ResetPasswordForm = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="password">Шинэ нууц үг</FieldLabel>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Дор хаяж 4 тэмдэгт оруулна уу"
+                  placeholder="Шинэ нууц үг"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="confirmPassword">
-                  Нууц үг давтах
-                </FieldLabel>
                 <Input
                   id="confirmPassword"
                   type="password"
-                  placeholder="Нууц үгээ дахин оруулна уу"
+                  placeholder="Шинэ нууц үгээ дахин оруулна уу"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="border border-gray-600"
                   required
                 />
               </Field>
               <Field>
-                <Button type="submit" disabled={loading}>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-linear-to-r from-indigo-500 to-purple-600 hover:opacity-90"
+                >
                   {loading ? "Сольж байна" : "Нууц үг солих"}
                 </Button>
               </Field>

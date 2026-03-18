@@ -32,7 +32,7 @@ const CategoryList = () => {
       fetchCategories();
     } catch (err) {
       toast.error(
-        err.response?.data?.error?.message || "Устгахад алдаа гарлаа"
+        err.response?.data?.error?.message || "Устгахад алдаа гарлаа",
       );
     }
   };
@@ -50,45 +50,52 @@ const CategoryList = () => {
   }
 
   return (
-    <div className="w-full max-w-5xl container flex flex-col justify-between p-6">
-      <h1 className="text-3xl font-bold p-3">Категори</h1>
-      <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-end pb-4 px-2 md:px-0 ">
-        <Link href="/admin/categories/create" className="w-full md:w-auto">
-          <Button className="hover:bg-gray-500">+ Шинэ категори нэмэх</Button>
-        </Link>
-      </div>
+    <div className="w-full flex flex-col justify-between ">
+      <div className="container lg:max-w-6xl mx-auto px-4">
+        <h1 className="text-3xl font-bold mb-6">Категори</h1>
+        <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-end py-6 px-2 md:px-0 ">
+          <Link href="/admin/categories/create" className="w-full md:w-auto">
+            <Button className="hover:bg-gray-500">+ Шинэ категори нэмэх</Button>
+          </Link>
+        </div>
 
-      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {categories.map((cate) => (
-          <div key={cate.id} className="border rounded-lg p-4 ">
-            <div className="flex items-center gap-4 mb-3">
-              <div className="flex-1">
-                <h3 className="font-bold text-lg">{cate.name}</h3>
-                <p className="text-sm text-gray-400 line-clamp-2">
-                  {cate.description}
-                </p>
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {categories.map((cate) => (
+            <div key={cate.id} className="border rounded-lg p-4 ">
+              <div className="flex items-center gap-4 mb-3">
+                <div className="flex-1">
+                  <h3 className="font-bold text-lg">{cate.name}</h3>
+                  <p className="text-sm text-gray-400 line-clamp-2">
+                    {cate.description}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2 ">
+                <Link href={`/admin/categories/${cate._id}`}>
+                  <Button
+                    variant="outline"
+                    className="bg-gray-800 text-gray-300 border border-gray-700 hover:bg-gray-700 hover:text-white rounded-md"
+                  >
+                    Засах
+                  </Button>
+                </Link>
+                <Button
+                  variant="destructive"
+                  onClick={() => handleDelete(cate._id, cate.name)}
+                  className="bg-red-700 text-white hover:bg-red-500 rounded-md"
+                >
+                  Устгах
+                </Button>
               </div>
             </div>
-            <div className="flex gap-2 ">
-              <Link href={`/admin/categories/${cate._id}`}>
-                <Button className="hover:bg-gray-500 transition">Засах</Button>
-              </Link>
-              <Button
-                variant="destructive"
-                onClick={() => handleDelete(cate._id, cate.name)}
-                className="hover:bg-red-400  transition"
-              >
-                Устгах
-              </Button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        {categories.length === 0 && (
+          <p className="text-center text-gray-500 mt-10">
+            Одоогоор категори алга
+          </p>
+        )}
       </div>
-      {categories.length === 0 && (
-        <p className="text-center text-gray-500 mt-10">
-          Одоогоор категори алга
-        </p>
-      )}
     </div>
   );
 };

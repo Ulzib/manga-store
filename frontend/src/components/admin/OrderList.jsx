@@ -32,8 +32,8 @@ const OrderList = () => {
       //state refresh
       setOrders(
         orders.map((order) =>
-          order._id === orderId ? { ...order, status: newStatus } : order
-        )
+          order._id === orderId ? { ...order, status: newStatus } : order,
+        ),
       );
     } catch (err) {
       console.log("Алдаа гарлаа : ", err);
@@ -93,8 +93,8 @@ const OrderList = () => {
     );
   }
   return (
-    <div className="flex justify-center items-center px-4 sm:px-6 lg:px-8 py-6">
-      <div className="max-w-4xl w-full">
+    <div className="w-full flex flex-col justify-center items-center">
+      <div className="mx-auto container lg:max-w-6xl px-4">
         <h1 className="text-3xl font-bold mb-6"> Захиалгууд</h1>
 
         <div className="space-y-4">
@@ -109,19 +109,19 @@ const OrderList = () => {
                     </p>
                     <span
                       className={`px-3 py-1 text-xs rounded-full flex items-center gap-1 ${getStatusColor(
-                        order.status
+                        order.status,
                       )}`}
                     >
                       {getStatusIcon(order.status)}
                       {order.status === "pending"
                         ? "Хүлээгдэж байна"
                         : order.status === "processing"
-                        ? "Боловсруулж байна"
-                        : order.status === "completed"
-                        ? "Дууссан"
-                        : order.status === "cancelled"
-                        ? "Цуцлагдсан"
-                        : order.status}
+                          ? "Боловсруулж байна"
+                          : order.status === "completed"
+                            ? "Дууссан"
+                            : order.status === "cancelled"
+                              ? "Цуцлагдсан"
+                              : order.status}
                     </span>
                   </div>
                   {/* user */}

@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,7 +25,6 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Spinner from "../../Spinner";
 
 const formSchema = z.object({
@@ -60,7 +58,6 @@ const CreateBook = () => {
       description: "",
     },
   });
-
   // Dropdown дотор категориуд харуулах
   useEffect(() => {
     const fetchCategories = async () => {
@@ -131,15 +128,13 @@ const CreateBook = () => {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center p-10">
-      <div className="max-w-5xl container ">
-        <p className="text-4xl font-bold leading-2 text-center pb-10">
-          Шинэ ном нэмэх
-        </p>
+    <div className="w-full flex flex-col justify-center items-center">
+      <div className="mx-auto container lg:max-w-6xl px-4">
+        <p className="text-3xl font-bold mb-6">Шинэ ном нэмэх</p>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex justify-between pt-10 "
+            className="flex justify-between pt-8 "
           >
             <div className="flex flex-col gap-2">
               <FormLabel>Номын зураг</FormLabel>
@@ -147,7 +142,7 @@ const CreateBook = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="mt-2 "
+                className="mt-2 h-3/4 "
               />
               {imagePreview && (
                 <img
@@ -253,10 +248,20 @@ const CreateBook = () => {
                       router.back();
                     }
                   }}
+                  className="bg-gray-800 text-white
+  border border-gray-700 
+  hover:bg-gray-700 
+   rounded-md"
                 >
                   Буцах
                 </Button>
-                <Button type="submit" disabled={loading} className="flex-1">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 bg-indigo-600 text-white 
+  hover:bg-indigo-500 
+   rounded-md "
+                >
                   {loading ? <Spinner /> : "Хадгалах"}
                 </Button>
               </div>

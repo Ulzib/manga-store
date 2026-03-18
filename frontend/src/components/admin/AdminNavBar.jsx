@@ -76,61 +76,65 @@ const AdminNavBar = () => {
   }, []);
 
   return (
-    <nav className="flex justify-center items-center gap-8 p-4 bg-white shadow">
-      <Link href="/admin">Admin Home</Link>
-      <Link href="/admin/books">Номын жагсаалт</Link>
-      <Link href="/admin/books/create">Ном нэмэх</Link>
-      <Link href="/admin/categories">Категори</Link>
-      <Link href="/admin/users">Хэрэглэгчид</Link>
-      <Link href="/admin/orders">Захиалга</Link>
-
-      <form
-        ref={dropdownRef}
-        onSubmit={handleSearchSubmit}
-        className="flex-1 max-w-md mx-4 relative"
-      >
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <Input
-            placeholder="Ном хайх..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
-          />
-
-          {showDropdown && result.length > 0 && (
-            <div className="absolute left-0 right-0 mt-1 bg-white border rounded shadow-lg max-h-60 overflow-y-auto z-50">
-              {result.map((book) => (
-                <div
-                  key={book._id}
-                  className="flex gap-5 p-3 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleSelectBook(book._id)}
-                >
-                  {book.photo && (
-                    <img
-                      src={getImageUrl(book.photo)}
-                      alt={book.name}
-                      className="w-16 h-16 object-fill rounded-full flex-shrink-0 "
-                    />
-                  )}
-                  <div className="flex flex-col">
-                    <p className="font-medium">{book.name} </p>
-                    {book.author && (
-                      <p className="text-sm text-gray-500">{book.author}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+    <nav className="w-full fixed top-0 left-0 z-50  gap-4 p-4  bg-gray-800 backdrop-blur-md shadow-lg text-white">
+      <div className="flex w-full mx-auto px-4 sm:px-2 lg:px-4  items-center justify-between h-8 md:h-12 container">
+        <div className="flex items-center gap-10">
+          <Link href="/admin">Admin Home</Link>
+          <Link href="/admin/books">Номын жагсаалт</Link>
+          <Link href="/admin/books/create">Ном нэмэх</Link>
+          <Link href="/admin/categories">Категори</Link>
+          <Link href="/admin/users">Хэрэглэгчид</Link>
+          <Link href="/admin/orders">Захиалга</Link>
         </div>
-      </form>
 
-      {token ? (
-        <button onClick={logout}>Гарах</button>
-      ) : (
-        <Link href="/login">Нэвтрэх</Link>
-      )}
+        <form
+          ref={dropdownRef}
+          onSubmit={handleSearchSubmit}
+          className="flex-1 max-w-md mx-4 relative"
+        >
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input
+              placeholder="Ном хайх..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 "
+            />
+
+            {showDropdown && result.length > 0 && (
+              <div className="absolute right-0 lg:left-0  mt-1 bg-gray-800 border rounded shadow-lg max-h-60 overflow-y-auto z-50 border-none min-w-52">
+                {result.map((book) => (
+                  <div
+                    key={book._id}
+                    className="flex gap-5 p-3 hover:bg-gray-700 cursor-pointer"
+                    onClick={() => handleSelectBook(book._id)}
+                  >
+                    {book.photo && (
+                      <img
+                        src={getImageUrl(book.photo)}
+                        alt={book.name}
+                        className="w-16 h-16 object-fill rounded-full flex-shrink-0 "
+                      />
+                    )}
+                    <div className="flex flex-col">
+                      <p className="font-medium">{book.name} </p>
+                      {book.author && (
+                        <p className="text-sm text-gray-500">{book.author}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </form>
+
+        {token ? (
+          <button onClick={logout}>Гарах</button>
+        ) : (
+          <Link href="/login">Нэвтрэх</Link>
+        )}
+      </div>
     </nav>
   );
 };

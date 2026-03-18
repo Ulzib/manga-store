@@ -77,8 +77,6 @@ const CreateCategory = () => {
               </FormItem>
             )}
           />
-
-          {/* Тайлбар */}
           <FormField
             control={form.control}
             name="description"
@@ -100,10 +98,20 @@ const CreateCategory = () => {
               type="button"
               variant="outline"
               onClick={() => router.back()}
+              className="bg-gray-800 text-white 
+  border border-gray-700 
+  hover:bg-gray-700 
+   rounded-md"
             >
               Буцах
             </Button>
-            <Button type="submit" disabled={loading} className="flex-1">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-indigo-600 text-white 
+  hover:bg-indigo-500 
+   rounded-md "
+            >
               {loading ? <Spinner /> : "Хадгалах"}
             </Button>
           </div>

@@ -20,14 +20,10 @@ export default function BookDetail({ id }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
   const [deleted, setDeleted] = useState(false);
 
-  //zurag uurchluh state-uud
-  const [imageFile, setImageFile] = useState(null); //user-iin songosn zurag
+  const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-
-  //butsah
   const router = useRouter();
 
   const goBack = () => {
@@ -58,9 +54,7 @@ export default function BookDetail({ id }) {
       toast.error("Зураг сонгоно уу");
       return;
     }
-
     setImageFile(file);
-
     //preview uusgeh //zurag servert ilgeegeegui browser dr haruulh
     const reader = new FileReader(); //zurgiig base64 data url bolgon huvirgh
     reader.onloadend = () => setImagePreview(reader.result);
@@ -81,9 +75,7 @@ export default function BookDetail({ id }) {
       setPhoto(data.data?.photo || "");
       //buh category tatah
       const categoriesRes = await axios.get("categories");
-
       setCategories(categoriesRes.data.data || []);
-
       setLoading(false);
       setError(null);
       console.log(data);
@@ -101,20 +93,14 @@ export default function BookDetail({ id }) {
 
     try {
       setLoading(true);
-
       // herev shine zurag songosn bol upload hiine
       if (imageFile) {
         const formData = new FormData();
         formData.append("file", imageFile); //file nertei imageFile nemeed backend-d req.file hlberer ochno
-
-        //Axios PUT хүсэлт илгээнэ
-        // Endpoint: books/:id/upload-photo Header-д multipart/form-data гэж заавал өгөх шаардлагатай
-        // Backend энэ замаар зураг хадгална (жишээ нь Cloudinary, S3 гэх мэт)
         const response = await axios.put(`books/${id}/upload-photo`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-
-        // State шинэчлэх
+        // State shinchine
         setPhoto(response.data.data);
         setImageFile(null);
         // setImagePreview(null);
@@ -151,10 +137,8 @@ export default function BookDetail({ id }) {
     if (!isConfirmed) {
       return;
     }
-
     try {
       setLoading(true);
-
       // Token байхгүй байсан ч хүсэлт явуулах
       const response = await axios.delete(`books/${id}`);
 
@@ -177,10 +161,6 @@ export default function BookDetail({ id }) {
       setLoading(false);
     }
   };
-  // useEffect(() => {
-  //   if (error) toast.error(error);
-  // }, [error]);
-
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -203,14 +183,13 @@ export default function BookDetail({ id }) {
   }
 
   return (
-    <div className="container">
-      <div className="flex flex-col items-center mt-8 gap-10">
-        <h1 className="text-[30px] font-bold">{headerName}</h1>
-
-        <div className="w-full flex gap-8 ">
+    <div className="w-full flex flex-col justify-center items-center">
+      <div className="mx-auto container lg:max-w-6xl px-4 flex flex-col  gap-10">
+        <h1 className="text-3xl font-bold mb-6">{headerName}</h1>
+        <div className="w-full flex gap-10 ">
           {photo && (
-            <div className="w-[310px] shrink-0 flex flex-col items-center">
-              <div className="w-[310px] h-96 overflow-hidden rounded-lg relative group">
+            <div className="w-310px shrink-0 flex flex-col items-center">
+              <div className="w-310px h-96 overflow-hidden rounded-lg relative group">
                 <img
                   className="w-full h-full object-contain transition-transform group-hover:scale-105"
                   src={imagePreview || getImageUrl(photo)}
@@ -236,7 +215,7 @@ export default function BookDetail({ id }) {
             </div>
           )}
 
-          <div className="w-full flex flex-col gap-3">
+          <div className="w-full flex flex-col gap-3 ">
             <label className="font-medium">Нэр</label>
             <input
               type="text"
@@ -286,14 +265,28 @@ export default function BookDetail({ id }) {
               className="h-30 border p-2 rounded"
             />
 
-            <div className="flex gap-2 ">
-              <Button className="bg-black" onClick={goBack}>
+            <div className="w-full  flex gap-2 mt-3">
+              <Button
+                className="w-30 bg-gray-800 text-white
+  border border-gray-700 
+  hover:bg-gray-700 
+   rounded-md"
+                onClick={goBack}
+              >
                 Буцах
               </Button>
-              <Button className="bg-black" onClick={handleSave}>
+              <Button
+                className="w-30 bg-indigo-600 text-white 
+  hover:bg-indigo-500 
+   rounded-md "
+                onClick={handleSave}
+              >
                 Хадгалах
               </Button>
-              <Button className="bg-black" onClick={handleDelete}>
+              <Button
+                className="w-30 bg-red-700 text-white hover:bg-red-500 rounded-md"
+                onClick={handleDelete}
+              >
                 Устгах
               </Button>
             </div>
