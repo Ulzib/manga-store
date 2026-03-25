@@ -15,7 +15,7 @@ const CategroySection = () => {
         const res = await axios.get("/categories?limit=6");
         setCategories(res.data.data || []);
       } catch (err) {
-        console.log("Алдаа гарлаа", err);
+        console.error("Алдаа гарлаа", err);
       } finally {
         setLoading(false);
       }

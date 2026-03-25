@@ -11,7 +11,7 @@ import WishlistItem from "./WishlistItem";
 import { useEffect, useState } from "react";
 
 const MainWishlist = () => {
-  const { wishlist, loading, removeFromWishlist } = useWishList();
+  const { wishlist, removeFromWishlist } = useWishList();
   const [inloading, setInLoading] = useState(true);
   const { addToCart } = useCart();
 
@@ -30,7 +30,7 @@ const MainWishlist = () => {
 
   if (inloading) {
     return (
-      <div className="container flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen ">
         <Spinner />
       </div>
     );

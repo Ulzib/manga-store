@@ -17,7 +17,7 @@ const UserList = () => {
         const response = await axios.get("users");
         setUsers(response.data.data || []);
       } catch (err) {
-        console.log("Алдаа гарлаа:", err);
+        console.error("Алдаа гарлаа:", err);
       } finally {
         setLoading(false);
       }

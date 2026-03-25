@@ -4,9 +4,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300 py-12 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Компанийн мэдээлэл */}
         <div>
-          <h3 className="text-white font-bold text-xl mb-4">Manga Store</h3>
+          <h3 className="text-white font-bold text-xl mb-4">Panel</h3>
           <p className="text-sm leading-relaxed">
             Монгол дахь хамгийн том manga, комикс, номын дэлгүүр. Таны дуртай
             manga-г хүргэж өгнө.
@@ -55,29 +54,28 @@ const Footer = () => {
           <h4 className="text-white font-semibold mb-4">Үйлчилгээ</h4>
           <ul className="space-y-2 text-sm">
             <li>
-              <a href="#" className="hover:text-white transition-colors">
+              <div href="#" className="hover:text-white transition-colors">
                 Хүргэлтийн үйлчилгээ
-              </a>
+              </div>
             </li>
             <li>
-              <a href="#" className="hover:text-white transition-colors">
+              <div href="#" className="hover:text-white transition-colors">
                 Буцаалт & Солилт
-              </a>
+              </div>
             </li>
             <li>
-              <a href="#" className="hover:text-white transition-colors">
+              <div href="#" className="hover:text-white transition-colors">
                 Нууцлалын бодлого
-              </a>
+              </div>
             </li>
             <li>
-              <a href="#" className="hover:text-white transition-colors">
+              <div href="#" className="hover:text-white transition-colors">
                 Үйлчилгээний нөхцөл
-              </a>
+              </div>
             </li>
           </ul>
         </div>
 
-        {/* Холбоо барих */}
         <div>
           <h4 className="text-white font-semibold mb-4">Холбоо барих</h4>
           <ul className="space-y-2 text-sm">
@@ -97,7 +95,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-8 pt-8 border-t border-gray-800 text-center text-sm">
+      <div className="max-w-7xl mx-auto mt-6 pt-6 border-t border-gray-800 text-center text-sm">
         <p>
           &copy; {new Date().getFullYear()} Manga Store. Бүх эрх хуулиар
           хамгаалагдсан.

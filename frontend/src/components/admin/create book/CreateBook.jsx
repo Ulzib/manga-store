@@ -74,7 +74,6 @@ const CreateBook = () => {
       reader.readAsDataURL(file);
     }
   };
-
   // Submit handler
   const onSubmit = async (values) => {
     setLoading(true);
@@ -129,7 +128,6 @@ const CreateBook = () => {
               imagePreview={imagePreview}
               handleImageChange={handleImageChange}
             />
-
             <div className="w-full">
               {/* Form talbaruud */}
               <BookFormFields form={form} categories={categories} />

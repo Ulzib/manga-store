@@ -29,7 +29,7 @@ const decodeToken = (token) => {
 const LoginForm = ({ className, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
   const { handleLogin } = useToken();
   const router = useRouter();

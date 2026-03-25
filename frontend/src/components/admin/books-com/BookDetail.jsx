@@ -7,7 +7,6 @@ import Spinner from "../../Spinner";
 import axios from "../../axios/Axios";
 import toast from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
-
 import DetailImage from "./DetailImage";
 import DetailFields from "./DetailFields";
 import DetailActions from "./DetailActions";
@@ -26,15 +25,15 @@ export default function BookDetail({ id }) {
     photo: "",
   });
   const [headerName, setHeaderName] = useState("");
-  const [imageFile, setImageFile] = useState(null); // Backend руу явуулах файл
-  const [imagePreview, setImagePreview] = useState(null); // Хэрэглэгчид харуулах preview
+  const [imageFile, setImageFile] = useState(null); // Backend ruu yvulah file
+  const [imagePreview, setImagePreview] = useState(null); // User-t haruulh preview
 
-  // Input-ийн утга өөрчлөгдөх бүрт formData-г шинэчлэх
+  // Input-n utga uurchlugduh burd formData-г shinechleh
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  // Анхны өгөгдөл (ном болон категори) татаж авах
+  // Anhnii ugugdul (nom bolon category) tataj avah
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -64,21 +63,21 @@ export default function BookDetail({ id }) {
     const file = e.target.files[0];
     if (file?.type.startsWith("image/")) {
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(file)); // Preview үүсгэх
+      setImagePreview(URL.createObjectURL(file)); // Preview uusgeh
     }
   };
 
   const handleSave = async () => {
     try {
       setLoading(true);
-      // Хэрэв шинэ зураг сонгосон бол эхлээд зургийг upload хийнэ
+      // Herev shine zurag songosn bl ehleed zurgiig upload hiine
       if (imageFile) {
         const fd = new FormData();
         fd.append("file", imageFile);
         const imgRes = await axios.put(`books/${id}/upload-photo`, fd);
         setFormData((prev) => ({ ...prev, photo: imgRes.data.data }));
       }
-      // Номын мэдээллийг шинэчлэх
+      // Nomiin medeellig shinechleh
       await axios.put(`books/${id}`, formData);
       setHeaderName(formData.name);
       toast.success("Амжилттай хадгалагдлаа");
@@ -104,8 +103,7 @@ export default function BookDetail({ id }) {
       setLoading(false);
     }
   };
-
-  // Компонент ачаалагдах үед датаг татах
+  // component achaalagdh ued data-g tatah
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -126,7 +124,6 @@ export default function BookDetail({ id }) {
 
   return (
     <div className="w-full flex flex-col items-start p-6">
-      {/* Буцах товчлуур */}
       <Button
         variant="ghost"
         onClick={() => router.back()}
@@ -138,22 +135,21 @@ export default function BookDetail({ id }) {
       <div className="mx-auto container lg:max-w-6xl flex flex-col gap-10">
         <h1 className="text-3xl font-bold">{headerName}</h1>
         <div className="flex flex-col md:flex-row gap-10">
-          {/* Зургийн компонент */}
+          {/* Image component */}
           <DetailImage
             imagePreview={imagePreview}
             photo={formData.photo}
             name={formData.name}
             handleImageChange={handleImageChange}
           />
-
           <div className="flex-1">
-            {/* Талбаруудын компонент */}
+            {/* talbaruudiin component */}
             <DetailFields
               formData={formData}
               categories={categories}
               handleChange={handleChange}
             />
-            {/* Товчлууруудын компонент */}
+            {/* button component */}
             <DetailActions
               handleSave={handleSave}
               handleDelete={handleDelete}

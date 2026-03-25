@@ -25,7 +25,7 @@ const DesktopSearch = () => {
         setResult(res.data.data || []);
         setShowDropDown(true);
       } catch (err) {
-        console.log("Хайх явцад алдаа гарлаа: ", err);
+        console.error("Хайх явцад алдаа гарлаа: ", err);
       }
     };
     const delay = setTimeout(fetchSearch, 400);

@@ -19,7 +19,7 @@ const OrderList = () => {
         const response = await axios.get("orders");
         setOrders(response.data.data || []);
       } catch (err) {
-        console.log("Алдаа гарлаа:", err);
+        console.error("Алдаа гарлаа:", err);
       } finally {
         setLoading(false);
       }

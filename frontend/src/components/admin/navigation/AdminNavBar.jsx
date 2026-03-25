@@ -39,7 +39,7 @@ const AdminNavBar = () => {
         setResult(res.data.data || []); //result hadgalah
         setShowDropdown(true);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     const delay = setTimeout(fetchSearch, 400);
@@ -68,7 +68,6 @@ const AdminNavBar = () => {
         setShowDropdown(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);

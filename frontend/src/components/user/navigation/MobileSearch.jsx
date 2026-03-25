@@ -22,7 +22,7 @@ const MobileSearch = ({ isOpen, onClose }) => {
         const res = await axios.get(`/books?name=${search}&limit=10`);
         setResult(res.data.data || []);
       } catch (err) {
-        console.log("Хайх явцад алдаа гарлаа: ", err);
+        console.error("Хайх явцад алдаа гарлаа: ", err);
         setResult([]);
       } finally {
         setLoading(false);

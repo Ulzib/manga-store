@@ -30,7 +30,7 @@ const BestSellers = () => {
         const res = await axios.get("/books?limit=12&sort=-price");
         setBooks(res.data.data || []);
       } catch (err) {
-        console.log("Алдаа гарлаа: ", err);
+        console.error("Алдаа гарлаа: ", err);
       } finally {
         setLoading(false);
       }

@@ -23,7 +23,7 @@ const Books = () => {
 
       const res = await axios.get(query);
       setBooks(res.data.data);
-      //Backend-аас ирсэн pagination объект → totalPages, totalItems, nextPage, etc.
+      //Backend-s irsen pagination object - totalPages, totalItems, nextPage, etc.
       setPagination({ ...res.data.pagination, page });
       setCurrentPage(page);
     } catch (err) {

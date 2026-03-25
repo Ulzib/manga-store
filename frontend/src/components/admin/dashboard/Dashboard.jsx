@@ -38,7 +38,7 @@ const Dashboard = () => {
           recentBooks,
         });
       } catch (err) {
-        console.log("Алдаа гарлаа:", err);
+        console.error("Алдаа гарлаа:", err);
       } finally {
         setLoading(false);
       }
@@ -126,7 +126,6 @@ const Dashboard = () => {
               </Link>
             ))}
           </div>
-          {/* "Bugdiig harah" link */}
           <div className="text-center">
             <Link
               href="/admin/books"

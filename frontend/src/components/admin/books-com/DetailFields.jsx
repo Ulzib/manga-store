@@ -1,7 +1,6 @@
 const DetailFields = ({ formData, categories, handleChange }) => {
   return (
     <div className="flex-1 flex flex-col gap-3">
-      {/* Нэр, Зохиолч, Үнэ гэсэн талбаруудыг давталт ашиглан үүсгэх */}
       {["name", "author", "price"].map((field) => (
         <div key={field} className="flex flex-col">
           <label className="capitalize font-medium">
@@ -16,7 +15,6 @@ const DetailFields = ({ formData, categories, handleChange }) => {
         </div>
       ))}
 
-      {/* Категори сонгох dropdown хэсэг */}
       <label className="font-medium">Категори</label>
       <select
         name="category"
@@ -32,7 +30,6 @@ const DetailFields = ({ formData, categories, handleChange }) => {
         ))}
       </select>
 
-      {/* Номын дэлгэрэнгүй тайлбар бичих хэсэг */}
       <label className="font-medium">Тайлбар</label>
       <textarea
         name="description"

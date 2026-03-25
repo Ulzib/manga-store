@@ -29,7 +29,7 @@ instance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {
-      console.log(" No token found in cookie");
+      console.error(" No token found in cookie");
     }
 
     return config;

@@ -28,7 +28,7 @@ const MainReview = ({ bookId }) => {
       const res = await axios.get(`/books/${bookId}/reviews`);
       setReviews(res.data.data || []);
     } catch (err) {
-      console.log("Үнэлгээ татахад алдаа гарлаа :", err);
+      console.error("Үнэлгээ татахад алдаа гарлаа :", err);
     } finally {
       setLoading(false);
     }

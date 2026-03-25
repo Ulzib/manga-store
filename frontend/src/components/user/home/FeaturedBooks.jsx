@@ -30,7 +30,7 @@ const FeaturedBooks = () => {
         const res = await axios.get("/books?limit=12&sort=-createdAt&page=2");
         setBooks(res.data.data || []);
       } catch (err) {
-        console.log("Алдаа гарлаа", err);
+        console.error("Алдаа гарлаа", err);
       } finally {
         setLoading(false);
       }

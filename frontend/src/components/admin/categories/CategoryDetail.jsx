@@ -117,18 +117,13 @@ const CategoryDetail = ({ id }) => {
             <Button
               type="button"
               variant="outline"
-              className="bg-gray-800 text-white 
-  border border-gray-700 
-  hover:bg-gray-700 
-   rounded-md"
+              className="bg-gray-800 text-white border border-gray-700 hover:bg-gray-700 rounded-md"
               onClick={() => router.back()}
             >
               Буцах
             </Button>
             <Button
-              className="flex-1 bg-indigo-600 text-white 
-  hover:bg-indigo-500 
-   rounded-md "
+              className="flex-1 bg-indigo-600 text-white hover:bg-indigo-500 rounded-md "
               type="submit"
               disabled={loading}
               onSubmit={onSubmit}

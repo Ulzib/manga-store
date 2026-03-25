@@ -120,7 +120,7 @@ const Books = () => {
           ))}
         </div>
       )}
-      {books.length === 0 && (
+      {!loading && books.length === 0 && (
         <p className="text-center text-gray-500 mt-10">Ном олдсонгүй</p>
       )}
       <Pagination

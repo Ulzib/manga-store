@@ -16,7 +16,7 @@ export const WishlistProvider = ({ children }) => {
       const res = await axios.get("/wishlist");
       setWishlist(res.data.data.books || []);
     } catch (err) {
-      console.log("Хүслийн жагсаалт татахад алдаа гарлаа : ", err);
+      console.error("Хүслийн жагсаалт татахад алдаа гарлаа : ", err);
     } finally {
       setLoading(false);
     }
