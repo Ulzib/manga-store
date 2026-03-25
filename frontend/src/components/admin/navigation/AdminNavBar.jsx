@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useToken } from "../navi/TokenLog";
+import { useToken } from "../../navi/TokenLog";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import axios from "../axios/axios";
-import { getImageUrl } from "../../../utils/imageHelper";
+import axios from "../../axios/Axios";
+import { getImageUrl } from "../../../../utils/imageHelper";
 import { useRef } from "react";
 
 const AdminNavBar = () => {

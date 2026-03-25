@@ -47,12 +47,12 @@ async function proxyRequest(request, method) {
     console.error("Proxy error:", error);
     return NextResponse.json(
       { success: false, error: "Proxy request failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-// 🔥 Бүх HTTP method export хийх
+// buh HTTP method export hiih
 export async function GET(request) {
   return proxyRequest(request, "GET");
 }

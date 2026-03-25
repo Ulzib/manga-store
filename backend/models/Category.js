@@ -37,7 +37,7 @@ const CategorySchema = new mongoose.Schema(
       default: Date.now,
     },
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
 );
 
 CategorySchema.virtual("books", {
@@ -48,14 +48,13 @@ CategorySchema.virtual("books", {
 });
 
 CategorySchema.pre("deleteOne", { document: true }, async function (next) {
-  console.log("removing books for category:", this._id);
   const result = await this.model("Book").deleteMany({ category: this._id });
   console.log(`${result.deletedCount} ном устгагдлаа`);
   next();
 });
 
 CategorySchema.pre("save", function (next) {
-  // name хөрвүүлэх
+  // name hurvuuleh
   this.slug = slugify(this.name);
   this.averageRating = Math.floor(Math.random() * 10) + 1;
   // this.averagePrice = Math.floor(Math.random() * 100000) + 3000;

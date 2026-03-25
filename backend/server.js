@@ -11,7 +11,6 @@ import fileUpload from "express-fileupload";
 import categoriesRoutes from "./routes/categories.js";
 import booksRoutes from "./routes/books.js";
 import usersRoutes from "./routes/users.js";
-import commentsRoutes from "./routes/comments.js";
 
 // __dirname тохируулах (ESM-д)
 import { fileURLToPath } from "url";
@@ -63,17 +62,11 @@ app.use(morgan("combined", { stream: accessLogStream }));
 
 // server.js дээр routes-аас ӨМНӨ нэмэх
 app.use((req, res, next) => {
-  console.log(`\n🌐 ${req.method} ${req.originalUrl}`);
-  console.log("🍪 Cookies:", req.cookies);
-  console.log(
-    "👤 req.user:",
-    req.user ? `ID=${req.user._id}, Role=${req.user.role}` : "undefined",
-  );
   next();
 });
 
 app.get("/", (req, res) => {
-  res.send("API is running... 🚀");
+  res.send("API is running... ");
 });
 //zurag
 app.use("/uploads", express.static(path.join(__dirname, "public/upload")));
@@ -84,7 +77,6 @@ app.use("/api/v1/books", booksRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/orders", ordersRoutes);
 // app.use("/api/v1/users", usersRoutes);
-app.use("/api/v1/comments", commentsRoutes);
 app.use("/api/v1/wishlist", wishlistRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 // Error handler
@@ -96,6 +88,6 @@ const server = app.listen(process.env.PORT, () =>
 
 // Unhandled promise rejection
 process.on("unhandledRejection", (err, promise) => {
-  console.log(`Алдаа гарлаа : ${err.message}`.underline.red.bold);
+  console.log(`Алдаа гарлаа : ${err.message}`);
   server.close(() => process.exit(1));
 });

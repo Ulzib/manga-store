@@ -4,7 +4,7 @@ import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useWishList } from "@/context/WishlistContext";
-import { Heart, ShoppingBag } from "lucide-react";
+import { Heart } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import WishlistItem from "./WishlistItem";
@@ -49,7 +49,6 @@ const MainWishlist = () => {
       </div>
     );
   }
-
   //data-tai ued
   return (
     <div className="flex flex-col justify-center px-4 md:px-8">

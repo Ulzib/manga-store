@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ShippingSection from "./Shipping";
 import toast from "react-hot-toast";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import PaymentSection from "./Payment";
 import OrderSummary from "./OrderSummary";
 
@@ -78,9 +78,6 @@ const CheckoutForm = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Захиалга үүсгэхэд алдаа гарлаа:", error);
-
-      // Error message-г string болгож харуулах
       let errorMessage = "Захиалга үүсгэхэд алдаа гарлаа!";
 
       if (error.response?.status === 403) {

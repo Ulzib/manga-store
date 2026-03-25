@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import Spinner from "@/components/Spinner";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 
 const formSchema = z.object({
   name: z

@@ -1,6 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-  console.log(err.stack.cyan.underline);
-
   const error = { ...err };
   error.message = err.message;
 
@@ -21,7 +19,7 @@ const errorHandler = (err, req, res, next) => {
 
   res.status(err.statusCode || 500).json({
     success: false,
-    error,
+    error: error.message,
   });
 };
 

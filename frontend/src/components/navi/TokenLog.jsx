@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const TokenContext = createContext();
 
-// Cookie унших helper
+// Cookie unshih helper
 const getCookie = (name) => {
   if (typeof document === "undefined") return null;
   const value = `; ${document.cookie}`;
@@ -12,7 +12,7 @@ const getCookie = (name) => {
   return null;
 };
 
-// JWT Token decode хийх (role гаргах)
+// JWT Token decode hiih (role gargh)
 const decodeToken = (token) => {
   try {
     if (!token) return null;
@@ -22,93 +22,75 @@ const decodeToken = (token) => {
       atob(base64)
         .split("")
         .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
+        .join(""),
     );
     return JSON.parse(jsonPayload);
   } catch (error) {
-    console.error("❌ Token decode error:", error);
     return null;
   }
 };
 
 export const TokenProvider = ({ children }) => {
   const [token, setToken] = useState(null);
-  const [userRole, setUserRole] = useState(null); // ← НЭМСЭН
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("🔄 TokenProvider initializing...");
-
-    // 1️⃣ Cookie-с унших
+    // Cookie-s unshih
     const cookieToken = getCookie("book-token");
-    console.log("🍪 Cookie token:", cookieToken ? "Found" : "Not found");
 
     if (cookieToken) {
       setToken(cookieToken);
       localStorage.setItem("book-token", cookieToken);
 
-      // Token decode хийж role авах
+      // Token decode hj role avna
       const decoded = decodeToken(cookieToken);
-      console.log("🔓 Decoded token:", decoded);
-      setUserRole(decoded?.role); // ← НЭМСЭН
 
-      console.log("✅ Token loaded from cookie");
+      setUserRole(decoded?.role);
     } else {
-      // 2️⃣ localStorage-с fallback
+      // localStorage-s fallback
       const localToken = localStorage.getItem("book-token");
-      console.log("💾 LocalStorage token:", localToken ? "Found" : "Not found");
 
       if (localToken) {
         setToken(localToken);
-
         // Token decode
         const decoded = decodeToken(localToken);
-        setUserRole(decoded?.role); // ← НЭМСЭН
-
-        console.log("⚠️ Token loaded from localStorage (cookie missing)");
+        setUserRole(decoded?.role);
       }
     }
-
     setLoading(false);
   }, []);
 
   const handleLogin = (newToken) => {
-    console.log("🔐 handleLogin called");
     setToken(newToken);
     localStorage.setItem("book-token", newToken);
 
-    // Token decode хийж role авах
+    // Token decode hj role avna
     const decoded = decodeToken(newToken);
-    setUserRole(decoded?.role); // ← НЭМСЭН
-
-    console.log("✅ Token saved to localStorage");
+    setUserRole(decoded?.role);
   };
 
   const handleLogout = async () => {
-    console.log("🚪 handleLogout called");
-
     try {
       await fetch("http://localhost:8000/api/v1/users/logout", {
         method: "POST",
         credentials: "include",
       });
-      console.log("✅ Logout API success");
     } catch (error) {
-      console.error("❌ Logout API error:", error);
+      console.error(" Logout API error:", error);
     }
 
-    // Local state цэвэрлэх
+    // Local state tsetserlene
     setToken(null);
-    setUserRole(null); // ← НЭМСЭН
+    setUserRole(null);
     localStorage.removeItem("book-token");
     document.cookie =
       "book-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    console.log("✅ Token cleared locally");
   };
 
   return (
     <TokenContext.Provider
-      value={{ token, userRole, handleLogin, handleLogout, loading }} // ← userRole нэмсэн
+      value={{ token, userRole, handleLogin, handleLogout, loading }}
     >
       {children}
     </TokenContext.Provider>

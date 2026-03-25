@@ -147,7 +147,6 @@ export const getMyOrders = asyncHandler(async (req, res, next) => {
   if (!req.user || !req.user._id) {
     throw new MyError("Нэвтэрч орох шаардлагатай!", 401);
   }
-
   const orders = await Order.find({ user: req.user._id })
     .populate("items.book", "name price photo")
     .sort("-createdAt");

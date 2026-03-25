@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen } from "lucide-react";
-import axios from "../../axios/axios";
+import { Card, CardTitle } from "@/components/ui/card";
+import axios from "../../axios/Axios";
 
 const CategroySection = () => {
   const [categories, setCategories] = useState([]);

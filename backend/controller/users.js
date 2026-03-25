@@ -8,33 +8,32 @@ import crypto from "crypto";
 //register hiine
 export const register = asyncHandler(async (req, res, next) => {
   const user = await User.create(req.body);
-
   //jwt token-oo end duudaj bn
   const token = user.getJsonWebToken();
 
   res.status(200).json({
     success: true,
     token,
-    user: user,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
   });
 });
 
 //login hiine
 export const login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
-
   //orolt shalgana
   if (!email || !password) {
     throw new MyError("Имэйл болон нууц үгээ дамжуулна уу!", 400);
   }
-
   //tuhain hereglegchiig haina
   const user = await User.findOne({ email }).select("+password");
-
   if (!user) {
     throw new MyError("Имэйл болон нууц үгээ зөв оруулна уу!", 401);
   }
-
   //passwordoo shalgana
   const ok = await user.checkPassword(password);
 
@@ -42,10 +41,10 @@ export const login = asyncHandler(async (req, res, next) => {
     throw new MyError("Имэйл болон нууц үгээ зөв оруулна уу!", 401);
   }
 
-  // ✅ Token үүсгэх - энд байх ёстой
+  // Token uusgeh
   const token = user.getJsonWebToken();
 
-  // ✅ Cookie тохиргоо
+  // Cookie tohirgoo
   const cookieOptions = {
     httpOnly: false,
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 хоног
@@ -54,9 +53,7 @@ export const login = asyncHandler(async (req, res, next) => {
     path: "/",
   };
 
-  console.log("✅ Setting cookie for user:", user.email);
-
-  // ✅ Cookie set хийж response буцаах
+  //Cookie set hj response butsaah
   res
     .cookie("book-token", token, cookieOptions)
     .status(200)
@@ -74,8 +71,6 @@ export const login = asyncHandler(async (req, res, next) => {
 
 //logout
 export const logout = asyncHandler(async (req, res, next) => {
-  console.log("✅ Clearing cookie");
-
   res
     .clearCookie("book-token", {
       httpOnly: false,
@@ -99,10 +94,10 @@ export const guestLogin = asyncHandler(async (req, res, next) => {
   );
 
   const cookieOps = {
-    httpOnly: false,
+    httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
     sameSite: "lax",
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
   };
 
@@ -112,7 +107,6 @@ export const guestLogin = asyncHandler(async (req, res, next) => {
   });
 });
 //////////////users-iin crud///////////////////////////////////////////
-
 export const getUsers = asyncHandler(async (req, res, next) => {
   //page,limit,sort,select-iig damjuulaad queryObj-r ustgah
   const page = parseInt(req.query.page) || 1;
@@ -122,10 +116,9 @@ export const getUsers = asyncHandler(async (req, res, next) => {
 
   const queryObj = { ...req.query };
   ["select", "sort", "page", "limit"].forEach((el) => delete queryObj[el]);
-  ///
+
   // Pagination
   const pagination = await paginate(page, limit, User);
-  ///
 
   const users = await User.find(queryObj, select)
     .sort(sort)
@@ -207,8 +200,6 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   const resetToken = user.generatePasswordChangeToken();
   await user.save();
 
-  // await user.save({ validateBeforeSave: false });
-
   //email ilgeene
   const link = `http://localhost:3000/changepassword/${resetToken}`;
 
@@ -220,14 +211,13 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
       subject: "Нууц үг өөрчлөх хүсэлт",
       message,
     });
-    console.log("✅ Имэйл явуулсан хаяг:", user.email);
   } catch (mailErr) {
-    console.error("❌ Имэйл алдаа:", mailErr.message);
+    console.error("Имэйл алдаа лгээхэд алдаа гарлаа:", mailErr.message);
   }
 
   res.status(200).json({
     success: true,
-    resetToken,
+    message: "Email илгээгдлээ",
   });
 });
 

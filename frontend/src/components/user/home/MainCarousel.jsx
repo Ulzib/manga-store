@@ -8,7 +8,6 @@ const MainCarousel = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   // const [isScrolling, setIsScrolling] = useState(false);
   // const mainCarouselRef = useRef(null);
-
   const slides = [
     {
       id: 1,
@@ -101,7 +100,6 @@ const MainCarousel = ({ children }) => {
                 className="w-full h-full object-top lg:object-fill"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
-
               {/*content*/}
               <div className="absolute inset-0 z-20 px-12 flex items-center pb-35 md:pb-35 sm:px-14 lg:px-20">
                 <div className="w-full md:max-w-2xl text-white space-y-4 md:space-y-6 text-center md:text-left">

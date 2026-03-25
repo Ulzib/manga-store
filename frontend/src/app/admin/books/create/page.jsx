@@ -1,5 +1,5 @@
 import React from "react";
-import CreateBook from "@/components/admin/books-com/CreateBook";
+import CreateBook from "@/components/admin/create book/CreateBook";
 
 const CreateBookPage = () => {
   return (

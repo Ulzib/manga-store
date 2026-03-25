@@ -2,22 +2,22 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://localhost:8000/api/v1/",
-  withCredentials: true, // ✅ Cookie автоматаар дамжуулна
+  withCredentials: true, // Cookie automataar damjuulna
 });
 
-// Global default тохиргоо
+// Global default tohirgoo
 instance.defaults.withCredentials = true;
 
-// REQUEST interceptor - Token нэмэх
+// REQUEST interceptor - Token nemeh
 instance.interceptors.request.use(
   (config) => {
-    // Cookie-с token авах
+    // Cookie-с token avah
     const getCookieToken = () => {
       const cookies = document.cookie.split(";");
       for (let cookie of cookies) {
         const [name, value] = cookie.trim().split("=");
         if (name === "book-token") {
-          // Таны cookie нэр
+          // Tanii cookie ner
           return value;
         }
       }
@@ -28,30 +28,28 @@ instance.interceptors.request.use(
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("✅ Token added to request:", token.substring(0, 20) + "...");
     } else {
-      console.log("⚠️ No token found in cookie");
+      console.log(" No token found in cookie");
     }
 
     return config;
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
-// RESPONSE interceptor - 401 алдаа бол logout
+// RESPONSE interceptor - 401 aldaa bol logout
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.log("❌ 401 Unauthorized");
       localStorage.removeItem("book-token");
       document.cookie =
         "book-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default instance;

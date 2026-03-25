@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import ReviewStars from "./ReviewStar";
 import { useToken } from "@/components/navi/TokenLog";
 import { useRouter } from "next/navigation";
@@ -68,7 +68,7 @@ const MainReview = ({ bookId }) => {
         "Алдаа гарлаа";
       toast.error(msg);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -127,7 +127,11 @@ const MainReview = ({ bookId }) => {
         ) : (
           <div className="space-y-6 w-full ">
             {reviews.map((review) => (
-              <ReviewItem key={review._id} review={review} />
+              <ReviewItem
+                key={review._id}
+                review={review}
+                onUpdated={fetchReviews}
+              />
             ))}
           </div>
         )}

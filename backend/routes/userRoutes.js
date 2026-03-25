@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
-router.post("/logout", logout); // ✅ Logout нэмэх хэсэг
+router.post("/logout", logout);
 
 router.route("/").get(getUsers).post(createUser);
 

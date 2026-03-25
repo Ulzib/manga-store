@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "../axios/axios";
+import axios from "../../axios/Axios";
 import { BookOpen, Layers, TrendingUp, Users } from "lucide-react";
-import { Card } from "../ui/card";
-import Spinner from "../Spinner";
+import { Card } from "../../ui/card";
+
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({

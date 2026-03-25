@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import {
   Card,
   CardContent,

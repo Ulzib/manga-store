@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 
 import ProfileTabs from "./ProfileTabs";
 import ProfileInfoForm from "./ProfileInfoForm";
@@ -59,7 +59,6 @@ const MainProfile = () => {
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
-    console.log(passwordData);
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       toast.error("Шинэ нууц үг таарахгүй байна!");

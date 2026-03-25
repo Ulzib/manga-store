@@ -1,5 +1,5 @@
 import { Search, X } from "lucide-react";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
@@ -32,7 +32,6 @@ const MobileSearch = ({ isOpen, onClose }) => {
     const delay = setTimeout(fetchSearch, 400);
     return () => clearTimeout(delay);
   }, [search]);
-
   //overlay haagdahad hailtiin utgiig tseverlene
   useEffect(() => {
     if (!isOpen) {
@@ -40,7 +39,6 @@ const MobileSearch = ({ isOpen, onClose }) => {
       setResult([]);
     }
   }, [isOpen]);
-
   //Form submit hiihed buren hailtiin huudas ru shiljine
   const handleSearchSubmit = (e) => {
     e.preventDefault();

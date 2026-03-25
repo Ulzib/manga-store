@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Spinner from "../../Spinner";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import { useCart } from "@/context/CartContext";
@@ -21,10 +21,6 @@ export default function BookInfo({ id }) {
   const router = useRouter();
   const { addToCart } = useCart();
 
-  const goBack = () => {
-    router.back();
-  };
-
   const fetchData = async () => {
     if (!id) return;
     try {
@@ -34,7 +30,6 @@ export default function BookInfo({ id }) {
       setBook(data.data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       const errorMessage = err.message;
       toast.error(errorMessage);
     } finally {
@@ -52,7 +47,6 @@ export default function BookInfo({ id }) {
       e.preventDefault();
       e.stopPropagation();
     }
-
     setIsAdding(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 600));
@@ -82,7 +76,6 @@ export default function BookInfo({ id }) {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       <BookBackground bookId={id} />
-
       <div className="relative z-10 w-full mx-auto pt-20 lg:pt-24 pb-14 px-4 md:px-14">
         <Button
           variant="ghost"

@@ -13,7 +13,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Холбоосууд */}
         <div>
           <h4 className="text-white font-semibold mb-4">Холбоосууд</h4>
           <ul className="space-y-2 text-sm">
@@ -52,7 +51,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Үйлчилгээ */}
         <div>
           <h4 className="text-white font-semibold mb-4">Үйлчилгээ</h4>
           <ul className="space-y-2 text-sm">
@@ -85,7 +83,7 @@ const Footer = () => {
           <ul className="space-y-2 text-sm">
             <li className="flex items-start gap-2">
               <span className="text-gray-500">📧</span>
-              <span>info@mangastore.mn</span>
+              <span>info@panel.mn</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-gray-500">📞</span>
@@ -99,7 +97,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Copyright */}
       <div className="max-w-7xl mx-auto mt-8 pt-8 border-t border-gray-800 text-center text-sm">
         <p>
           &copy; {new Date().getFullYear()} Manga Store. Бүх эрх хуулиар

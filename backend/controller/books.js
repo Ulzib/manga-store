@@ -4,7 +4,6 @@ import Category from "../models/Category.js";
 import MyError from "../utils/myError.js";
 import asyncHandler from "express-async-handler";
 import { paginate } from "../utils/paginate.js";
-import User from "../models/User.js";
 
 // api/v1/books
 export const getBooks = asyncHandler(async (req, res, next) => {
@@ -19,7 +18,6 @@ export const getBooks = asyncHandler(async (req, res, next) => {
   if (req.query.name) {
     queryObj.name = { $regex: req.query.name, $options: "i" };
   }
-
   // Pagination
   const pagination = await paginate(page, limit, Book);
 
@@ -204,7 +202,6 @@ export const updateBook = asyncHandler(async (req, res, next) => {
   if (!isAdmin && !isOwner) {
     throw new MyError("Та зөвхөн өөрийн номыг засварлах эрхтэй", 403);
   }
-
   //  req.userId → req.user._id
   req.body.updatedUser = req.user._id;
 
@@ -234,15 +231,12 @@ export const uploadBookPhoto = asyncHandler(async (req, res, next) => {
   if (!file.mimetype.startsWith("image")) {
     throw new MyError("Ta zurag upload hiine uu!", 400);
   }
-
   //file size
   if (file.size > process.env.MAX_UPLOAD_FILE_SIZE) {
     throw new MyError("Tany zuragnii hemjee hetersen bn", 400);
   }
-
   //buh upload hiisn zurgiin neree photo gdg standart nertei bolgoj bn
   file.name = `photo_${req.params.id}${path.parse(file.name).ext}`;
-
   //file upload path gsn folderiin filename bolgj huul
   file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
     if (err) {

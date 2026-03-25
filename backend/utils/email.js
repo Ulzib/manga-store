@@ -19,7 +19,6 @@ const sendMail = async (options) => {
     html: options.message,
   });
 
-  console.log("Имэйл илгээгдлээ:", info.messageId);
   return info;
 };
 

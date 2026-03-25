@@ -27,7 +27,6 @@ export const getBookReviews = asyncHandler(async (req, res, next) => {
 });
 
 // post /api/v1/books/:bookId/reviews - Review nemeh
-
 export const createReview = asyncHandler(async (req, res, next) => {
   const book = await Book.findById(req.params.bookId);
   if (!book) {
@@ -60,7 +59,6 @@ export const createReview = asyncHandler(async (req, res, next) => {
 });
 
 // put /api/v1/reviews/:id - Review zasah
-
 export const updateReview = asyncHandler(async (req, res, next) => {
   let review = await Review.findById(req.params.id);
 

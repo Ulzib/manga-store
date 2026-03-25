@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", async function (next) {
-  //нууц үг өөрчлөгдөөгүй бол дараагийн middleware лүү шилжинэ
+  //password uurchlugduugui bol daraagiin middleware luu shiljine
   if (!this.isModified("password")) next();
   //nuuts ug uurchlugdsun
   const salt = await bcrypt.genSalt(10);
@@ -53,7 +53,7 @@ UserSchema.methods.getJsonWebToken = function () {
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRESIN,
-    }
+    },
   );
 
   return token;

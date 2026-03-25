@@ -23,9 +23,9 @@ router
 
 router
   .route("/:id")
-  .get(getBook) // ✅ Бүх хүн харна - protect ХЭРЭГГҮЙ
-  .put(protect, updateBook) // ✅ ЗАСВАР: authorize хасав - controller дотор шалгана
-  .delete(protect, deleteBook); // ✅ ЗАСВАР: authorize хасав - controller дотор шалгана
+  .get(getBook)
+  .put(protect, updateBook)
+  .delete(protect, deleteBook);
 
 router
   .route("/:id/upload-photo")

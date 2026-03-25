@@ -4,9 +4,10 @@ import { Card } from "@/components/ui/card";
 import { CheckCircle, Clock, Package, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import axios from "../../../components/axios/axios";
+import axios from "../../../components/axios/Axios";
 import Spinner from "@/components/Spinner";
 import { getImageUrl } from "../../../../utils/imageHelper";
+import toast from "react-hot-toast";
 
 const MyOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -19,7 +20,7 @@ const MyOrdersPage = () => {
         const response = await axios.get("/orders/my");
         setOrders(response.data.data || []);
       } catch (error) {
-        console.error("Захиалга татахад алдаа гарлаа", error);
+        toast.error("Захиалга татахад алдаа гарлаа", error);
       } finally {
         setLoading(false);
       }

@@ -1,4 +1,4 @@
-import OrderList from "@/components/admin/OrderList";
+import OrderList from "@/components/admin/lists/OrderListMain";
 
 const OrderPage = () => {
   return (

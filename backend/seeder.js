@@ -16,28 +16,28 @@ const __dirname = path.dirname(__filename);
 mongoose.connect(process.env.MONGODB_URI);
 
 const categories = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "/data/categories.json"), "utf-8")
+  fs.readFileSync(path.join(__dirname, "/data/categories.json"), "utf-8"),
 );
 
 const books = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "/data/book.json"), "utf-8")
+  fs.readFileSync(path.join(__dirname, "/data/book.json"), "utf-8"),
 );
 
 const users = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "/data/user.json"), "utf-8")
+  fs.readFileSync(path.join(__dirname, "/data/user.json"), "utf-8"),
 );
 
 const importData = async () => {
   try {
-    // Users эхлээд үүсгэх
+    // Users uusgh
     const createdUsers = await User.create(users);
     console.log("Users imported...".cyan);
 
-    // Categories үүсгэх
+    // Categories uusgh
     const createdCategories = await Category.create(categories);
     console.log("Categories imported...".cyan);
 
-    // Category нэрээр ID map үүсгэх
+    // Category nereer ID map uusgh
     const categoryMap = {};
     createdCategories.forEach((cat) => {
       categoryMap[cat.name] = cat._id;
@@ -45,12 +45,12 @@ const importData = async () => {
 
     console.log("Category Map:", categoryMap);
 
-    // Books дээр category холбох
+    // Books dr category holboh
     const booksWithCategory = books.map((book) => {
-      // Номын нэрээр category тодорхойлох
+      // nomiin nereer category todorhoiloh
       let categoryName = "Инээдэм"; // Default
 
-      // Гэмт хэрэг, тулаант
+      // crime
       if (
         [
           "Demon Slayer (Чөтгөрийн ангууч)",
@@ -63,7 +63,7 @@ const importData = async () => {
       ) {
         categoryName = "Гэмт хэрэг, тулаант";
       }
-      // Спорт
+      // sport
       else if (
         [
           "Haikyu (Хаикюү)",
@@ -77,7 +77,7 @@ const importData = async () => {
       ) {
         categoryName = "Спорт";
       }
-      // Адал явдал
+      // adventure
       else if (
         [
           "Луут бөмбөлөг (Dragon ball)",
@@ -93,17 +93,17 @@ const importData = async () => {
         categoryName = "Адал явдал";
       }
 
-      // Category ID холбох
+      // Category ID holboh
       book.category = categoryMap[categoryName];
 
-      // User ID холбох (эхний user)
+      // User ID holboh (ehnii user)
       book.createdUser = createdUsers[0]._id;
       book.updatedUser = createdUsers[0]._id;
 
       return book;
     });
 
-    // Books оруулах
+    // Books oruulah
     await Book.create(booksWithCategory);
     console.log("Books imported...".cyan);
 

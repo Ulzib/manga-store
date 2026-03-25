@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import axios from "../components/axios/axios";
+import axios from "../components/axios/Axios";
 
 const WishlistContext = createContext();
 

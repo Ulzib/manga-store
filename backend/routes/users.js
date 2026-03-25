@@ -17,7 +17,6 @@ import {
 } from "../controller/users.js";
 import { getUserBooks } from "../controller/books.js";
 import { protect, authorize } from "../middleware/protect.js";
-import { getUserComments } from "../controller/comments.js";
 
 const router = express.Router();
 
@@ -65,7 +64,5 @@ router
 router
   .route("/:id/books")
   .get(authorize("admin", "operator", "user"), getUserBooks);
-
-router.route("/:id/comments").get(getUserComments);
 
 export default router;

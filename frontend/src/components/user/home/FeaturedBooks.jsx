@@ -1,6 +1,6 @@
 "use client";
 import { useCart } from "@/context/CartContext";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {

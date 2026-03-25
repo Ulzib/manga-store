@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import { getImageUrl } from "../../../../utils/imageHelper";
 
 const DesktopSearch = () => {

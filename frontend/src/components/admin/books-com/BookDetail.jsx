@@ -4,292 +4,160 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Spinner from "../../Spinner";
-import axios from "../../axios/axios";
+import axios from "../../axios/Axios";
 import toast from "react-hot-toast";
-import { getImageUrl } from "../../../../utils/imageHelper";
-import { Camera } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+
+import DetailImage from "./DetailImage";
+import DetailFields from "./DetailFields";
+import DetailActions from "./DetailActions";
 
 export default function BookDetail({ id }) {
-  const [headerName, setHeaderName] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [author, setAuthor] = useState("");
-  const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [deleted, setDeleted] = useState(false);
-
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    author: "",
+    price: "",
+    category: "",
+    description: "",
+    photo: "",
+  });
+  const [headerName, setHeaderName] = useState("");
+  const [imageFile, setImageFile] = useState(null); // Backend руу явуулах файл
+  const [imagePreview, setImagePreview] = useState(null); // Хэрэглэгчид харуулах preview
 
-  const goBack = () => {
-    router.back();
-  };
-
-  const handleType = (e) => {
+  // Input-ийн утга өөрчлөгдөх бүрт formData-г шинэчлэх
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "name") {
-      setName(value);
-    } else if (name === "price") {
-      setPrice(value);
-    } else if (name === "author") {
-      setAuthor(value);
-    } else if (name === "category") {
-      setCategory(value);
-    } else if (name === "description") {
-      setDescription(value);
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  //zurag songoh
-  const handleImageChange = (el) => {
-    const file = el.target.files[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      toast.error("Зураг сонгоно уу");
-      return;
-    }
-    setImageFile(file);
-    //preview uusgeh //zurag servert ilgeegeegui browser dr haruulh
-    const reader = new FileReader(); //zurgiig base64 data url bolgon huvirgh
-    reader.onloadend = () => setImagePreview(reader.result);
-    reader.readAsDataURL(file);
-  };
-
+  // Анхны өгөгдөл (ном болон категори) татаж авах
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`books/${id}`);
-      const data = await res.data;
-      setName(data.data?.name || "");
-      setHeaderName(data.data?.name || "");
-      setAuthor(data.data?.author || "");
-      setPrice(data.data?.price || "");
-      setCategory(data.data?.category._id || "");
-      setDescription(data.data?.description || "");
-      setPhoto(data.data?.photo || "");
-      //buh category tatah
-      const categoriesRes = await axios.get("categories");
-      setCategories(categoriesRes.data.data || []);
-      setLoading(false);
-      setError(null);
-      console.log(data);
+      const [bookRes, catRes] = await Promise.all([
+        axios.get(`books/${id}`),
+        axios.get("categories"),
+      ]);
+      const book = bookRes.data.data;
+      setFormData({
+        name: book.name,
+        author: book.author,
+        price: book.price,
+        category: book.category?._id || "",
+        description: book.description,
+        photo: book.photo,
+      });
+      setHeaderName(book.name);
+      setCategories(catRes.data.data || []);
     } catch (err) {
-      console.log(err);
-      const errorMessage = err.message;
-      toast.error(errorMessage);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSave = async () => {
-    const token = localStorage.getItem("token");
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file?.type.startsWith("image/")) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file)); // Preview үүсгэх
+    }
+  };
 
+  const handleSave = async () => {
     try {
       setLoading(true);
-      // herev shine zurag songosn bol upload hiine
+      // Хэрэв шинэ зураг сонгосон бол эхлээд зургийг upload хийнэ
       if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile); //file nertei imageFile nemeed backend-d req.file hlberer ochno
-        const response = await axios.put(`books/${id}/upload-photo`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        // State shinchine
-        setPhoto(response.data.data);
-        setImageFile(null);
-        // setImagePreview(null);
+        const fd = new FormData();
+        fd.append("file", imageFile);
+        const imgRes = await axios.put(`books/${id}/upload-photo`, fd);
+        setFormData((prev) => ({ ...prev, photo: imgRes.data.data }));
       }
-
-      await axios.put(`books/${id}`, {
-        name,
-        author,
-        price,
-        category,
-        description,
-      });
-      setHeaderName(name);
+      // Номын мэдээллийг шинэчлэх
+      await axios.put(`books/${id}`, formData);
+      setHeaderName(formData.name);
       toast.success("Амжилттай хадгалагдлаа");
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.error?.message || // "нэвтэрч байж энэ үйлдлийг хийх боломжтой"
-        err.response?.data?.message ||
-        err.message ||
-        "Хадгалахад алдаа гарлаа";
-      toast.error(errorMessage);
-      if (err.response?.status === 401) {
-        localStorage.removeItem("token");
-        router.push("/login");
-      }
+      toast.error(err.response?.data?.error?.message || "Алдаа гарлаа");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    const isConfirmed = window.confirm("Та үнэхээр устгахыг хүсэж байна уу?");
-
-    if (!isConfirmed) {
-      return;
-    }
+    if (!window.confirm("Та үнэхээр устгахыг хүсэж байна уу?")) return;
     try {
       setLoading(true);
-      // Token байхгүй байсан ч хүсэлт явуулах
-      const response = await axios.delete(`books/${id}`);
-
+      await axios.delete(`books/${id}`);
       toast.success("Ном амжилттай устгагдлаа");
       setDeleted(true);
     } catch (err) {
-      //  Middleware-ээс ирсэн мессеж
-      const errorMessage =
-        err.response?.data?.error?.message || // "нэвтэрч байж энэ үйлдлийг хийх боломжтой!"
-        err.response?.data?.message ||
-        err.message ||
-        "Устгахад алдаа гарлаа";
-
-      toast.error(errorMessage);
-
-      if (err.response?.status === 401) {
-        localStorage.removeItem("token");
-      }
+      toast.error(
+        err.response?.data?.error?.message || "Устгахад алдаа гарлаа",
+      );
     } finally {
       setLoading(false);
     }
   };
+
+  // Компонент ачаалагдах үед датаг татах
   useEffect(() => {
     fetchData();
   }, [id]);
 
-  if (loading) {
+  if (loading)
     return (
       <div className="container flex justify-center items-center min-h-screen">
         <Spinner />
       </div>
     );
-  }
-
-  if (deleted) {
+  if (deleted)
     return (
-      <div className="container flex flex-col justify-center items-center min-h-screen gap-4">
+      <div className="flex flex-col justify-center items-center min-h-screen gap-4 pb-35">
         <p className="text-xl font-semibold">Ном амжилттай устгагдлаа</p>
-        <Button onClick={goBack}>Буцах</Button>
+        <Button onClick={() => router.back()}>Буцах</Button>
       </div>
     );
-  }
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <div className="mx-auto container lg:max-w-6xl px-4 flex flex-col  gap-10">
-        <h1 className="text-3xl font-bold mb-6">{headerName}</h1>
-        <div className="w-full flex gap-10 ">
-          {photo && (
-            <div className="w-310px shrink-0 flex flex-col items-center">
-              <div className="w-310px h-96 overflow-hidden rounded-lg relative group">
-                <img
-                  className="w-full h-full object-contain transition-transform group-hover:scale-105"
-                  src={imagePreview || getImageUrl(photo)}
-                  alt={name}
-                />
-                //zurag solih ui
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <label
-                    htmlFor="fileInput"
-                    className="cursor-pointer flex flex-col items-center"
-                  >
-                    <Camera className="w-10 h-10 text-white" />
-                    <input
-                      id="fileInput"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-          )}
+    <div className="w-full flex flex-col items-start p-6">
+      {/* Буцах товчлуур */}
+      <Button
+        variant="ghost"
+        onClick={() => router.back()}
+        className="w-20 mb-6 text-black hover:bg-gray-600/30 text-sm ml-0"
+      >
+        <ArrowLeft className="w-4 h-4 text-black" /> Буцах
+      </Button>
 
-          <div className="w-full flex flex-col gap-3 ">
-            <label className="font-medium">Нэр</label>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={handleType}
-              className="border p-2 rounded"
+      <div className="mx-auto container lg:max-w-6xl flex flex-col gap-10">
+        <h1 className="text-3xl font-bold">{headerName}</h1>
+        <div className="flex flex-col md:flex-row gap-10">
+          {/* Зургийн компонент */}
+          <DetailImage
+            imagePreview={imagePreview}
+            photo={formData.photo}
+            name={formData.name}
+            handleImageChange={handleImageChange}
+          />
+
+          <div className="flex-1">
+            {/* Талбаруудын компонент */}
+            <DetailFields
+              formData={formData}
+              categories={categories}
+              handleChange={handleChange}
             />
-            <label className="font-medium">Зохиолч</label>
-            <input
-              type="text"
-              name="author"
-              value={author}
-              onChange={handleType}
-              className="border p-2 rounded"
+            {/* Товчлууруудын компонент */}
+            <DetailActions
+              handleSave={handleSave}
+              handleDelete={handleDelete}
             />
-
-            <label className="font-medium">Үнэ</label>
-            <input
-              type="text"
-              name="price"
-              value={price}
-              onChange={handleType}
-              className="border p-2 rounded"
-            />
-
-            <label className="font-medium">Категори</label>
-            <select
-              name="category"
-              value={category}
-              onChange={handleType}
-              className="border p-2 rounded"
-            >
-              <option value="">Сонгох...</option>
-              {categories.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-
-            <label className="font-medium">Тайлбар</label>
-            <textarea
-              name="description"
-              value={description}
-              onChange={handleType}
-              className="h-30 border p-2 rounded"
-            />
-
-            <div className="w-full  flex gap-2 mt-3">
-              <Button
-                className="w-30 bg-gray-800 text-white
-  border border-gray-700 
-  hover:bg-gray-700 
-   rounded-md"
-                onClick={goBack}
-              >
-                Буцах
-              </Button>
-              <Button
-                className="w-30 bg-indigo-600 text-white 
-  hover:bg-indigo-500 
-   rounded-md "
-                onClick={handleSave}
-              >
-                Хадгалах
-              </Button>
-              <Button
-                className="w-30 bg-red-700 text-white hover:bg-red-500 rounded-md"
-                onClick={handleDelete}
-              >
-                Устгах
-              </Button>
-            </div>
           </div>
         </div>
       </div>

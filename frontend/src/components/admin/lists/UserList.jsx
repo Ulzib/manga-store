@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "../axios/axios";
-import { Card } from "../ui/card";
-import Spinner from "../Spinner";
+import axios from "../../axios/Axios";
+import { Card } from "../../ui/card";
+import Spinner from "../../Spinner";
 import { ShieldIcon, Trash2, UserCircle } from "lucide-react";
 
 const UserList = () => {
@@ -51,11 +51,10 @@ const UserList = () => {
                 key={user._id}
                 className="flex items-center sm:flex-row sm:items-center  gap-4 p-4 border rounded hover:bg-gray-50"
               >
-                {/* Avatar icon */}
                 <div className="p-3 bg-green-300 rounded-full self-start sm:self-auto">
                   <UserCircle className="w-6 h-6 text-gray-700" />
                 </div>
-                {/* Хэрэглэгчийн мэдээлэл */}
+                {/* User info */}
                 <div className="flex-1">
                   <p className="font-medium">{user.name}</p>
                   <p className="text-sm text-gray-500 sm:truncate">
