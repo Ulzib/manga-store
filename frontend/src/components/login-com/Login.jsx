@@ -1,3 +1,4 @@
+"use client";
 import LoginForm from "./Login-form";
 
 const Login = () => {
