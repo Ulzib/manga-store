@@ -7,18 +7,17 @@ import connectDB from "./config/db.js";
 import errorHandler from "./middleware/error.js";
 import logger from "./middleware/logger.js";
 import fileUpload from "express-fileupload";
-// Router оруулж ирэх
 import categoriesRoutes from "./routes/categories.js";
 import booksRoutes from "./routes/books.js";
 import usersRoutes from "./routes/users.js";
 
-// __dirname тохируулах (ESM-д)
+// __dirname tohiruulga ESM-d
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 import cors from "cors";
-// Аппын тохиргоог process.env рүү ачаалах
+// App-iin tohirgoog process.env ruu achaallah
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 import cookieParser from "cookie-parser";
@@ -35,7 +34,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000", // Frontend URL
+    origin: process.env.FRONTEND_URL,
     credentials: true, //busad cookie-r irj bga medeellig huleej avah
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
@@ -45,7 +44,7 @@ app.use(logger);
 
 // create a write stream (in append mode)
 const accessLogStream = rfs.createStream("access.log", {
-  interval: "1d", // өдөр тутам rotate хийх
+  interval: "1d", // udur tutam rotate hiih
   path: path.join(__dirname, "log"),
 });
 
@@ -54,13 +53,13 @@ app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/tmp/",
-    createParentPath: true, // хавтас байхгүй бол автоматаар үүсгэнэ
+    createParentPath: true, //havtas bhgui bl automataar uusne
   }),
 );
 
 app.use(morgan("combined", { stream: accessLogStream }));
 
-// server.js дээр routes-аас ӨМНӨ нэмэх
+// server.js dr routes-s umnu nemeh
 app.use((req, res, next) => {
   next();
 });
