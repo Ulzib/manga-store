@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "${process.env.NEXT_PUBLIC_API_URL}/api/v1/",
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/`,
   withCredentials: true, // Cookie automataar damjuulna
 });
 
@@ -11,7 +11,7 @@ instance.defaults.withCredentials = true;
 // REQUEST interceptor - Token nemeh
 instance.interceptors.request.use(
   (config) => {
-    // Cookie-с token avah
+    // Cookie-s token avah
     const getCookieToken = () => {
       const cookies = document.cookie.split(";");
       for (let cookie of cookies) {

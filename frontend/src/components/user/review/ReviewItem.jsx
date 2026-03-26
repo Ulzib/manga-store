@@ -3,7 +3,7 @@ import { useToken } from "@/components/navi/TokenLog";
 import ReviewStars from "./ReviewStar";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import toast from "react-hot-toast";
 
 const ReviewItem = ({ review, onUpdated }) => {

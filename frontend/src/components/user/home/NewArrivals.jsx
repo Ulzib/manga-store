@@ -1,5 +1,5 @@
 "use client";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {

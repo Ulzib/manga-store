@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Spinner from "../../Spinner";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import toast from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 import DetailImage from "./DetailImage";

@@ -1,5 +1,5 @@
 import { Search, X } from "lucide-react";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Card, CardTitle } from "@/components/ui/card";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 
 const CategroySection = () => {
   const [categories, setCategories] = useState([]);

@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { CheckCircle, Clock, Package, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import axios from "../../../components/axios/Axios";
+import axios from "../../../components/axios/axios";
 import Spinner from "@/components/Spinner";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import toast from "react-hot-toast";

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "../../axios/Axios"; // Backend руу хүсэлт явуулах
+import axios from "../../axios/axios"; // Backend руу хүсэлт явуулах
 import toast from "react-hot-toast"; // Мессеж харуулах
 
 import { Button } from "@/components/ui/button";

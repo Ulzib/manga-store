@@ -1,10 +1,9 @@
 "use client";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Spinner from "../../Spinner";
 import { getImageUrl } from "../../../../utils/imageHelper";
-import ToastProvider from "@/components/toast/ToastProvider";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";

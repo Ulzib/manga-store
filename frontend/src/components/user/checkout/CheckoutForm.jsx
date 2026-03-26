@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ShippingSection from "./Shipping";
 import toast from "react-hot-toast";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import PaymentSection from "./Payment";
 import OrderSummary from "./OrderSummary";
 

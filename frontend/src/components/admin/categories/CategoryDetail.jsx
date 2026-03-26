@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import {

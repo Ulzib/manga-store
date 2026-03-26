@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "../axios/Axios";
+import axios from "../axios/axios";
 import toast from "react-hot-toast";
 import { useToken } from "../navi/TokenLog";
 import Spinner from "../Spinner/index";

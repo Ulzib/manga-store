@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 
 import ProfileTabs from "./ProfileTabs";
 import ProfileInfoForm from "./ProfileInfoForm";

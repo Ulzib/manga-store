@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import { getImageUrl } from "../../../../utils/imageHelper";
 import { useRef } from "react";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import { Card } from "../../ui/card";
 import Spinner from "../../Spinner";
 import { ShieldIcon, Trash2, UserCircle } from "lucide-react";

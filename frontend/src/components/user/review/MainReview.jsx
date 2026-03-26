@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "../../axios/Axios";
+import axios from "../../axios/axios";
 import ReviewStars from "./ReviewStar";
 import { useToken } from "@/components/navi/TokenLog";
 import { useRouter } from "next/navigation";
