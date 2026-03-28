@@ -110,7 +110,7 @@ const LoginForm = ({ className, ...props }) => {
         <CardHeader>
           <CardTitle>Нэвтрэх</CardTitle>
           <CardDescription>
-            И-мэйл болон нууц үгээ оруулан нэвтэрнэ үү
+            Имэйл болон нууц үгээ оруулан нэвтэрнэ үү
           </CardDescription>
         </CardHeader>
         <CardContent>
