@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Dashboard from "@/components/admin/dashboard/Dashboard";
 
 const AdminHomePage = () => {
