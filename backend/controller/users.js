@@ -47,9 +47,9 @@ export const login = asyncHandler(async (req, res, next) => {
   // Cookie tohirgoo
   const cookieOptions = {
     httpOnly: false,
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 хоног
-    sameSite: "lax",
-    secure: false,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 honog
+    sameSite: "none",
+    secure: true,
     path: "/",
   };
 
@@ -74,8 +74,8 @@ export const logout = asyncHandler(async (req, res, next) => {
   res
     .clearCookie("book-token", {
       httpOnly: false,
-      sameSite: "lax",
-      secure: false,
+      sameSite: "none",
+      secure: true,
       path: "/",
     })
     .status(200)
@@ -96,8 +96,8 @@ export const guestLogin = asyncHandler(async (req, res, next) => {
   const cookieOps = {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+    secure: true,
     path: "/",
   };
 
