@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import HeroCarousel from "./HeroCarousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MainCarousel = ({ children }) => {
@@ -36,8 +35,7 @@ const MainCarousel = ({ children }) => {
     },
     {
       id: 4,
-      image:
-        "https://www.animationmagazine.net/wordpress/wp-content/uploads/%E3%80%90BLUE-LOCK%E3%80%91Season-3-Announcement.jpg",
+      image: "https://images4.alphacoders.com/116/thumb-1920-1165712.jpg",
       title: "Blue lock",
       description:
         "Багийг ялалтад хөтлөх чадвартай, төгс довтлогч, жинхэнэ “Ace довтлогч” хэрэгтэй.",
@@ -97,11 +95,11 @@ const MainCarousel = ({ children }) => {
               <img
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-full object-top lg:object-fill"
+                className="w-full h-full object-cover object-top lg:object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
               {/*content*/}
-              <div className="absolute inset-0 z-20 px-12 flex items-center pb-35 md:pb-35 sm:px-14 lg:px-20">
+              <div className="absolute inset-0 z-20 px-14 flex items-center pb-35 md:pb-35 sm:px-16 lg:px-24">
                 <div className="w-full md:max-w-2xl text-white space-y-4 md:space-y-6 text-center md:text-left">
                   <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight">
                     {slide.title}
