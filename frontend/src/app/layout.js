@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${inter.variable} ${montserrat.variable} font-sans bg-gray-50 text-gray-900`}
+        className={`${inter.variable} ${montserrat.variable} font-sans bg-gray-900 text-white`}
       >
         <TokenProvider>
           <WishlistProvider>
