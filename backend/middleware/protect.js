@@ -9,7 +9,12 @@ export const protect = asyncHandler(async (req, res, next) => {
   // Cookie-s token avah
   if (req.cookies && req.cookies["book-token"]) {
     token = req.cookies["book-token"];
-  } else {
+  } //Authorization header-s avah (mobile-d cookie ajillahgui bol)
+  else if (req.headers.authorization?.startsWith("Bearer")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
     throw new MyError("Нэвтрэх шаардлагатай! Cookie олдсонгүй.", 401);
   }
 
