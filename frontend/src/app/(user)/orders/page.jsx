@@ -84,16 +84,18 @@ const MyOrdersPage = () => {
     <div className="w-lg md:w-2xl lg:w-6xl mx-auto pt-25 md:pt-30 pb-8 px-4 md:px-8">
       <h1 className="text-3xl font-bold mb-8 text-white">Миний захиалгууд</h1>
       {orders.length === 0 ? (
-        <Card className="p-12 text-center">
-          <Package className="w-16 h-16 mx-auto mb-4 text-gray" />
-          <p className="text-gray-600 mb-4">Захиалга алга байна</p>
-          <Button
-            onClick={() => router.push("/books")}
-            className="px-6 py-2 bg-blue-950 text-white rounded-lg hover:bg-blue-800"
-          >
-            Манга үзэх
-          </Button>
-        </Card>
+        <div className="w-full px-4 md:px-0">
+          <Card className="p-12 text-center">
+            <Package className="w-16 h-16 mx-auto mb-4 text-gray" />
+            <p className="text-gray-600 mb-4">Захиалга алга байна</p>
+            <Button
+              onClick={() => router.push("/books")}
+              className="px-6 py-2 bg-blue-950 text-white rounded-lg hover:bg-blue-800"
+            >
+              Манга үзэх
+            </Button>
+          </Card>
+        </div>
       ) : (
         <div className="space-y-4 ">
           {orders.map((order) => (
