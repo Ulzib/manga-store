@@ -1,12 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MainCarousel = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  // const [isScrolling, setIsScrolling] = useState(false);
-  // const mainCarouselRef = useRef(null);
   const slides = [
     {
       id: 1,
@@ -90,7 +88,6 @@ const MainCarousel = ({ children }) => {
                   : "opacity-0 translate-x-full z-0"
             }`}
           >
-            {/*background image*/}
             <div className="absolute inset-0 ">
               <img
                 src={slide.image}
@@ -105,8 +102,6 @@ const MainCarousel = ({ children }) => {
                     "linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.4), transparent)",
                 }}
               ></div>
-
-              {/* доод gradient */}
               <div
                 style={{
                   position: "absolute",

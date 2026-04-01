@@ -113,7 +113,7 @@ export default function UserNavBar() {
                 />
 
                 {showProfile && (
-                  <div className="absolute right-0 top-full opacity-0 invisible group-hover:opacity-100 pt-4 group-hover:visible transition-all ">
+                  <div className="absolute right-0 top-full pt-4 z-[200] ">
                     <div className="w-48 bg-gray-900 overflow-hidden border border-white/10  rounded-lg shadow-xl text-white">
                       <Link
                         href="/profile"
