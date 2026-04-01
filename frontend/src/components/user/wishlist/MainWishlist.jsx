@@ -38,7 +38,7 @@ const MainWishlist = () => {
 
   if (wishlist.length === 0) {
     return (
-      <div className="container  text-center flex flex-col justify-center items-center min-h-screen ">
+      <div className="container text-center flex flex-col justify-center items-center min-h-screen ">
         <Heart className="w-24 h-24 text-gray-300 " />
         <h1 className="text-gray-500 font-bold text-2xl mb-4">
           Жагсаалт хоосон байна

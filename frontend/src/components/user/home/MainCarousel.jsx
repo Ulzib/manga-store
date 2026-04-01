@@ -77,7 +77,7 @@ const MainCarousel = ({ children }) => {
   };
 
   return (
-    <div className=" relative w-full h-screen overflow-hidden bg-linear-to-b from-slate-900 to-slate-800 ">
+    <div className=" relative w-full h-screen overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800 ">
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
@@ -97,9 +97,9 @@ const MainCarousel = ({ children }) => {
                 alt={slide.title}
                 className="w-full h-full object-cover object-top lg:object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
               {/*content*/}
-              <div className="absolute inset-0 z-20 px-14 flex items-center pb-35 md:pb-35 sm:px-16 lg:px-24">
+              <div className="absolute inset-0 z-20 px-14 flex items-center pb-36 md:pb-36 sm:px-16 lg:px-24">
                 <div className="w-full md:max-w-2xl text-white space-y-4 md:space-y-6 text-center md:text-left">
                   <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight">
                     {slide.title}

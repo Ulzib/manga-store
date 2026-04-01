@@ -81,7 +81,7 @@ const MyOrdersPage = () => {
     );
   }
   return (
-    <div className="w-lg md:w-2xl lg:w-6xl mx-auto pt-25 md:pt-30 pb-8 px-4 md:px-8">
+    <div className="w-full max-w-lg md:max-w-2xl lg:max-w-6xl mx-auto pt-25 md:pt-30 pb-8 px-4 md:px-8">
       <h1 className="text-3xl font-bold mb-8 text-white">Миний захиалгууд</h1>
       {orders.length === 0 ? (
         <div className="w-full px-4 md:px-0">
