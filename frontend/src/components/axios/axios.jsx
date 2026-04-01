@@ -24,12 +24,10 @@ instance.interceptors.request.use(
       return null;
     };
 
-    const token = getCookieToken();
+    const token = getCookieToken() || localStorage.getItem("book-token");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      console.error(" No token found in cookie");
     }
 
     return config;
