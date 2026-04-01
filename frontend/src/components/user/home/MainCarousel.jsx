@@ -97,7 +97,9 @@ const MainCarousel = ({ children }) => {
                 alt={slide.title}
                 className="w-full h-full object-cover object-top lg:object-center"
               />
-              <div className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+
+              <div className="absolute bottom-0 left-0 right-0 h-40 z-10 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
               {/*content*/}
               <div className="absolute inset-0 z-20 px-14 flex items-center pb-36 md:pb-36 sm:px-16 lg:px-24">
                 <div className="w-full md:max-w-2xl text-white space-y-4 md:space-y-6 text-center md:text-left">
