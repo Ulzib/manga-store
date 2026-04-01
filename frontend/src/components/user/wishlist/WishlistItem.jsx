@@ -32,11 +32,21 @@ const WishlistItem = ({ book, onAdd, onRemove }) => {
       </button>
 
       <Link href={`/books/${book._id}`} className="block">
-        <div className="relative w-full aspect-[5/6] overflow-hidden bg-gray-100">
+        <div
+          style={{ position: "relative", width: "100%", paddingBottom: "133%" }}
+          className="overflow-hidden bg-gray-100"
+        >
           <img
             src={getImageUrl(book.photo)}
             alt={book.name}
-            className="w-full h-full object-fill group-hover:scale-105 transition duration-300"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+            className="group-hover:scale-105 transition duration-300"
           />
         </div>
       </Link>

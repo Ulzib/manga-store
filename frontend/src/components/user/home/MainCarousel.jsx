@@ -97,9 +97,28 @@ const MainCarousel = ({ children }) => {
                 alt={slide.title}
                 className="w-full h-full object-cover object-top lg:object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.4), transparent)",
+                }}
+              ></div>
 
-              <div className="absolute bottom-0 left-0 right-0 h-40 z-10 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+              {/* доод gradient */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "160px",
+                  zIndex: 10,
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.8), transparent)",
+                }}
+              ></div>
               {/*content*/}
               <div className="absolute inset-0 z-20 px-14 flex items-center pb-36 md:pb-36 sm:px-16 lg:px-24">
                 <div className="w-full md:max-w-2xl text-white space-y-4 md:space-y-6 text-center md:text-left">
