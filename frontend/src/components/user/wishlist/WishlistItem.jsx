@@ -8,6 +8,7 @@ import { useState } from "react";
 
 const WishlistItem = ({ book, onAdd, onRemove }) => {
   const [loading, setLoading] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   const handleAddClick = async (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const WishlistItem = ({ book, onAdd, onRemove }) => {
           e.preventDefault();
           onRemove(book._id);
         }}
-        className="absolute top-2 right-2 z-20 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-gray-600 hover:bg-gray-300 hover:text-white transition-all shadow-sm opacity-0 group-hover:opacity-100"
+        className="absolute top-2 right-2 z-20 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-gray-600 hover:bg-gray-300 hover:text-white transition-all shadow-sm"
       >
         <X className="w-2.5 h-2.5 md:w-4 md:h-4" />
       </button>
@@ -44,7 +45,7 @@ const WishlistItem = ({ book, onAdd, onRemove }) => {
               inset: 0,
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "fill",
             }}
             className="group-hover:scale-105 transition duration-300"
           />

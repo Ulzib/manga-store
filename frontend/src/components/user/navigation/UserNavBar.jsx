@@ -16,6 +16,7 @@ export default function UserNavBar() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isHomePage = pathname === "/" || pathname === "/home";
+  const [showProfile, setShowProfile] = useState(false);
 
   //scroll hiihed navbar ungu solih
   useEffect(() => {
@@ -45,6 +46,14 @@ export default function UserNavBar() {
     }
     return pathname.startsWith(path);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".profile-dropdown")) setShowProfile(false);
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   const navLinkClass =
     "relative pb-1 transition-colors hover:text-white/90 group";
@@ -97,27 +106,36 @@ export default function UserNavBar() {
             )}
 
             {token ? (
-              <div className="relative group block">
-                <User className="w-5 h-5 md:w-6 md:h-6 text-white hover:text-gray-100 cursor-pointer" />
+              <div className="relative group block profile-dropdown">
+                <User
+                  className="w-5 h-5 md:w-6 md:h-6 text-white hover:text-gray-100 cursor-pointer"
+                  onClick={() => setShowProfile((prev) => !prev)}
+                />
 
-                <div className="absolute right-0 top-full opacity-0 invisible group-hover:opacity-100 pt-4 group-hover:visible transition-all ">
-                  <div className="w-48 bg-gray-900 overflow-hidden border border-white/10  rounded-lg shadow-xl text-white">
-                    <Link
-                      href="/profile"
-                      className="flex items-center gap-2.5 px-4 py-3 text-sm text-white hover:bg-white/10 transition"
-                    >
-                      <CircleUserRound className="w-4 h-4 text-white" />
-                      Профайл
-                    </Link>
-                    <button
-                      onClick={logout}
-                      className="w-full flex items-center gap-3 text-left px-4 py-3 text-sm  text-white hover:bg-white/10 transition"
-                    >
-                      <LogOut className="w-4 h-4 text-white" />
-                      Гарах
-                    </button>
+                {showProfile && (
+                  <div className="absolute right-0 top-full opacity-0 invisible group-hover:opacity-100 pt-4 group-hover:visible transition-all ">
+                    <div className="w-48 bg-gray-900 overflow-hidden border border-white/10  rounded-lg shadow-xl text-white">
+                      <Link
+                        href="/profile"
+                        className="flex items-center gap-2.5 px-4 py-3 text-sm text-white hover:bg-white/10 transition"
+                        onClick={() => setShowProfile(false)}
+                      >
+                        <CircleUserRound className="w-4 h-4 text-white" />
+                        Профайл
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setShowProfile(false);
+                          logout();
+                        }}
+                        className="w-full flex items-center gap-3 text-left px-4 py-3 text-sm  text-white hover:bg-white/10 transition"
+                      >
+                        <LogOut className="w-4 h-4 text-white" />
+                        Гарах
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ) : (
               <Link
