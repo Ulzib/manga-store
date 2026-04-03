@@ -2,12 +2,11 @@ import "./globals.css";
 import ToastProvider from "../components/toast/ToastProvider";
 import { TokenProvider } from "../components/navi/TokenLog";
 import { CartProvider } from "@/context/CartContext";
-import UserNavBar from "@/components/user/navigation/UserNavBar";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { Inter, Montserrat } from "next/font/google";
 
 const inter = Inter({
-  subsets: ["latin", "cyrillic"], // Монгол кирилл үсэг дэмжихийн тулд
+  subsets: ["latin", "cyrillic"],
   variable: "--font-inter",
 });
 

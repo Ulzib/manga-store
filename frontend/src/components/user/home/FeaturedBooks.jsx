@@ -15,8 +15,8 @@ import { getImageUrl } from "../../../../utils/imageHelper";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
-import Spinner from "@/components/Spinner";
 import WheelGesturesPlugin from "embla-carousel-wheel-gestures";
+import BookCardSkeleton from "./BookCardSkeleton";
 
 const FeaturedBooks = () => {
   const [books, setBooks] = useState([]);
@@ -46,9 +46,18 @@ const FeaturedBooks = () => {
 
   if (loading) {
     return (
-      <div className="w-full py-20 flex justify-center items-center text-white">
-        <Spinner />
-      </div>
+      <section className="w-full pt-6 md:pt-12">
+        <div className="relative flex justify-between items-center md:justify-center mb-1 lg:mb-6 w-full">
+          <h2 className="text-xl md:text-3xl font-bold text-white">
+            Онцлох манганууд
+          </h2>
+        </div>
+        <div className="flex gap-4 overflow-hidden pt-10">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <BookCardSkeleton key={i} />
+          ))}
+        </div>
+      </section>
     );
   }
 
@@ -56,13 +65,13 @@ const FeaturedBooks = () => {
     <section className="w-full pt-6 md:pt-12">
       <div className="relative flex justify-between items-center md:justify-center mb-1 lg:mb-6 w-full">
         <h2 className="text-xl md:text-3xl font-bold text-white">
-          Онцлох номууд
+          Онцлох манганууд
         </h2>
         <Link
           href="/books"
           className="absolute right-0 text-white/40 hover:text-white font-medium text-[10px] md:text-sm transition-colors"
         >
-          Бүгдийг үзэх →
+          Бүгдийг харах →
         </Link>
       </div>
       <Carousel

@@ -12,6 +12,7 @@ import MainReview from "../review/MainReview";
 import WishlistButton from "../wishlist/WishlistButton";
 import { ArrowLeft } from "lucide-react";
 import BookBackground from "./BackImage";
+import BookInfoSkeleton from "./BookInfoSkeleton";
 
 export default function BookInfo({ id }) {
   const [book, setBook] = useState(null);
@@ -28,10 +29,8 @@ export default function BookInfo({ id }) {
       const res = await axios.get(`books/${id}`);
       const data = await res.data;
       setBook(data.data);
-      setLoading(false);
     } catch (err) {
-      const errorMessage = err.message;
-      toast.error(errorMessage);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -60,7 +59,7 @@ export default function BookInfo({ id }) {
   if (loading) {
     return (
       <div className="container flex justify-center items-center min-h-screen">
-        <Spinner />
+        <BookInfoSkeleton />
       </div>
     );
   }

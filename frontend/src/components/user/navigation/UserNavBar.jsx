@@ -77,7 +77,7 @@ export default function UserNavBar() {
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-14 flex items-center justify-between h-8 md:h-12 ">
           <Link
             href="/"
-            className="flex sm:text-xl md:text-2xl font-black text-white shrink-0"
+            className="flex text-xl  md:text-2xl font-black text-white shrink-0"
           >
             Panel
           </Link>
@@ -95,20 +95,20 @@ export default function UserNavBar() {
               <span className={underlineClass("/orders")}></span>
             </Link>
           </div>
-          <div className="flex ml-auto items-center gap-3 md:gap-7">
+          <div className="flex ml-auto items-center gap-8">
             <DesktopSearch />
 
             <CartButton />
             {token && (
               <Link href="/wishlist" className="block">
-                <Heart className="w-5 h-5 md:w-6 md:h-6 hover:fill-white hover:text-white transition-all text-white" />
+                <Heart className="w-6 h-6 hover:fill-white hover:text-white transition-all text-white" />
               </Link>
             )}
 
             {token ? (
               <div className="relative group block profile-dropdown">
                 <User
-                  className="w-5 h-5 md:w-6 md:h-6 text-white hover:text-gray-100 cursor-pointer"
+                  className="w-6 h-6 text-white hover:text-gray-100 cursor-pointer"
                   onClick={() => setShowProfile((prev) => !prev)}
                 />
 

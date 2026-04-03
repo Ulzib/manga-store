@@ -41,6 +41,24 @@ const CategroySection = () => {
       return img[categoryName];
     }
   };
+
+  if (loading) {
+    return (
+      <div className="w-full py-12">
+        <h2 className="text-xl md:text-3xl font-bold mb-6 text-white md:text-center">
+          Категори
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-42 rounded-lg bg-zinc-700/60 animate-pulse"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="w-full py-12">
       <h2 className="text-xl md:text-3xl font-bold mb-6 text-white md:text-center">
@@ -49,7 +67,10 @@ const CategroySection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 ">
         {categories.map((cat, index) => (
-          <Link key={cat._id} href={`/books?category=${cat._id}`}>
+          <Link
+            key={cat._id}
+            href={`/books?category=${cat._id}&categoryName=${encodeURIComponent(cat.name)}`}
+          >
             <Card
               className="relative h-42 hover:scale-105 transition-transform shadow-lg cursor-pointer border-none "
               style={{

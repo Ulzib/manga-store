@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Badge, ShoppingCart, Star, TrendingUp } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import toast from "react-hot-toast";
-import Spinner from "@/components/Spinner";
 import WheelGesturesPlugin from "embla-carousel-wheel-gestures";
+import BookCardSkeleton from "./BookCardSkeleton";
 
 const BestSellers = () => {
   const [books, setBooks] = useState([]);
@@ -46,8 +46,17 @@ const BestSellers = () => {
 
   if (loading) {
     return (
-      <div className="w-full flex py-20 items-center justify-center">
-        <Spinner />
+      <div className="w-full pt-6 md:pt-12">
+        <div className="relative flex justify-between items-center md:justify-center w-full mb-1 lg:mb-6">
+          <h2 className="text-xl md:text-3xl font-bold text-white">
+            Бестселлер
+          </h2>
+        </div>
+        <div className="flex gap-4 overflow-hidden pt-10">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <BookCardSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
