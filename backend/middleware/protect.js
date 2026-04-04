@@ -21,6 +21,11 @@ export const protect = asyncHandler(async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    if (decoded.id === "guest") {
+      req.user = { _id: "guest", role: "user", name: "Зочин" };
+      return next();
+    }
+
     req.user = await User.findById(decoded.id);
 
     if (!req.user) {

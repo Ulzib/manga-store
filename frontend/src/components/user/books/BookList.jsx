@@ -84,7 +84,7 @@ const Books = () => {
         Буцах
       </Button>
       {categoryName && !loading && (
-        <h2 className="text-base md:text-lg font-bold text-white uppercase tracking-wider pb-6 text-center">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-8 text-center text-white">
           {categoryName}
         </h2>
       )}

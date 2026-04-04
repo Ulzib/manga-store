@@ -48,6 +48,7 @@ const LoginForm = ({ className, ...props }) => {
 
       if (token) {
         const decoded = decodeToken(token);
+        if (decoded?.id === "guest") return;
         router.replace(
           decoded?.role === "admin" || decoded?.role === "operator"
             ? "/admin"

@@ -3,15 +3,17 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { ArrowLeft, Package } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShippingSection from "./Shipping";
 import toast from "react-hot-toast";
 import axios from "../../axios/axios";
 import PaymentSection from "./Payment";
 import OrderSummary from "./OrderSummary";
+import { useToken } from "@/components/navi/TokenLog";
 
 const CheckoutForm = () => {
   const { cart, setCart, clearCart } = useCart();
+  const { token, userId, loading: authLoading } = useToken();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +25,14 @@ const CheckoutForm = () => {
     note: "",
     paymentMethod: "cash",
   });
+  // login bloogui bl redirect
+  useEffect(() => {
+    if (authLoading) return;
+    if (userId === "guest") {
+      toast.error("Захиалга өгөхийн тулд нэвтэрнэ үү");
+      router.push("/login");
+    }
+  }, [userId, authLoading]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

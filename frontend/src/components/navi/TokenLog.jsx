@@ -33,6 +33,7 @@ const decodeToken = (token) => {
 export const TokenProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,11 +43,10 @@ export const TokenProvider = ({ children }) => {
     if (cookieToken) {
       setToken(cookieToken);
       localStorage.setItem("book-token", cookieToken);
-
       // Token decode hj role avna
       const decoded = decodeToken(cookieToken);
-
       setUserRole(decoded?.role);
+      setUserId(decoded?.id);
     } else {
       // localStorage-s fallback
       const localToken = localStorage.getItem("book-token");
@@ -56,6 +56,7 @@ export const TokenProvider = ({ children }) => {
         // Token decode
         const decoded = decodeToken(localToken);
         setUserRole(decoded?.role);
+        setUserId(decoded?.id);
       }
     }
     setLoading(false);
@@ -64,10 +65,10 @@ export const TokenProvider = ({ children }) => {
   const handleLogin = (newToken) => {
     setToken(newToken);
     localStorage.setItem("book-token", newToken);
-
     // Token decode hj role avna
     const decoded = decodeToken(newToken);
     setUserRole(decoded?.role);
+    setUserId(decoded?.id);
   };
 
   const handleLogout = async () => {
@@ -83,6 +84,7 @@ export const TokenProvider = ({ children }) => {
     // Local state tsetserlene
     setToken(null);
     setUserRole(null);
+    setUserId(null);
     localStorage.removeItem("book-token");
     document.cookie =
       "book-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
@@ -90,7 +92,7 @@ export const TokenProvider = ({ children }) => {
 
   return (
     <TokenContext.Provider
-      value={{ token, userRole, handleLogin, handleLogout, loading }}
+      value={{ token, userRole, userId, handleLogin, handleLogout, loading }}
     >
       {children}
     </TokenContext.Provider>

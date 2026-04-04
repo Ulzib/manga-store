@@ -21,7 +21,6 @@ const ShippingSection = ({ formData, onChange }) => {
             <Input
               type="text"
               name="city"
-              placeholder="Улаанбаатар"
               value={formData.city}
               onChange={onChange}
               className="border-neutral-700 text-xs md:text-base"
@@ -34,7 +33,6 @@ const ShippingSection = ({ formData, onChange }) => {
             <Input
               type="text"
               name="district"
-              placeholder="Сүхбаатар"
               value={formData.district}
               onChange={onChange}
               className="border-neutral-700 text-xs md:text-base"
@@ -61,7 +59,6 @@ const ShippingSection = ({ formData, onChange }) => {
           <Input
             type="tel"
             name="phone"
-            placeholder="99999999"
             value={formData.phone}
             onChange={onChange}
             className="border-neutral-700 text-xs md:text-base"
