@@ -41,7 +41,7 @@ export const getOrders = asyncHandler(async (req, res, next) => {
 
 //get /api/v1/orders/:id - 1 zahialga
 export const getOrder = asyncHandler(async (req, res, next) => {
-  const order = Order.findById(req.params.id)
+  const order = await Order.findById(req.params.id)
     .populate("user", "name email")
     .populate("items.book", "name price photo");
 
@@ -89,7 +89,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
   }
 
   //zahialga uusgeh
-  const order = Order.create({
+  const order = await Order.create({
     user: req.user._id,
     items: orderItems,
     totalAmount,
@@ -146,6 +146,10 @@ export const deleteOrder = asyncHandler(async (req, res, next) => {
 export const getMyOrders = asyncHandler(async (req, res, next) => {
   if (!req.user || !req.user._id) {
     throw new MyError("Нэвтэрч орох шаардлагатай!", 401);
+  }
+
+  if (req.user._id === "guest") {
+    return res.status(200).json({ success: true, count: 0, data: [] });
   }
   const orders = await Order.find({ user: req.user._id })
     .populate("items.book", "name price photo")

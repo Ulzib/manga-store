@@ -10,7 +10,7 @@ import MobileSearch from "./MobileSearch";
 import DesktopSearch from "./DesktopSearch";
 
 export default function UserNavBar() {
-  const { token, handleLogout } = useToken();
+  const { token, handleLogout, userId } = useToken();
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
@@ -115,14 +115,16 @@ export default function UserNavBar() {
                 {showProfile && (
                   <div className="absolute right-0 top-full pt-4 z-[200] ">
                     <div className="w-48 bg-gray-900 overflow-hidden border border-white/10  rounded-lg shadow-xl text-white">
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-2.5 px-4 py-3 text-sm text-white hover:bg-white/10 transition"
-                        onClick={() => setShowProfile(false)}
-                      >
-                        <CircleUserRound className="w-4 h-4 text-white" />
-                        Профайл
-                      </Link>
+                      {token && userId !== "guest" && (
+                        <Link
+                          href="/profile"
+                          className="flex items-center gap-2.5 px-4 py-3 text-sm text-white hover:bg-white/10 transition"
+                          onClick={() => setShowProfile(false)}
+                        >
+                          <CircleUserRound className="w-4 h-4 text-white" />
+                          Профайл
+                        </Link>
+                      )}
                       <button
                         onClick={() => {
                           setShowProfile(false);
